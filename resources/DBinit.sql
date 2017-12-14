@@ -22,4 +22,10 @@ CREATE UNIQUE INDEX Item_itemId_uindex ON Item (itemId);
 
 
 
-INSERT INTO ToDo.User(userId, email, firstName, lastName, creationDate) VALUES (UUID(), 'pap@pap.com', 'pap', 'ushe', NOW())
+INSERT INTO ToDo.User(userId, email, firstName, lastName, creationDate) VALUES
+    (UUID(), 'pap@pap.com', 'pap', 'ushe', NOW()),
+    (UUID(), 'naor@naor.com', 'na', 'or', NOW()),
+    (UUID(), 'terry@terry.com', 'ter', 'ry', NOW()),
+    (UUID(), 'tal@pap.tal', 'ta', 'l', NOW()),
+    (UUID(), 'shlomi@shlomi.com', 'shl', 'omi', NOW()),
+    (UUID(), 'ktzv@ktzv.com', 'kt', 'zv', NOW());
