@@ -1,6 +1,6 @@
-package com.todolist.dao;
+package com.todoList.dao;
 
-import com.todolist.pojo.Item;
+import com.todoList.pojo.Item;
 import java.util.List;
 import java.util.UUID;
 

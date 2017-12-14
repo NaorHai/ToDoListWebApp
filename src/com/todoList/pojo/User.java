@@ -1,4 +1,4 @@
-package com.todolist.pojo;
+package com.todoList.pojo;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -20,6 +20,9 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.creationDate = creationDate;
+    }
+    public User(){
+
     }
 
     public UUID getUuid() {

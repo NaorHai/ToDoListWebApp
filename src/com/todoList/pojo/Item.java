@@ -1,4 +1,4 @@
-package com.todolist.pojo;
+package com.todoList.pojo;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -19,6 +19,9 @@ public class Item {
         this.title = title;
         this.content = content;
         this.creationDate = creationDate;
+    }
+    public Item(){
+
     }
 
     public UUID getItemId() {

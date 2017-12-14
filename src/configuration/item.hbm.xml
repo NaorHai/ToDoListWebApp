@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.todoList.pojo.Item" table="Item">
+		<id name="itemId" type="java.util.UUID" column="itemId" >
+			<generator class="increment"/>
+		</id>
+		<property name="userId">
+			<column name="userId"/>
+		</property>
+		<property name="title">
+			<column name="title"/>
+		</property>
+		<property name="content">
+			<column name="content"/>
+		</property>
+		<property name="creationDate">
+			<column name="creationDate"/>
+		</property>
+	</class>
+</hibernate-mapping>
