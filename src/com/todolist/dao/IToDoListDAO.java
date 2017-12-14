@@ -12,5 +12,5 @@ public interface IToDoListDAO {
     void createItem(Item item);
     void updateItem(Item item);
     void deleteItemById(UUID item_id);
-    List<Item> getUserItems(UUID user_id);
+    List<Item> getItemsByUserId(UUID user_id);
 }

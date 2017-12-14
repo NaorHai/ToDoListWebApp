@@ -25,7 +25,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public List<Item> getUserItems(UUID user_id) {
+    public List<Item> getItemsByUserId(UUID user_id) {
         return null;
     }
 }
