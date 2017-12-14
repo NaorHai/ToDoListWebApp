@@ -11,15 +11,15 @@ public class User {
     private UUID uuid;
     private String email;
     private String firstName;
-    private String lasttName;
+    private String lastName;
     private String password;
     private LocalDate creationDate;
 
-    public User(UUID uuid, String email, String firstName, String lasttName, String password, LocalDate creationDate) {
+    public User(UUID uuid, String email, String firstName, String lastName, String password, LocalDate creationDate) {
         this.uuid = uuid;
         this.email = email;
         this.firstName = firstName;
-        this.lasttName = lasttName;
+        this.lastName = lastName;
         this.password = password;
         this.creationDate = creationDate;
     }
@@ -48,12 +48,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLasttName() {
-        return lasttName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLasttName(String lasttName) {
-        this.lasttName = lasttName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -78,7 +78,7 @@ public class User {
                 "uuid=" + uuid +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", lasttName='" + lasttName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", creationDate=" + creationDate +
                 '}';
@@ -94,7 +94,7 @@ public class User {
         if (!getUuid().equals(user.getUuid())) return false;
         if (!getEmail().equals(user.getEmail())) return false;
         if (!getFirstName().equals(user.getFirstName())) return false;
-        if (!getLasttName().equals(user.getLasttName())) return false;
+        if (!getLastName().equals(user.getLastName())) return false;
         if (!getPassword().equals(user.getPassword())) return false;
         return getCreationDate().equals(user.getCreationDate());
     }
@@ -104,7 +104,7 @@ public class User {
         int result = getUuid().hashCode();
         result = 31 * result + getEmail().hashCode();
         result = 31 * result + getFirstName().hashCode();
-        result = 31 * result + getLasttName().hashCode();
+        result = 31 * result + getLastName().hashCode();
         result = 31 * result + getPassword().hashCode();
         result = 31 * result + getCreationDate().hashCode();
         return result;
