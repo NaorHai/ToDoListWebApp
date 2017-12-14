@@ -98,4 +98,7 @@ public class Item {
         result = 31 * result + getCreationDate().hashCode();
         return result;
     }
+    public UUID createUUID(){
+        return UUID.randomUUID();
+    }
 }

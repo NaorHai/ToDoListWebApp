@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS User
 (
-    userId BINARY(16) PRIMARY KEY NOT NULL,
+    userId VARBINARY(128) PRIMARY KEY NOT NULL,
     email VARCHAR(50) NOT NULL,
     firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20) NOT NULL,
@@ -11,11 +11,15 @@ CREATE UNIQUE INDEX User_userId_uindex ON User (userId);
 
 CREATE TABLE IF NOT EXISTS Item
 (
-    itemId BINARY(16) PRIMARY KEY NOT NULL,
-    userId BINARY(16) NOT NULL,
+    itemId VARBINARY(128) PRIMARY KEY NOT NULL,
+    userId VARBINARY(128) NOT NULL,
     title VARCHAR(50) NOT NULL,
     content VARCHAR(200),
     creationDate DATE,
     foreign key (userId) references User(userId)
 );
 CREATE UNIQUE INDEX Item_itemId_uindex ON Item (itemId);
+
+
+
+INSERT INTO ToDo.User(userId, email, firstName, lastName, creationDate) VALUES (UUID(), 'pap@pap.com', 'pap', 'ushe', NOW())
