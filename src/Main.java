@@ -14,7 +14,7 @@ public class Main {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             new ScriptRunner(DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/ToDo", "root", "root`"))
+                    "jdbc:mysql://localhost:3306/ToDo", "root", "shely9188"))
                     .runScript(new BufferedReader(new FileReader(script)));
         } catch (Exception e) {
             System.err.println(e);
