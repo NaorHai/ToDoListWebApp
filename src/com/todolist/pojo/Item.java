@@ -7,34 +7,34 @@ import java.util.UUID;
  * Created by Papushe on 14/12/2017.
  */
 public class Item {
-    private UUID uuid;
-    private UUID assignedUser;
+    private UUID itemId;
+    private UUID userId;
     private String title;
     private String content;
     private LocalDate creationDate;
 
-    public Item(UUID uuid, UUID assignedUser, String title, String content, LocalDate creationDate) {
-        this.uuid = uuid;
-        this.assignedUser = assignedUser;
+    public Item(UUID itemId, UUID userId, String title, String content, LocalDate creationDate) {
+        this.itemId = itemId;
+        this.userId = userId;
         this.title = title;
         this.content = content;
         this.creationDate = creationDate;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getItemId() {
+        return itemId;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setItemId(UUID itemId) {
+        this.itemId = itemId;
     }
 
-    public UUID getAssignedUser() {
-        return assignedUser;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setAssignedUser(UUID assignedUser) {
-        this.assignedUser = assignedUser;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -64,8 +64,8 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "uuid=" + uuid +
-                ", assignedUser=" + assignedUser +
+                "itemId=" + itemId +
+                ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", creationDate=" + creationDate +
@@ -79,8 +79,8 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (!getUuid().equals(item.getUuid())) return false;
-        if (!getAssignedUser().equals(item.getAssignedUser())) return false;
+        if (!getItemId().equals(item.getItemId())) return false;
+        if (!getUserId().equals(item.getUserId())) return false;
         if (!getTitle().equals(item.getTitle())) return false;
         if (!getContent().equals(item.getContent())) return false;
         return getCreationDate().equals(item.getCreationDate());
@@ -88,8 +88,8 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int result = getUuid().hashCode();
-        result = 31 * result + getAssignedUser().hashCode();
+        int result = getItemId().hashCode();
+        result = 31 * result + getUserId().hashCode();
         result = 31 * result + getTitle().hashCode();
         result = 31 * result + getContent().hashCode();
         result = 31 * result + getCreationDate().hashCode();
