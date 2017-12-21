@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class UserDAOImpl implements UserDAO{
 
-    final static Logger logger = Logger.getLogger(UserDAOImpl.class);
+    private final static Logger logger = Logger.getLogger(UserDAOImpl.class);
     private UserDAO instance;
     private Session session;
 
