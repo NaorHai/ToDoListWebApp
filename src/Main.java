@@ -26,9 +26,9 @@ public class Main {
         User u2 = new User(UUID.randomUUID(), "naor@naor.com", "nao", "r", LocalDate.now());
         User u3 = new User(UUID.randomUUID(), "tomer@tomer.com", "kt", "zv", LocalDate.now());
 
-        Item i1 = new Item(UUID.randomUUID(),u1.getUserId(),"Task","Content",LocalDate.now());
-        Item i2 = new Item(UUID.randomUUID(),u2.getUserId(),"Task","Content",LocalDate.now());
-        Item i3 = new Item(UUID.randomUUID(),u3.getUserId(),"Task","Content",LocalDate.now());
+        Item i1 = new Item(UUID.randomUUID(), u1.getUserId(),"Task","Content", LocalDate.now());
+        Item i2 = new Item(UUID.randomUUID(), u2.getUserId(),"Task","Content", LocalDate.now());
+        Item i3 = new Item(UUID.randomUUID(), u3.getUserId(),"Task","Content", LocalDate.now());
 
 
         session.save(u1);
