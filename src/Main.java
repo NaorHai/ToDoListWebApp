@@ -10,7 +10,7 @@ import java.sql.DriverManager;
  */
 public class Main {
     public static void main(String[] args) {
-        String script = "../resources/DBinit.sql";
+        String script = "resources/DBinit.sql";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             new ScriptRunner(DriverManager.getConnection(
