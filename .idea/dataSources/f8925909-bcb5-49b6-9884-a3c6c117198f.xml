@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="MySQL - ToDo@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
     <root id="1"/>
     <schema id="2" parent="1" name="ToDo">
       <Current>1</Current>
@@ -14,12 +14,12 @@
     <table id="8" parent="2" name="User"/>
     <column id="9" parent="7" name="itemId">
       <Position>1</Position>
-      <DataType>varbinary(128)|0</DataType>
+      <DataType>varchar(128)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="10" parent="7" name="userId">
       <Position>2</Position>
-      <DataType>varbinary(128)|0</DataType>
+      <DataType>varchar(128)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="11" parent="7" name="title">
@@ -43,6 +43,7 @@
       <ColNames>userId</ColNames>
     </index>
     <key id="16" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>itemId</ColNames>
       <Primary>1</Primary>
     </key>
@@ -58,7 +59,7 @@
     </foreign-key>
     <column id="19" parent="8" name="userId">
       <Position>1</Position>
-      <DataType>varbinary(128)|0</DataType>
+      <DataType>varchar(128)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="20" parent="8" name="email">
@@ -86,6 +87,7 @@
       <Unique>1</Unique>
     </index>
     <key id="25" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>userId</ColNames>
       <Primary>1</Primary>
     </key>

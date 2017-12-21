@@ -4,7 +4,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="com.todoList.pojo.User" table="User">
-		<id name="userId" type="java.util.UUID" column="userId" >
+		<id name="userId" type="java.util.UUID" column="userId">
 			<generator class="increment"/>
 		</id>
 		<property name="email">

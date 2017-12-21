@@ -22,9 +22,23 @@ public class Main {
         //creating a new session for adding products
         Session session = factory.openSession();
         session.beginTransaction();
+//
+//        User u1 = new User();
+//        u1.setUserId(u1.createUUID());
+//        u1.setEmail("pap@pap.com");
+//        u1.setFirstName("pap");
+//        u1.setLastName("Ushe");
+//        u1.setCreationDate(LocalDate.now());
         User u1 = new User(UUID.randomUUID(), "pap@pap.com", "pap", "Ushe", LocalDate.now());
         User u2 = new User(UUID.randomUUID(), "naor@naor.com", "nao", "r", LocalDate.now());
         User u3 = new User(UUID.randomUUID(), "tomer@tomer.com", "kt", "zv", LocalDate.now());
+
+//        Item i1 = new Item();
+//        i1.setItemId(i1.createUUID());
+//        i1.setUserId(u1.getUserId());
+//        i1.setTitle("Task");
+//        i1.setContent("Content");
+//        i1.setCreationDate(LocalDate.now());
 
         Item i1 = new Item(UUID.randomUUID(), u1.getUserId(),"Task","Content", LocalDate.now());
         Item i2 = new Item(UUID.randomUUID(), u2.getUserId(),"Task","Content", LocalDate.now());

@@ -4,10 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 import java.util.UUID;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Papushe on 14/12/2017.
@@ -15,12 +12,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Item")
 public class Item {
+
     private UUID itemId;
     private UUID userId;
     private String title;
     private String content;
     private LocalDate creationDate;
 
+    public Item(){
+
+    }
     public Item(UUID itemId, UUID userId, String title, String content, LocalDate creationDate) {
         this.itemId = itemId;
         this.userId = userId;
@@ -28,12 +29,10 @@ public class Item {
         this.content = content;
         this.creationDate = creationDate;
     }
-    public Item(){
 
-    }
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "java.util.UUID")
     public UUID getItemId() {
         return itemId;
     }
@@ -108,6 +107,14 @@ public class Item {
         result = 31 * result + getCreationDate().hashCode();
         return result;
     }
+
+    @PrePersist
+    private void generateCodeIdentifier(){
+        createUUID();
+    }
+
+
+
     public UUID createUUID(){
         return UUID.randomUUID();
     }
