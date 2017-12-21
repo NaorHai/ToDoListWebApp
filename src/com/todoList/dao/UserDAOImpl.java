@@ -8,6 +8,7 @@ import java.util.UUID;
  * Created by Haimov on 21/12/2017.
  */
 public class UserDAOImpl implements UserDAO{
+
     @Override
     public void createUser(User user) {
 

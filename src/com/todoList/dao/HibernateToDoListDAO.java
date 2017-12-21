@@ -9,6 +9,17 @@ import java.util.UUID;
  */
 public class HibernateToDoListDAO implements IToDoListDAO {
 
+    private IToDoListDAO instance;
+
+    private HibernateToDoListDAO() {}
+
+    public synchronized IToDoListDAO getInstance() {
+        if (instance == null) {
+            return  new HibernateToDoListDAO();
+        }
+        return instance;
+    }
+
     @Override
     public void createItem(Item item) {
 
