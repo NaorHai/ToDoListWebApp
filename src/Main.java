@@ -1,16 +1,14 @@
+import com.todoList.pojo.Item;
 import com.todoList.pojo.User;
-import org.apache.ibatis.jdbc.ScriptRunner;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.sql.DriverManager;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
 
 
 /**
@@ -28,20 +26,40 @@ public class Main {
         User u2 = new User(UUID.randomUUID(), "naor@naor.com", "nao", "r", LocalDate.now());
         User u3 = new User(UUID.randomUUID(), "tomer@tomer.com", "kt", "zv", LocalDate.now());
 
+        Item i1 = new Item(UUID.randomUUID(),u1.getUserId(),"Task","Content",LocalDate.now());
+        Item i2 = new Item(UUID.randomUUID(),u2.getUserId(),"Task","Content",LocalDate.now());
+        Item i3 = new Item(UUID.randomUUID(),u3.getUserId(),"Task","Content",LocalDate.now());
+
+
         session.save(u1);
         session.save(u2);
         session.save(u3);
+        session.save(i1);
+        session.save(i2);
+        session.save(i3);
+
+
         session.getTransaction().commit();
         session.close();
         //creating a new session for getting all products
         Session anotherSession = factory.openSession();
         anotherSession.beginTransaction();
-        List products = anotherSession.createQuery("from User").list();
-        System.out.println("There are " + products.size() + " product(s)");
-        Iterator i = products.iterator();
+
+        List users = anotherSession.createQuery("from User").list();
+        System.out.println("There are " + users.size() + " user(s)");
+        Iterator i = users.iterator();
         while(i.hasNext()) {
             System.out.println(i.next());
         }
+
+        List items = anotherSession.createQuery("from User").list();
+        System.out.println("There are " + items.size() + " item(s)");
+        Iterator j = items.iterator();
+        while(j.hasNext()) {
+            System.out.println(j.next());
+        }
+
+
         anotherSession.close();
     }
 }

@@ -1,8 +1,11 @@
 package com.todoList.pojo;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -29,6 +32,8 @@ public class Item {
 
     }
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     public UUID getItemId() {
         return itemId;
     }

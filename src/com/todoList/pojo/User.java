@@ -1,8 +1,11 @@
 package com.todoList.pojo;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,6 +22,7 @@ public class User {
     private String lastName;
     private LocalDate creationDate;
 
+
     public User(UUID uuid, String email, String firstName, String lastName, LocalDate creationDate) {
         this.userId = uuid;
         this.email = email;
@@ -30,12 +34,14 @@ public class User {
 
     }
     @Id
-    public UUID getUuid() {
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUuid(UUID uuid) {
-        this.userId = uuid;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -88,7 +94,7 @@ public class User {
 
         User user = (User) o;
 
-        if (!getUuid().equals(user.getUuid())) return false;
+        if (!getUserId().equals(user.getUserId())) return false;
         if (!getEmail().equals(user.getEmail())) return false;
         if (!getFirstName().equals(user.getFirstName())) return false;
         if (!getLastName().equals(user.getLastName())) return false;
@@ -98,7 +104,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = getUuid().hashCode();
+        int result = getUserId().hashCode();
         result = 31 * result + getEmail().hashCode();
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
