@@ -32,7 +32,7 @@ public class User {
     }
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "java.util.UUID")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     public UUID getUserId() {
         return userId;
     }
