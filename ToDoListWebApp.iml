@@ -15,7 +15,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="configuration:hibernate.cfg.xml" />
-          <unit-entry name="hibernate.cfg.xml" value="38c98257-1ae1-4c22-821c-ac008e32fa80" />
+          <unit-entry name="hibernate.cfg.xml" value="12658071-14ef-44f1-a1c7-e0836e0d584d" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
@@ -106,6 +106,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/resources/javassist-3.12.1.GA.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/resources/antlr-3.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

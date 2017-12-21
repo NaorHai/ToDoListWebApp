@@ -7,6 +7,17 @@
         <element id="directory" name="classes">
           <element id="module-output" name="ToDoListWebApp" />
         </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/resources/mysql-connector-java-5.1.44-bin.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/hibernate3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/log4j-1.2.16.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/ibatis-core-3.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/dom4j-1.6.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/slf4j-api-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/slf4j-simple-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/commons-collections-3.2.1-1.0.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/javassist-3.12.1.GA.jar" />
+        </element>
       </element>
     </root>
   </artifact>

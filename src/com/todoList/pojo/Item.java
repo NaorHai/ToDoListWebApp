@@ -1,8 +1,7 @@
 package com.todoList.pojo;
 
-import org.hibernate.annotations.GenericGenerator;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -17,22 +16,19 @@ public class Item {
     private UUID userId;
     private String title;
     private String content;
-    private LocalDate creationDate;
+    private Date creationDate;
 
     public Item(){
 
     }
-    public Item(UUID itemId, UUID userId, String title, String content, LocalDate creationDate) {
-        this.itemId = itemId;
+    public Item(UUID userId, String title, String content, Date creationDate) {
+        this.itemId = UUID.randomUUID();
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.creationDate = creationDate;
     }
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     public UUID getItemId() {
         return itemId;
     }
@@ -65,11 +61,11 @@ public class Item {
         this.content = content;
     }
 
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

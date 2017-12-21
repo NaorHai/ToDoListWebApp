@@ -1,8 +1,6 @@
 package com.todoList.pojo;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -13,37 +11,28 @@ import javax.persistence.*;
 @Table(name = "User")
 public class User {
 
-    private UUID userId;
+    private UUID userId = UUID.randomUUID();
     private String email;
     private String firstName;
     private String lastName;
-    private LocalDate creationDate;
+    private Date creationDate;
 
 
-    public User(UUID uuid, String email, String firstName, String lastName, LocalDate creationDate) {
-        this.userId = uuid;
+    public User(String email, String firstName, String lastName, Date creationDate) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.creationDate = creationDate;
     }
-    public User(){
+    public User(){}
 
-    }
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
+    public void setUserId(UUID userId) { this.userId = userId; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() {return email;}
 
     public void setEmail(String email) {
         this.email = email;
@@ -65,11 +54,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

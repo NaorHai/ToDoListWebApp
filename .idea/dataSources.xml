@@ -15,11 +15,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="38c98257-1ae1-4c22-821c-ac008e32fa80">
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="12658071-14ef-44f1-a1c7-e0836e0d584d">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
-      <remarks>$PROJECT_DIR$/hibernate.cfg.xml</remarks>
+      <remarks>$PROJECT_DIR$/src/hibernate.cfg.xml</remarks>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/ToDo</jdbc-url>
       <driver-properties>
@@ -30,14 +30,6 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/MySQL Connector/J/5.1.44/mysql-connector-license.txt</url>
-        </library>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/MySQL Connector/J/5.1.44/mysql-connector-java-5.1.44-bin.jar</url>
-        </library>
-      </libraries>
     </data-source>
   </component>
 </project>

@@ -4,11 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
-
 
 
 /**
@@ -22,27 +21,16 @@ public class Main {
         //creating a new session for adding products
         Session session = factory.openSession();
         session.beginTransaction();
-//
-//        User u1 = new User();
-//        u1.setUserId(u1.createUUID());
-//        u1.setEmail("pap@pap.com");
-//        u1.setFirstName("pap");
-//        u1.setLastName("Ushe");
-//        u1.setCreationDate(LocalDate.now());
-        User u1 = new User(UUID.randomUUID(), "pap@pap.com", "pap", "Ushe", LocalDate.now());
-        User u2 = new User(UUID.randomUUID(), "naor@naor.com", "nao", "r", LocalDate.now());
-        User u3 = new User(UUID.randomUUID(), "tomer@tomer.com", "kt", "zv", LocalDate.now());
 
-//        Item i1 = new Item();
-//        i1.setItemId(i1.createUUID());
-//        i1.setUserId(u1.getUserId());
-//        i1.setTitle("Task");
-//        i1.setContent("Content");
-//        i1.setCreationDate(LocalDate.now());
 
-        Item i1 = new Item(UUID.randomUUID(), u1.getUserId(),"Task","Content", LocalDate.now());
-        Item i2 = new Item(UUID.randomUUID(), u2.getUserId(),"Task","Content", LocalDate.now());
-        Item i3 = new Item(UUID.randomUUID(), u3.getUserId(),"Task","Content", LocalDate.now());
+        User u1 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));
+        User u2 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));
+        User u3 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));;
+
+
+        Item i1 = new Item(u1.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
+        Item i2 = new Item(u1.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
+        Item i3 = new Item(u1.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
 
 
         session.save(u1);
@@ -77,20 +65,3 @@ public class Main {
         anotherSession.close();
     }
 }
-
-
-
-
-//public class Main {
-//    public static void main(String[] args) {
-//        String script = "resources/DBinit.sql";
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            new ScriptRunner(DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/ToDo", "root", "shely9188"))
-//                    .runScript(new BufferedReader(new FileReader(script)));
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        }
-//    }
-//}

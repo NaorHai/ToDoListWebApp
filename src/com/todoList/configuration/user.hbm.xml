@@ -5,7 +5,7 @@
 <hibernate-mapping>
 	<class name="com.todoList.pojo.User" table="User">
 		<id name="userId" type="java.util.UUID" column="userId">
-			<generator class="increment"/>
+			<!--<generator class="native"/>-->
 		</id>
 		<property name="email">
 			<column name="email"/>
@@ -16,7 +16,7 @@
 		<property name="lastName">
 			<column name="lastName"/>
 		</property>
-		<property name="creationDate">
+		<property name="creationDate" type="date">
 			<column name="creationDate"/>
 		</property>
 	</class>
