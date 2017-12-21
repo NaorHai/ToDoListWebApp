@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Created by Papushe on 14/12/2017.
  */
 @Entity
-@Table(name = "User")
+@Table(name = "User", schema = "ToDo")
 public class User {
 
     private UUID userId = UUID.randomUUID();

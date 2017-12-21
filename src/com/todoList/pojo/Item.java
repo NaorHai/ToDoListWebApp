@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by Papushe on 14/12/2017.
  */
 @Entity
-@Table(name = "Item")
+@Table(name = "Item", schema = "ToDo")
 public class Item {
 
     private UUID itemId;
