@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface IToDoListDAO {
     void createItem(Item item);
     void updateItem(Item item);
-    void deleteItemById(UUID item_id);
-    List<Item> getItemsByUserId(UUID user_id);
+    void deleteItemById(UUID itemId);
+    List<Item> getItemsByUserId(UUID userId);
 }
