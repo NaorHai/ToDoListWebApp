@@ -15,7 +15,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     public synchronized IToDoListDAO getInstance() {
         if (instance == null) {
-            return  new HibernateToDoListDAO();
+            return new HibernateToDoListDAO();
         }
         return instance;
     }

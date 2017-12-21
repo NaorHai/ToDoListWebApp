@@ -22,15 +22,14 @@ public class Main {
         Session session = factory.openSession();
         session.beginTransaction();
 
-
         User u1 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));
         User u2 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));
         User u3 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));;
 
 
         Item i1 = new Item(u1.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
-        Item i2 = new Item(u1.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
-        Item i3 = new Item(u1.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
+        Item i2 = new Item(u2.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
+        Item i3 = new Item(u3.getUserId(),"Task","Content", Date.valueOf(LocalDate.now()));
 
 
         session.save(u1);

@@ -7,9 +7,9 @@ import org.hibernate.cfg.AnnotationConfiguration;
 /**
  * Created by Haimov on 21/12/2017.
  */
-public class HibernateHelper {
+public final class HibernateHelper {
 
-     Session getSession() {
+     public static Session getSession() {
          //creating factory for getting sessions
          SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
          //creating a new session for adding products
