@@ -2,10 +2,15 @@ package com.todoList.pojo;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by Papushe on 14/12/2017.
  */
+@Entity
+@Table(name = "User")
 public class User {
 
     private UUID userId;
@@ -24,7 +29,7 @@ public class User {
     public User(){
 
     }
-
+    @Id
     public UUID getUuid() {
         return userId;
     }
