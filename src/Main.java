@@ -60,8 +60,6 @@ public class Main {
         while(j.hasNext()) {
             System.out.println(j.next());
         }
-
-
         anotherSession.close();
     }
 }
