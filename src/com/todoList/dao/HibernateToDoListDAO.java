@@ -14,12 +14,12 @@ import java.util.UUID;
 public class HibernateToDoListDAO implements IToDoListDAO {
 
     private final static Logger logger = Logger.getLogger(HibernateToDoListDAO.class);
-    private IToDoListDAO instance;
+    private static IToDoListDAO instance;
     private Session session;
 
     private HibernateToDoListDAO() {}
 
-    public synchronized IToDoListDAO getInstance() {
+    public static synchronized IToDoListDAO getInstance() {
         if (instance == null) {
             return new HibernateToDoListDAO();
         }

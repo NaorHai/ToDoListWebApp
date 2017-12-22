@@ -13,13 +13,13 @@ import java.util.UUID;
 public class UserDAOImpl implements UserDAO{
 
     private final static Logger logger = Logger.getLogger(UserDAOImpl.class);
-    private UserDAO instance;
+    private static UserDAO instance;
     private Session session;
 
 
     private UserDAOImpl() {}
 
-    public synchronized UserDAO getInstance() {
+    public static synchronized UserDAO getInstance() {
         if (instance == null) {
             return new UserDAOImpl();
         }
