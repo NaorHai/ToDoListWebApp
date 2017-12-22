@@ -22,6 +22,7 @@ public class Main {
         Session session = factory.openSession();
         session.beginTransaction();
 
+
         User u1 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));
         User u2 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));
         User u3 = new User("pap@pap.com", "pap", "Ushe", Date.valueOf(LocalDate.now()));;

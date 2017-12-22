@@ -1,5 +1,6 @@
 package com.todoList.pojo;
 
+import org.hibernate.annotations.Entity;
 
 import java.sql.Date;
 import java.util.UUID;
@@ -9,39 +10,38 @@ import javax.persistence.*;
  * Created by Papushe on 14/12/2017.
  */
 @Entity
-@Table(name = "Item")
+@Table(name="Items")
 public class Item {
 
-    private UUID itemId;
-    private UUID userId;
+    private String itemId;
+    private String userId;
     private String title;
     private String content;
     private Date creationDate;
 
-    public Item(){
-
-    }
-    public Item(UUID userId, String title, String content, Date creationDate) {
-        this.itemId = UUID.randomUUID();
+    public Item(){ }
+    public Item(String userId, String title, String content, Date creationDate) {
+        this.itemId = UUID.randomUUID().toString();
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.creationDate = creationDate;
     }
 
-    public UUID getItemId() {
+    @Id
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(UUID itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
-    public UUID getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

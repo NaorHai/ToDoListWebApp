@@ -8,29 +8,30 @@ import javax.persistence.*;
  * Created by Papushe on 14/12/2017.
  */
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User {
 
-    private UUID userId = UUID.randomUUID();
+    private String userId;
     private String email;
     private String firstName;
     private String lastName;
     private Date creationDate;
 
-
+    public User(){}
     public User(String email, String firstName, String lastName, Date creationDate) {
+        this.userId = UUID.randomUUID().toString();
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.creationDate = creationDate;
     }
-    public User(){}
 
-    public UUID getUserId() {
+    @Id
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) { this.userId = userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getEmail() {return email;}
 
