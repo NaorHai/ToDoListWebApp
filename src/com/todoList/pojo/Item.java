@@ -13,16 +13,16 @@ import javax.persistence.*;
 @Table(name="Items")
 public class Item {
 
-    private String itemId;
-    private String userId;
+    private UUID itemId;
+    private UUID userId;
     private String title;
     private String content;
     private Date creationDate;
 
     public Item(){ }
     public Item(String userId, String title, String content, Date creationDate) {
-        this.itemId = UUID.randomUUID().toString();
-        this.userId = userId;
+        this.itemId = UUID.randomUUID();
+        this.userId = UUID.fromString(userId);
         this.title = title;
         this.content = content;
         this.creationDate = creationDate;
@@ -30,19 +30,19 @@ public class Item {
 
     @Id
     public String getItemId() {
-        return itemId;
+        return itemId.toString();
     }
 
     public void setItemId(String itemId) {
-        this.itemId = itemId;
+        this.itemId = UUID.fromString(itemId);
     }
 
     public String getUserId() {
-        return userId;
+        return userId.toString();
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userId = UUID.fromString(userId);
     }
 
     public String getTitle() {

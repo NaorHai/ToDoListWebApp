@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name="Users")
 public class User {
 
-    private String userId;
+    private UUID userId;
     private String email;
     private String firstName;
     private String lastName;
@@ -19,7 +19,7 @@ public class User {
 
     public User(){}
     public User(String email, String firstName, String lastName, Date creationDate) {
-        this.userId = UUID.randomUUID().toString();
+        this.userId = UUID.randomUUID();
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,10 +28,10 @@ public class User {
 
     @Id
     public String getUserId() {
-        return userId;
+        return userId.toString();
     }
 
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setUserId(String userId) { this.userId = UUID.fromString(userId); }
 
     public String getEmail() {return email;}
 
