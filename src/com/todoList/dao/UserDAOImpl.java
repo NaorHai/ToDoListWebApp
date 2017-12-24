@@ -13,7 +13,6 @@ public class UserDAOImpl implements UserDAO{
     private static UserDAO instance;
     private Session session;
 
-
     private UserDAOImpl() {}
 
     public static synchronized UserDAO getInstance() {
@@ -44,20 +43,22 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void deleteUserById(String userId) {
+    public boolean deleteUser(User user) {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
         try{
-            session.delete(userId);
+            session.delete(user);
             session.getTransaction().commit();
-            logger.info("User with id " + userId +" was deleted successfully");
+            logger.info("User with id " + user +" was deleted successfully");
+            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete a user with id: " + userId);
+            logger.error("Failed to delete a user with id: " + user);
             logger.error(e.getStackTrace());
+            return false;
         }finally {
             session.close();
         }

@@ -3,7 +3,9 @@ package com.todoList.dao;
 import com.todoList.configuration.HibernateHelper;
 import com.todoList.pojo.Item;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -47,30 +49,38 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void deleteItemById(String itemId) {
+    public boolean deleteItem(Item item) {
+        session = HibernateHelper.getSession();
+        session.beginTransaction();
+
         try{
-            session.delete(itemId);
+            session.delete(item);
             session.getTransaction().commit();
-            logger.info("Item with id " + itemId +" was deleted successfully");
+            logger.info("Item with id " + item +" was deleted successfully");
+            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete an item with id: " + itemId);
+            logger.error("Failed to delete an item with id: " + item);
             logger.error(e.getStackTrace());
+            return false;
         }finally {
             session.close();
         }
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Item> getItemsByUserId(String userId) {
-
         session = HibernateHelper.getSession();
         session.beginTransaction();
         List<Item> items = null;
+
         try{
-            items = (List<Item>) session.get(Item.class, userId);
+
+            items =  (List<Item>) session.createCriteria(Item.class)
+                    .add(Restrictions.eq("userId", userId)).list();
             session.getTransaction().commit();
             logger.info("Got " + items.size() + "Item(s) for user");
         }catch (Exception e){

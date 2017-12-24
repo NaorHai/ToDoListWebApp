@@ -1,5 +1,6 @@
 package com.todoList.pojo;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.UUID;
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Users")
-public class User {
+public class User implements Serializable {
 
     private String userId;
     private String email;

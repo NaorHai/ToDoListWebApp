@@ -2,6 +2,7 @@ package com.todoList.pojo;
 
 import org.hibernate.annotations.Entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.UUID;
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Items")
-public class Item {
+public class Item implements Serializable {
 
     private String itemId;
     private String userId;

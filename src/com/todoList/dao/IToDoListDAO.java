@@ -1,5 +1,6 @@
 package com.todoList.dao;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import com.todoList.pojo.Item;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public interface IToDoListDAO {
     void saveOrUpdate(Item item);
-    void deleteItemById(String itemId);
+    boolean deleteItem(Item item);
     List<Item> getItemsByUserId(String userId);
+//    TODO delete user items(all)
 }

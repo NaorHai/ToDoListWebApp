@@ -8,6 +8,6 @@ import com.todoList.pojo.User;
  */
 public interface UserDAO {
     void saveOrUpdate(User user);
-    void deleteUserById(String userId);
+    boolean deleteUser(User user);
     User getUserById(String userId);
 }
