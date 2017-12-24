@@ -35,7 +35,10 @@ public class Main {
                 Date.valueOf(LocalDate.now()));
 
         //CREATE
+        logger.info("Creating a new user" + user.toString());
         userDAO.saveOrUpdate(user);
+
+        logger.info("Creating a new item" + item.toString());
         iToDoListDAO.saveOrUpdate(item);
 
         //READ
