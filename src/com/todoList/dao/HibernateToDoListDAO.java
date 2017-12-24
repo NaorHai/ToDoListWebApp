@@ -34,11 +34,15 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         try{
             session.saveOrUpdate(item);
             session.getTransaction().commit();
-            session.close();
             logger.info("Item with id " + item.getItemId() +" was saved successfully");
         }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
             logger.error("Failed to save an item " + item.toString());
             logger.error(e.getStackTrace());
+        }finally {
+            session.close();
         }
     }
 
@@ -47,11 +51,15 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         try{
             session.delete(itemId);
             session.getTransaction().commit();
-            session.close();
             logger.info("Item with id " + itemId +" was deleted successfully");
         }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
             logger.error("Failed to delete an item with id: " + itemId);
             logger.error(e.getStackTrace());
+        }finally {
+            session.close();
         }
     }
 
@@ -64,11 +72,15 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         try{
             items = (List<Item>) session.get(Item.class, userId);
             session.getTransaction().commit();
-            session.close();
             logger.info("Got " + items.size() + "Item(s) for user");
         }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
             logger.error("Failed to get items for user with id: " + userId);
             logger.error(e.getStackTrace());
+        }finally {
+            session.close();
         }
         return items;
     }

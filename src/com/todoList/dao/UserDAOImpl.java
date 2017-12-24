@@ -34,11 +34,15 @@ public class UserDAOImpl implements UserDAO{
         try{
             session.saveOrUpdate(user);
             session.getTransaction().commit();
-            session.close();
             logger.info("User with id " + user.getUserId() +" was saved successfully");
         }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
             logger.error("Failed to save a user " + user.toString());
             logger.error(e.getStackTrace());
+        }finally {
+            session.close();
         }
     }
 
@@ -50,11 +54,15 @@ public class UserDAOImpl implements UserDAO{
         try{
             session.delete(userId);
             session.getTransaction().commit();
-            session.close();
             logger.info("User with id " + userId +" was deleted successfully");
         }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
             logger.error("Failed to delete a user with id: " + userId);
             logger.error(e.getStackTrace());
+        }finally {
+            session.close();
         }
     }
 
@@ -66,10 +74,14 @@ public class UserDAOImpl implements UserDAO{
         try{
             user = (User)session.get(User.class, userId);
             session.getTransaction().commit();
-            session.close();
         }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
             logger.error("Failed to get a user with id: " + userId);
             logger.error(e.getStackTrace());
+        }finally {
+            session.close();
         }
         return user;
     }
