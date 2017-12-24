@@ -4,9 +4,6 @@ import com.todoList.configuration.HibernateHelper;
 import com.todoList.pojo.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-
-import java.util.UUID;
-
 /**
  * Created by Haimov on 21/12/2017.
  */
@@ -47,7 +44,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void deleteUserById(UUID userId) {
+    public void deleteUserById(String userId) {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -67,7 +64,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public User getUserById(UUID userId) {
+    public User getUserById(String userId) {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         User user = null;

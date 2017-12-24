@@ -8,8 +8,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.UUID;
-
 
 /**
  * Created by Papushe on 14/12/2017.
@@ -42,6 +40,11 @@ public class Main {
         iToDoListDAO.saveOrUpdate(item);
 
         //READ
+        User storedUser = userDAO.getUserById(user.getUserId());
+        logger.info("Creating a new user" + storedUser.toString());
+
+
+
 
         //UPDATE
 

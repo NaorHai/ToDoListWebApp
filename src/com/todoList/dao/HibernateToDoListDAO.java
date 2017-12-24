@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import java.util.List;
-import java.util.UUID;
+
 
 /**
  * Created by Papushe on 14/12/2017.
@@ -47,7 +47,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void deleteItemById(UUID itemId) {
+    public void deleteItemById(String itemId) {
         try{
             session.delete(itemId);
             session.getTransaction().commit();
@@ -64,7 +64,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public List<Item> getItemsByUserId(UUID userId) {
+    public List<Item> getItemsByUserId(String userId) {
 
         session = HibernateHelper.getSession();
         session.beginTransaction();
