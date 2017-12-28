@@ -103,7 +103,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     @Override
     @SuppressWarnings("unchecked")
     public boolean deleteAllItemsByUserId(String userId) {
-        userId ="dc8ad284-6329-4a30-9d04-a111fc81a7fe";
         session = HibernateHelper.getSession();
         session.beginTransaction();
 

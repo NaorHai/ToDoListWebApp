@@ -19,5 +19,16 @@
 		<property name="creationDate" type="date">
 			<column name="creationDate"/>
 		</property>
+
+		<!--<set name="items" inverse="true" cascade="delete" table="Items">-->
+			<!--<key>-->
+				<!--<column name="userId" not-null="true" />-->
+			<!--</key>-->
+			<!--<one-to-many class="com.todoList.pojo.Item" />-->
+		<!--</set>-->
+
+
+
+
 	</class>
 </hibernate-mapping>
