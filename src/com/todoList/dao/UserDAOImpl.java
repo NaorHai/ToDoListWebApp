@@ -1,13 +1,15 @@
 package com.todoList.dao;
 
 import com.todoList.configuration.HibernateHelper;
+import com.todoList.exception.user.UserException;
 import com.todoList.pojo.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
 /**
  * Created by Haimov on 21/12/2017.
  */
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
 
     private final static Logger logger = Logger.getLogger(UserDAOImpl.class);
     private static UserDAO instance;
@@ -23,7 +25,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void saveOrUpdate(User user) {
+    public void saveOrUpdate(User user) throws UserException{
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -43,7 +45,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public boolean deleteUser(User user) {
+    public boolean deleteUser(User user) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -65,14 +67,17 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public User getUserById(String userId) {
+    public User getUserById(String userId) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         User user = null;
         try{
             user = (User)session.get(User.class, userId);
             session.getTransaction().commit();
-        }catch (Exception e){
+            if (user == null) {
+                throw new UserException("User: " + userId + " not found");
+            }
+        }catch (UserException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
