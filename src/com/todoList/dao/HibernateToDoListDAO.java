@@ -1,6 +1,7 @@
 package com.todoList.dao;
 
 import com.todoList.configuration.HibernateHelper;
+import com.todoList.exception.task.TaskException;
 import com.todoList.pojo.Item;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -82,8 +83,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             items =  (List<Item>) session.createCriteria(Item.class)
                     .add(Restrictions.eq("userId", userId)).list();
             session.getTransaction().commit();
+            if (items == null) {
+                throw new TaskException("No items found for user: " + userId);
+            }
             logger.info("Got " + items.size() + "Item(s) for user");
-        }catch (Exception e){
+        }catch (TaskException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
