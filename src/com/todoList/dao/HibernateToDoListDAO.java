@@ -30,7 +30,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void saveOrUpdate(Item item) {
+    public void saveOrUpdate(Item item) throws TaskException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -50,7 +50,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public boolean deleteItem(Item item) {
+    public boolean deleteItem(Item item) throws TaskException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -73,7 +73,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Item> getItemsByUserId(String userId) {
+    public List<Item> getItemsByUserId(String userId) throws TaskException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         List<Item> items = null;
