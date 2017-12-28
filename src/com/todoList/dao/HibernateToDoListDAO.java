@@ -30,7 +30,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void saveOrUpdate(Item item) throws TaskException {
+    public boolean saveOrUpdate(Item item) throws TaskException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -38,12 +38,14 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             session.saveOrUpdate(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was saved successfully");
+            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
             logger.error("Failed to save an item " + item.toString());
             logger.error(e.getStackTrace());
+            return false;
         }finally {
             session.close();
         }

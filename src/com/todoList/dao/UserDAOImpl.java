@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void saveOrUpdate(User user) throws UserException{
+    public boolean saveOrUpdate(User user) throws UserException{
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -33,12 +33,14 @@ public class UserDAOImpl implements UserDAO {
             session.saveOrUpdate(user);
             session.getTransaction().commit();
             logger.info("User with id " + user.getUserId() +" was saved successfully");
+            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
             logger.error("Failed to save a user " + user.toString());
             logger.error(e.getStackTrace());
+            return false;
         }finally {
             session.close();
         }

@@ -2,6 +2,7 @@ import com.todoList.dao.HibernateToDoListDAO;
 import com.todoList.dao.IToDoListDAO;
 import com.todoList.dao.UserDAO;
 import com.todoList.dao.UserDAOImpl;
+import com.todoList.exception.task.TaskException;
 import com.todoList.exception.user.UserException;
 import com.todoList.pojo.Item;
 import com.todoList.pojo.User;
@@ -19,7 +20,7 @@ public class Main {
 
     private final static Logger logger = Logger.getLogger(Main.class);
 
-    public static void main(String[] args) throws UserException {
+    public static void main(String[] args) throws UserException, TaskException {
         BasicConfigurator.configure();
         UserDAO userDAO = UserDAOImpl.getInstance();
         IToDoListDAO iToDoListDAO = HibernateToDoListDAO.getInstance();
@@ -65,5 +66,9 @@ public class Main {
         logger.info("User's item deletion success " + isItemDeleted);
 
         //DELETE items
+
+
+
+
     }
 }
