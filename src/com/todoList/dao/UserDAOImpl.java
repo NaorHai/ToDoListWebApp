@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean saveOrUpdate(User user) throws UserException{
+    public boolean saveOrUpdate(User user) {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean deleteUser(User user) throws UserException {
+    public boolean deleteUser(User user) {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -69,7 +69,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(String userId) throws UserException {
+    public User getUserById(String userId) {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         User user = null;

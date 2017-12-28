@@ -11,9 +11,8 @@ import java.util.List;
  * Created by Haimov on 14/12/2017.
  */
 public interface IToDoListDAO {
-    boolean saveOrUpdate(Item item) throws TaskException;
-    boolean deleteItem(Item item) throws TaskException;
-    List<Item> getItemsByUserId(String userId) throws TaskException;
-//    boolean deleteAllItemsByUserId()
-//    TODO delete user items(all)
+    boolean saveOrUpdate(Item item);
+    boolean deleteItem(Item item);
+    List<Item> getItemsByUserId(String userId);
+    boolean deleteAllItemsByUserId(String user);
 }
