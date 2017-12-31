@@ -58,13 +58,13 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         try{
             session.delete(item);
             session.getTransaction().commit();
-            logger.info("Item with id " + item +" was deleted successfully");
+            logger.info("Item with id " + item.getItemId() +" was deleted successfully");
             return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete an item with id: " + item);
+            logger.error("Failed to delete an item with id: " + item.getItemId());
             logger.error(e.getStackTrace());
             return false;
         }finally {
@@ -85,9 +85,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
                     .add(Restrictions.eq("userId", userId)).list();
             session.getTransaction().commit();
             if (items == null) {
-                throw new TaskException("No items found for user: " + userId);
+                throw new TaskException("Got null instead items for user: " + userId);
             }
-            logger.info("Got " + items.size() + "Item(s) for user");
+            logger.info("Got " + items.size() + "Item(s) for user id: " + userId);
         }catch (TaskException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
