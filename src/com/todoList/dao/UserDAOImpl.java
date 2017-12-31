@@ -54,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
         try{
             session.delete(user);
             session.getTransaction().commit();
-            logger.info("User with id " + user +" was deleted successfully");
+            logger.info("User with id: " + user.getUserId() + " was deleted successfully");
             return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
