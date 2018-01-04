@@ -18,13 +18,19 @@ public class UserDAOImpl implements UserDAO {
 
     private UserDAOImpl() {}
 
+    /**
+     * returns a singleton object which implements UserDAO interface
+     * lazy initialization
+     * */
     public static synchronized UserDAO getInstance() {
         if (instance == null) {
             return new UserDAOImpl();
         }
         return instance;
     }
-
+    /**
+     * creating or updating user
+     * */
     @Override
     public boolean saveOrUpdate(User user) throws UserException {
         session = HibernateHelper.getSession();
@@ -47,7 +53,9 @@ public class UserDAOImpl implements UserDAO {
             session.close();
         }
     }
-
+    /**
+     * deleting an user
+     * */
     @Override
     public boolean deleteUser(User user) throws UserException {
         session = HibernateHelper.getSession();
@@ -70,7 +78,9 @@ public class UserDAOImpl implements UserDAO {
             session.close();
         }
     }
-
+    /**
+     * getting user by id
+     * */
     @Override
     public User getUserById(String userId) throws UserException {
         session = HibernateHelper.getSession();
