@@ -25,8 +25,8 @@ public class Main {
         User user = new User(
                 "user@mail.com",
                 "first",
-                "last",
-                Date.valueOf(LocalDate.now()));
+                "last"
+        );
 
         Item item = new Item(
                 user.getUserId(),

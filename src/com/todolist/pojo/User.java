@@ -2,6 +2,7 @@ package com.todolist.pojo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -19,12 +20,12 @@ public class User implements Serializable {
     private Date creationDate;
 
     public User(){}
-    public User(String email, String firstName, String lastName, Date creationDate) {
+    public User(String email, String firstName, String lastName) {
         this.userId = UUID.randomUUID().toString();
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.creationDate = creationDate;
+        this.creationDate = Date.valueOf(LocalDate.now());
     }
 
     @Id
