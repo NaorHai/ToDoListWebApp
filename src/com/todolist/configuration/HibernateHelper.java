@@ -1,4 +1,4 @@
-package com.todoList.configuration;
+package com.todolist.configuration;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

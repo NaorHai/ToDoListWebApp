@@ -3,7 +3,7 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.todoList.pojo.Item" table="Items">
+	<class name="com.todolist.pojo.Item" table="Items">
 		<id name="itemId" type="java.lang.String" column="itemId">
 			<!--<generator class="native"/>-->
 		</id>

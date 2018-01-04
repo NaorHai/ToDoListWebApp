@@ -1,13 +1,14 @@
-package com.todoList.dao;
+package com.todolist.dao;
 
-import com.todoList.configuration.HibernateHelper;
-import com.todoList.exception.user.UserException;
-import com.todoList.pojo.User;
+import com.todolist.configuration.HibernateHelper;
+import com.todolist.exception.user.UserException;
+import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 /**
  * Created by Haimov on 21/12/2017.
+ * UserDaoImpl class - an implementation of UserDAO interface
  */
 public class UserDAOImpl implements UserDAO {
 
@@ -25,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean saveOrUpdate(User user) {
+    public boolean saveOrUpdate(User user) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -40,14 +41,15 @@ public class UserDAOImpl implements UserDAO {
             }
             logger.error("Failed to save a user " + user.toString());
             logger.error(e.getStackTrace());
-            return false;
+            throw new UserException(e.getMessage(), e);
+//            return false;
         }finally {
             session.close();
         }
     }
 
     @Override
-    public boolean deleteUser(User user) {
+    public boolean deleteUser(User user) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -62,17 +64,18 @@ public class UserDAOImpl implements UserDAO {
             }
             logger.error("Failed to delete a user with id: " + user);
             logger.error(e.getStackTrace());
-            return false;
+            throw new UserException(e.getMessage(), e);
+//            return false;
         }finally {
             session.close();
         }
     }
 
     @Override
-    public User getUserById(String userId) {
+    public User getUserById(String userId) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
-        User user = null;
+        User user;
         try{
             user = (User)session.get(User.class, userId);
             session.getTransaction().commit();
@@ -85,6 +88,7 @@ public class UserDAOImpl implements UserDAO {
             }
             logger.error("Failed to get a user with id: " + userId);
             logger.error(e.getStackTrace());
+            throw new UserException(e.getMessage(), e);
         }finally {
             session.close();
         }

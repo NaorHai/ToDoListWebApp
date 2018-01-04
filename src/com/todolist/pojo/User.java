@@ -1,4 +1,4 @@
-package com.todoList.pojo;
+package com.todolist.pojo;
 
 import java.io.Serializable;
 import java.sql.Date;

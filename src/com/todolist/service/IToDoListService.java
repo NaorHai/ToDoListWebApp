@@ -1,4 +1,4 @@
-package com.todoList.service;
+package com.todolist.service;
 
 
 /**

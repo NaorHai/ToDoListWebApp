@@ -1,4 +1,4 @@
-package com.todoList.pojo;
+package com.todolist.pojo;
 
 import org.hibernate.annotations.Entity;
 

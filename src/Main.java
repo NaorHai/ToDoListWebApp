@@ -1,9 +1,9 @@
-import com.todoList.dao.HibernateToDoListDAO;
-import com.todoList.dao.IToDoListDAO;
-import com.todoList.dao.UserDAO;
-import com.todoList.dao.UserDAOImpl;
-import com.todoList.pojo.Item;
-import com.todoList.pojo.User;
+import com.todolist.dao.HibernateToDoListDAO;
+import com.todolist.dao.IToDoListDAO;
+import com.todolist.dao.UserDAO;
+import com.todolist.dao.UserDAOImpl;
+import com.todolist.pojo.Item;
+import com.todolist.pojo.User;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import java.sql.Date;

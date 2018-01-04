@@ -1,8 +1,8 @@
-package com.todoList.dao;
+package com.todolist.dao;
 
-import com.todoList.configuration.HibernateHelper;
-import com.todoList.exception.task.TaskException;
-import com.todoList.pojo.Item;
+import com.todolist.configuration.HibernateHelper;
+import com.todolist.exception.item.ItemException;
+import com.todolist.pojo.Item;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by Papushe on 14/12/2017.
+ * HibernateToDoListDAO class - an implementation of UserDAO interface
  */
 public class HibernateToDoListDAO implements IToDoListDAO {
 
@@ -21,6 +22,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     private HibernateToDoListDAO() {}
 
+    /*
+    * get a
+    * */
     public static synchronized IToDoListDAO getInstance() {
         if (instance == null) {
             return new HibernateToDoListDAO();
@@ -29,7 +33,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public boolean saveOrUpdate(Item item) {
+    public boolean saveOrUpdate(Item item) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -44,14 +48,15 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             }
             logger.error("Failed to save an item " + item.toString());
             logger.error(e.getStackTrace());
-            return false;
+            throw new ItemException(e.getMessage(), e);
+//            return false;
         }finally {
             session.close();
         }
     }
 
     @Override
-    public boolean deleteItem(Item item) {
+    public boolean deleteItem(Item item) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -66,7 +71,8 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             }
             logger.error("Failed to delete an item with id: " + item.getItemId());
             logger.error(e.getStackTrace());
-            return false;
+            throw new ItemException(e.getMessage(), e);
+//            return false;
         }finally {
             session.close();
         }
@@ -74,7 +80,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Item> getItemsByUserId(String userId) {
+    public List<Item> getItemsByUserId(String userId) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         List<Item> items = null;
@@ -85,15 +91,16 @@ public class HibernateToDoListDAO implements IToDoListDAO {
                     .add(Restrictions.eq("userId", userId)).list();
             session.getTransaction().commit();
             if (items == null) {
-                throw new TaskException("Got null instead items for user: " + userId);
+                throw new ItemException("Got null instead items for user: " + userId);
             }
             logger.info("Got " + items.size() + "Item(s) for user id: " + userId);
-        }catch (TaskException e){
+        }catch (ItemException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
             logger.error("Failed to get items for user with id: " + userId);
             logger.error(e.getStackTrace());
+            throw new ItemException(e.getMessage(), e);
         }finally {
             session.close();
         }
@@ -102,7 +109,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean deleteAllItemsByUserId(String userId) {
+    public boolean deleteAllItemsByUserId(String userId) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -111,7 +118,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
                     .add(Restrictions.eq("userId",userId)).list();
 
             if (itemsToDelete == null) {
-                throw new TaskException("Error while searching for items to delete");
+                throw new ItemException("Error while searching for items to delete");
             }
 
             for (Item item : itemsToDelete) {
@@ -121,13 +128,14 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             session.getTransaction().commit();
             logger.info("Items with user id " + userId +" was deleted successfully");
             return true;
-        }catch (TaskException e){
+        }catch (ItemException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
             logger.error("Failed to delete an items with user id: " + userId);
             logger.error(e.getStackTrace());
-            return false;
+            throw new ItemException(e.getMessage(), e);
+//            return false;
         }finally {
             session.close();
         }
