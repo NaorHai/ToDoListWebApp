@@ -22,8 +22,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     private HibernateToDoListDAO() {}
 
-    /*
-    * get a
+    /**
+    * returns a singleton object which implements IToDoListDAO interface
+    * lazy initialization
     * */
     public static synchronized IToDoListDAO getInstance() {
         if (instance == null) {
@@ -32,6 +33,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         return instance;
     }
 
+    /**
+     * creating or updating item
+     * */
     @Override
     public boolean saveOrUpdate(Item item) throws ItemException {
         session = HibernateHelper.getSession();
@@ -55,6 +59,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         }
     }
 
+    /**
+     * deleting an item
+     * */
     @Override
     public boolean deleteItem(Item item) throws ItemException {
         session = HibernateHelper.getSession();
@@ -78,6 +85,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         }
     }
 
+    /**
+     * getting all user items by userId
+     * */
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getItemsByUserId(String userId) throws ItemException {
@@ -107,6 +117,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         return items;
     }
 
+    /**
+     * deleting all user Items by userId
+     * */
     @Override
     @SuppressWarnings("unchecked")
     public boolean deleteAllItemsByUserId(String userId) throws ItemException {
