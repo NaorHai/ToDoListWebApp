@@ -21,7 +21,11 @@ public class Item implements Serializable {
     private String content;
     private Date creationDate;
 
-    public Item(){ }
+    public Item(){
+        this.itemId = UUID.randomUUID().toString();
+        this.creationDate = Date.valueOf(LocalDate.now());
+    }
+
     public Item(String userId, String title, String content) {
         this.itemId = UUID.randomUUID().toString();
         this.userId = userId;

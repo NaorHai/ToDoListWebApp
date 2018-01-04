@@ -19,7 +19,11 @@ public class User implements Serializable {
     private String lastName;
     private Date creationDate;
 
-    public User(){}
+    public User(){
+        this.userId = UUID.randomUUID().toString();
+        this.creationDate = Date.valueOf(LocalDate.now());
+    }
+
     public User(String email, String firstName, String lastName) {
         this.userId = UUID.randomUUID().toString();
         this.email = email;
