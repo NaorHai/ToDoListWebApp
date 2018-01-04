@@ -17,3 +17,4 @@ gen
 .idea/workspace.xml
 out/
 src/hibernate.cfg.xml
+logs/myLogger.log
