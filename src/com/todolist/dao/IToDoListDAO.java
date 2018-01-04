@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by Haimov on 14/12/2017.
- * IToDoListDAO interface represents user crud operations
+ * IToDoListDAO interface represents user CRUD operations
  */
 public interface IToDoListDAO {
     boolean saveOrUpdate(Item item) throws ItemException;
