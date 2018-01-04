@@ -4,6 +4,7 @@ import org.hibernate.annotations.Entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -21,12 +22,12 @@ public class Item implements Serializable {
     private Date creationDate;
 
     public Item(){ }
-    public Item(String userId, String title, String content, Date creationDate) {
+    public Item(String userId, String title, String content) {
         this.itemId = UUID.randomUUID().toString();
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.creationDate = creationDate;
+        this.creationDate = Date.valueOf(LocalDate.now());
     }
 
     @Id

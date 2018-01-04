@@ -9,7 +9,7 @@ import com.todolist.pojo.User;
  * UserDao interface represents user CRUD operations
  */
 public interface UserDAO {
-    boolean saveOrUpdate(User user) throws UserException;
-    boolean deleteUser(User user) throws UserException;
+    void saveOrUpdate(User user) throws UserException;
+    void deleteUser(User user) throws UserException;
     User getUserById(String userId) throws UserException;
 }

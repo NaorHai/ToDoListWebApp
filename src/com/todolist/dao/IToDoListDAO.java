@@ -11,8 +11,8 @@ import java.util.List;
  * IToDoListDAO interface represents user CRUD operations
  */
 public interface IToDoListDAO {
-    boolean saveOrUpdate(Item item) throws ItemException;
-    boolean deleteItem(Item item) throws ItemException;
+    void saveOrUpdate(Item item) throws ItemException;
+    void deleteItem(Item item) throws ItemException;
     List<Item> getItemsByUserId(String userId) throws ItemException;
-    boolean deleteAllItemsByUserId(String user) throws ItemException;
+    void deleteAllItemsByUserId(String user) throws ItemException;
 }

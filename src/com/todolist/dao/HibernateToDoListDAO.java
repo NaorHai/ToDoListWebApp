@@ -37,7 +37,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      * creating or updating item
      * */
     @Override
-    public boolean saveOrUpdate(Item item) throws ItemException {
+    public void saveOrUpdate(Item item) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -45,7 +45,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             session.saveOrUpdate(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was saved successfully");
-            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -53,7 +52,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             logger.error("Failed to save an item " + item.toString());
             logger.error(e.getStackTrace());
             throw new ItemException(e.getMessage(), e);
-//            return false;
         }finally {
             session.close();
         }
@@ -63,7 +61,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      * deleting an item
      * */
     @Override
-    public boolean deleteItem(Item item) throws ItemException {
+    public void deleteItem(Item item) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -71,7 +69,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             session.delete(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was deleted successfully");
-            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -79,7 +76,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             logger.error("Failed to delete an item with id: " + item.getItemId());
             logger.error(e.getStackTrace());
             throw new ItemException(e.getMessage(), e);
-//            return false;
         }finally {
             session.close();
         }
@@ -122,7 +118,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      * */
     @Override
     @SuppressWarnings("unchecked")
-    public boolean deleteAllItemsByUserId(String userId) throws ItemException {
+    public void deleteAllItemsByUserId(String userId) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -140,7 +136,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
             session.getTransaction().commit();
             logger.info("Items with user id " + userId +" was deleted successfully");
-            return true;
+
         }catch (ItemException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -148,7 +144,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             logger.error("Failed to delete an items with user id: " + userId);
             logger.error(e.getStackTrace());
             throw new ItemException(e.getMessage(), e);
-//            return false;
         }finally {
             session.close();
         }

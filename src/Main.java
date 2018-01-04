@@ -31,8 +31,8 @@ public class Main {
         Item item = new Item(
                 user.getUserId(),
                 "title",
-                "content of item",
-                Date.valueOf(LocalDate.now()));
+                "content of item"
+        );
 
 //        //CREATE user
 //        logger.info("Creating a new user " + user.toString()

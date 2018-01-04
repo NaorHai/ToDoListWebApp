@@ -32,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
      * creating or updating user
      * */
     @Override
-    public boolean saveOrUpdate(User user) throws UserException {
+    public void saveOrUpdate(User user) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -40,7 +40,6 @@ public class UserDAOImpl implements UserDAO {
             session.saveOrUpdate(user);
             session.getTransaction().commit();
             logger.info("User with id " + user.getUserId() +" was saved successfully");
-            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -48,7 +47,6 @@ public class UserDAOImpl implements UserDAO {
             logger.error("Failed to save a user " + user.toString());
             logger.error(e.getStackTrace());
             throw new UserException(e.getMessage(), e);
-//            return false;
         }finally {
             session.close();
         }
@@ -57,7 +55,7 @@ public class UserDAOImpl implements UserDAO {
      * deleting an user
      * */
     @Override
-    public boolean deleteUser(User user) throws UserException {
+    public void deleteUser(User user) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
 
@@ -65,7 +63,6 @@ public class UserDAOImpl implements UserDAO {
             session.delete(user);
             session.getTransaction().commit();
             logger.info("User with id: " + user.getUserId() + " was deleted successfully");
-            return true;
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -73,7 +70,6 @@ public class UserDAOImpl implements UserDAO {
             logger.error("Failed to delete a user with id: " + user);
             logger.error(e.getStackTrace());
             throw new UserException(e.getMessage(), e);
-//            return false;
         }finally {
             session.close();
         }
