@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Created by Haimov on 04/01/2018.
+ * implementation of UserService interface
  */
 public class UserServiceImpl implements UserService{
 

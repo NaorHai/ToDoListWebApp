@@ -11,4 +11,5 @@ public interface IToDoListService {
     boolean createItem(String userId, String title, String content);
     List<Item> getItemsByUserId(String userId);
     boolean deleteItemById(String itemId);
+    boolean deleteAllItemsByUserId(String userId);
 }

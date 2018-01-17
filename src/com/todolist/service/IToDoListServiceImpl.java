@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Created by Papushe on 04/01/2018.
+ * implementation of IToDoListService interface
  */
 public class IToDoListServiceImpl implements IToDoListService {
     private final static Logger logger = Logger.getLogger(IToDoListServiceImpl.class);
@@ -87,5 +88,25 @@ public class IToDoListServiceImpl implements IToDoListService {
             logger.error("failed to delete item: " + itemId);
         }
         return false;
+    }
+
+    @Override
+    public boolean deleteAllItemsByUserId(String userId) {
+        try {
+
+            if (userId == null || userId.equals("")) {
+                logger.error("invalid user id: " + userId);
+                throw new ItemException("invalid user id was provided!");
+            }
+
+            iToDoListDAO.deleteAllItemsByUserId(userId);
+            logger.info("deleted all user: " + userId + " items successfully");
+            return true;
+
+        } catch (ItemException e) {
+            e.printStackTrace();
+            logger.error("failed to get items for user: " + userId);
+            return false;
+        }
     }
 }
