@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 public class UserService {
 
     private final static Logger logger = Logger.getLogger(UserService.class);
-    public UserDAO userDAO = UserDAOImpl.getInstance();
+    private UserDAO userDAO = UserDAOImpl.getInstance();
 
     public UserService() {}
 
@@ -62,7 +62,7 @@ public class UserService {
 
         } catch (UserException e) {
             e.printStackTrace();
-            logger.info("failed to update user");
+            logger.error("failed to update user");
             return false;
         }
     }
@@ -91,7 +91,7 @@ public class UserService {
             return true;
         } catch (UserException e) {
             e.printStackTrace();
-            logger.info("failed to delete a user with id: " + id);
+            logger.error("failed to delete a user with id: " + id);
             return false;
         }
     }
@@ -118,7 +118,7 @@ public class UserService {
             return user;
         } catch (UserException e) {
             e.printStackTrace();
-            logger.info("failed to get user with id: " + id);
+            logger.error("failed to get user with id: " + id);
             return null;
         }
     }
