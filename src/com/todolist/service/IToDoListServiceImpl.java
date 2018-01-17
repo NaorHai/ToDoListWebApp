@@ -43,6 +43,10 @@ public class IToDoListServiceImpl implements IToDoListService {
         }
     }
 
+    /**
+     * get all user items
+     * return list of items in success or null in case of failure
+     */
     @Override
     public List<Item> getItemsByUserId(String userId) {
         List<Item> userItems;
@@ -66,6 +70,10 @@ public class IToDoListServiceImpl implements IToDoListService {
         }
     }
 
+    /**
+     * delete item by item id
+     * returns true in success or false in failure
+     */
     @Override
     public boolean deleteItemById(String itemId) {
         try {
@@ -90,6 +98,10 @@ public class IToDoListServiceImpl implements IToDoListService {
         return false;
     }
 
+    /**
+     * delete all user items by user id
+     * returns true in success or false in failure
+     */
     @Override
     public boolean deleteAllItemsByUserId(String userId) {
         try {
