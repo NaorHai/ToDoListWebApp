@@ -114,6 +114,33 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
+     * get item by providing item id
+     * */
+    @Override
+    public Item getItemById(String itemId) throws ItemException {
+        session = HibernateHelper.getSession();
+        session.beginTransaction();
+        Item item;
+        try {
+            item = (Item) session.get(Item.class, itemId);
+            session.getTransaction().commit();
+            if (item == null) {
+                throw new ItemException("Item: " + itemId + " not found");
+            }
+        } catch (ItemException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to get an item with id: " + itemId);
+            logger.error(e.getStackTrace());
+            throw new ItemException(e.getMessage(), e);
+        } finally {
+            session.close();
+        }
+        return item;
+    }
+
+    /**
      * deleting all user Items by userId
      * */
     @Override

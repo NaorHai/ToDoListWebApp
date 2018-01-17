@@ -8,11 +8,12 @@ import java.util.List;
 
 /**
  * Created by Haimov on 14/12/2017.
- * IToDoListDAO interface represents user CRUD operations
+ * IToDoListDAO interface represents DB operations on item entity
  */
 public interface IToDoListDAO {
     void saveOrUpdate(Item item) throws ItemException;
     void deleteItem(Item item) throws ItemException;
     List<Item> getItemsByUserId(String userId) throws ItemException;
+    Item getItemById(String itemId) throws ItemException;
     void deleteAllItemsByUserId(String user) throws ItemException;
 }
