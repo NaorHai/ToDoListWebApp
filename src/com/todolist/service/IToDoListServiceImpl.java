@@ -44,6 +44,31 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
+     * update an existing item
+     * returns true in success or false in failure
+     */
+    @Override
+    public boolean updateItem(String userId, String title, String content) {
+        try {
+
+            if (userId == null || userId.equals("")) {
+                logger.error("invalid user id: " + userId);
+                throw new ItemException("invalid user id was provided!");
+            }
+
+            Item item = new Item(userId, title, content);
+
+            iToDoListDAO.saveOrUpdate(item);
+            logger.info("updated an item successfully: " + item.toString());
+            return true;
+        } catch (ItemException e) {
+            e.printStackTrace();
+            logger.error("failed to update an item!");
+            return false;
+        }
+    }
+
+    /**
      * get all user items
      * return list of items in success or null in case of failure
      */

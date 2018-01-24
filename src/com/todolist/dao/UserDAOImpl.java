@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO {
         try{
             session.saveOrUpdate(user);
             session.getTransaction().commit();
-            logger.info("User with id " + user.getUserId() +" was saved successfully");
+            logger.info("User with id " + user.getEmail() +" was saved successfully");
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -62,7 +62,7 @@ public class UserDAOImpl implements UserDAO {
         try{
             session.delete(user);
             session.getTransaction().commit();
-            logger.info("User with id: " + user.getUserId() + " was deleted successfully");
+            logger.info("User with id: " + user.getEmail() + " was deleted successfully");
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
