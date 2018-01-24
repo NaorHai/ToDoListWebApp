@@ -15,6 +15,7 @@ public class User implements Serializable {
 
     private String userId;
     private String email;
+    private String password;
     private String firstName;
     private String lastName;
     private Date creationDate;
@@ -24,9 +25,10 @@ public class User implements Serializable {
         this.creationDate = Date.valueOf(LocalDate.now());
     }
 
-    public User(String email, String firstName, String lastName) {
+    public User(String email, String password, String firstName, String lastName) {
         this.userId = UUID.randomUUID().toString();
         this.email = email;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.creationDate = Date.valueOf(LocalDate.now());
@@ -43,6 +45,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

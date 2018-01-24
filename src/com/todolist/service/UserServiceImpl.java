@@ -1,10 +1,14 @@
 package com.todolist.service;
 
+import com.todolist.configuration.HibernateHelper;
 import com.todolist.dao.UserDAO;
 import com.todolist.dao.UserDAOImpl;
 import com.todolist.exception.user.UserException;
 import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.QueryException;
+import org.hibernate.Session;
 
 /**
  * Created by Haimov on 04/01/2018.
@@ -22,8 +26,8 @@ public class UserServiceImpl implements UserService{
      * returns true in success or false in failure
      */
     @Override
-    public boolean createUser(String email, String firstName, String lastName) {
-        User user = new User(email, firstName, lastName);
+    public boolean registerUser(String email, String password, String firstName, String lastName) {
+        User user = new User(email, password, firstName, lastName);
         try {
             userDAO.saveOrUpdate(user);
             logger.info("created a new user successfully: " + user.toString());
@@ -40,7 +44,7 @@ public class UserServiceImpl implements UserService{
      * returns true in success or false in failure
      */
     @Override
-    public boolean updateUser(String id, String email, String firstName, String lastName) {
+    public boolean updateUser(String id, String email, String password, String firstName, String lastName) throws UserException {
         try {
 
             if (id == null || id.equals("")) {
@@ -57,6 +61,7 @@ public class UserServiceImpl implements UserService{
             user.setEmail(email != null ? email : user.getEmail());
             user.setFirstName(firstName != null ? firstName : user.getFirstName());
             user.setLastName(lastName != null ? lastName : user.getLastName());
+            user.setPassword(password != null ? password : user.getPassword());
 
             userDAO.saveOrUpdate(user);
             logger.info("user: " + id + " was updated successfully");
@@ -74,7 +79,7 @@ public class UserServiceImpl implements UserService{
      * returns true in success or false in failure
      */
     @Override
-    public boolean deleteUserById(String id) {
+    public boolean deleteUserById(String id) throws UserException {
         User userToDelete;
 
         if (id == null || id.equals("")) {
@@ -100,11 +105,40 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
+     * checks user login credentials
+     * returns true in success or false in failure
+     */
+    @Override
+    public boolean checkUserLogin(String email, String password) throws QueryException {
+        Session session = HibernateHelper.getSession();
+        session.beginTransaction();
+        String hql = "SELECT COUNT(*) FROM User WHERE email = :email AND password = :password";
+        try {
+            Query q = session.createQuery(hql);
+
+            if (q == null) {
+                throw new QueryException("unexpected query error");
+            }
+
+            q.setString("email", email);
+            q.setString("password", password);
+
+            boolean isCredentialsValid = q.executeUpdate() > 0;
+            logger.debug("user: " + email + " loginSuccess: " + isCredentialsValid);
+
+            return isCredentialsValid;
+        } catch (QueryException e) {
+            e.printStackTrace();
+            logger.error("failed to check user credentials: ", e);
+            return false;
+        }    }
+
+    /**
      * creates a new user
      * returns true in success or false in failure
      */
     @Override
-    public User getUserById(String id) {
+    public User getUserById(String id) throws UserException {
         User user;
 
         if (id == null || id.equals("")) {
