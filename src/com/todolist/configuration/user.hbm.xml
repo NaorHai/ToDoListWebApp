@@ -5,7 +5,6 @@
 <hibernate-mapping>
 	<class name="com.todolist.pojo.User" table="Users">
 		<id name="userId" type="java.lang.String" column="userId">
-			<!--<generator class="native"/>-->
 		</id>
 		<property name="email">
 			<column name="email"/>
@@ -19,16 +18,5 @@
 		<property name="creationDate" type="date">
 			<column name="creationDate"/>
 		</property>
-
-		<!--<set name="items" inverse="true" cascade="delete" table="Items">-->
-			<!--<key>-->
-				<!--<column name="userId" not-null="true" />-->
-			<!--</key>-->
-			<!--<one-to-many class="com.todolist.pojo.Item" />-->
-		<!--</set>-->
-
-
-
-
 	</class>
 </hibernate-mapping>
