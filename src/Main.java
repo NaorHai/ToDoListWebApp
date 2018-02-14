@@ -18,24 +18,24 @@ public class Main {
 
     public static void main(String[] args) {
 
-        logger.info("hiii my first log");
-        logger.error("error");
+//        logger.info("hiii my first log");
+//        logger.error("error");
+//
+//        BasicConfigurator.configure();
+//        UserDAO userDAO = UserDAOImpl.getInstance();
+//        IToDoListDAO iToDoListDAO = HibernateToDoListDAO.getInstance();
+//
+//        User user = new User(
+//                "user@mail.com",
+//                "first",
+//                "last"
+//        );
 
-        BasicConfigurator.configure();
-        UserDAO userDAO = UserDAOImpl.getInstance();
-        IToDoListDAO iToDoListDAO = HibernateToDoListDAO.getInstance();
-
-        User user = new User(
-                "user@mail.com",
-                "first",
-                "last"
-        );
-
-        Item item = new Item(
-                user.getUserId(),
-                "title",
-                "content of item"
-        );
+//        Item item = new Item(
+//                user.getUserId(),
+//                "title",
+//                "content of item"
+//        );
 
 //        //CREATE user
 //        logger.info("Creating a new user " + user.toString()
