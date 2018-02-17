@@ -23,7 +23,7 @@ public class IToDoListServiceImpl implements IToDoListService {
      * returns true in success or false in failure
      */
     @Override
-    public boolean createItem(String email, String title, String content) {
+    public boolean createItem(String email, String title, String content) throws ItemException {
         try {
 
             if (email == null || email.equals("")) {
@@ -48,7 +48,7 @@ public class IToDoListServiceImpl implements IToDoListService {
      * return list of items in success or null in case of failure
      */
     @Override
-    public List<Item> getItemsByUserId(String email) {
+    public List<Item> getItemsByUserId(String email) throws ItemException {
         List<Item> userItems;
         try {
 
@@ -75,7 +75,7 @@ public class IToDoListServiceImpl implements IToDoListService {
      * returns true in success or false in failure
      */
     @Override
-    public boolean deleteItemById(String itemId) {
+    public boolean deleteItemById(String itemId) throws ItemException {
         try {
             if (itemId == null || itemId.equals("")) {
                 logger.error("invalid item id: " + itemId);
@@ -103,7 +103,7 @@ public class IToDoListServiceImpl implements IToDoListService {
      * returns true in success or false in failure
      */
     @Override
-    public boolean deleteAllItemsByUserId(String email) {
+    public boolean deleteAllItemsByUserId(String email) throws ItemException {
         try {
 
             if (email == null || email.equals("")) {

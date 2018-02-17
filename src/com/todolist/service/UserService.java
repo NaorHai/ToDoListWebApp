@@ -12,7 +12,7 @@ public interface UserService {
     boolean registerUser(String email, String password, String firstName, String lastName) throws UserException;
     boolean updateUser(String email, String password, String firstName, String lastName) throws UserException;
     boolean deleteUserById(String email) throws UserException;
-    boolean checkUserLogin(String email, String password) throws QueryException;
+    boolean checkUserLogin(String email, String password) throws UserException;
     User getUserById(String email) throws UserException;
 
 }

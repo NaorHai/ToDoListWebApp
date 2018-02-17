@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService{
      * returns true in success or false in failure
      */
     @Override
-    public boolean checkUserLogin(String email, String password) throws QueryException {
+    public boolean checkUserLogin(String email, String password) throws UserException {
         Session session = HibernateHelper.getSession();
         session.beginTransaction();
         String hql = "SELECT COUNT(*) FROM User WHERE email = :email AND password = :password";
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService{
             Query q = session.createQuery(hql);
 
             if (q == null) {
-                throw new QueryException("unexpected query error");
+                throw new UserException("unexpected query error");
             }
 
             q.setString("email", email);
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService{
             logger.debug("user: " + email + " loginSuccess: " + isCredentialsValid);
 
             return isCredentialsValid;
-        } catch (QueryException e) {
+        } catch (UserException e) {
             e.printStackTrace();
             logger.error("failed to check user credentials: ", e);
             return false;
