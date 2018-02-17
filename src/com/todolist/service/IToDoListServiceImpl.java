@@ -23,15 +23,15 @@ public class IToDoListServiceImpl implements IToDoListService {
      * returns true in success or false in failure
      */
     @Override
-    public boolean createItem(String userId, String title, String content) {
+    public boolean createItem(String email, String title, String content) {
         try {
 
-            if (userId == null || userId.equals("")) {
-                logger.error("invalid user id: " + userId);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new ItemException("invalid user id was provided!");
             }
 
-            Item item = new Item(userId, title, content);
+            Item item = new Item(email, title, content);
 
             iToDoListDAO.saveOrUpdate(item);
             logger.info("created a new item successfully: " + item.toString());
@@ -48,24 +48,24 @@ public class IToDoListServiceImpl implements IToDoListService {
      * return list of items in success or null in case of failure
      */
     @Override
-    public List<Item> getItemsByUserId(String userId) {
+    public List<Item> getItemsByUserId(String email) {
         List<Item> userItems;
         try {
 
-            if (userId == null || userId.equals("")) {
-                logger.error("invalid user id: " + userId);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new ItemException("invalid user id was provided!");
             }
 
-            userItems = iToDoListDAO.getItemsByUserId(userId);
+            userItems = iToDoListDAO.getItemsByUserId(email);
 
             if (userItems == null || userItems.size() == 0) {
-                logger.info("no items were found for user: " + userId);
+                logger.info("no items were found for user: " + email);
             }
             return userItems;
         } catch (ItemException e) {
             e.printStackTrace();
-            logger.error("failed to get items for user: " + userId);
+            logger.error("failed to get items for user: " + email);
             return null;
         }
     }
@@ -103,21 +103,21 @@ public class IToDoListServiceImpl implements IToDoListService {
      * returns true in success or false in failure
      */
     @Override
-    public boolean deleteAllItemsByUserId(String userId) {
+    public boolean deleteAllItemsByUserId(String email) {
         try {
 
-            if (userId == null || userId.equals("")) {
-                logger.error("invalid user id: " + userId);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new ItemException("invalid user id was provided!");
             }
 
-            iToDoListDAO.deleteAllItemsByUserId(userId);
-            logger.info("deleted all user: " + userId + " items successfully");
+            iToDoListDAO.deleteAllItemsByUserId(email);
+            logger.info("deleted all user: " + email + " items successfully");
             return true;
 
         } catch (ItemException e) {
             e.printStackTrace();
-            logger.error("failed to get items for user: " + userId);
+            logger.error("failed to get items for user: " + email);
             return false;
         }
     }

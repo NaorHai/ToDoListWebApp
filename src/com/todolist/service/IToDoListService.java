@@ -8,8 +8,8 @@ import java.util.List;
  * IToDoListService interface represents item CRUD operations
  */
 public interface IToDoListService {
-    boolean createItem(String userId, String title, String content);
-    List<Item> getItemsByUserId(String userId);
+    boolean createItem(String email, String title, String content);
+    List<Item> getItemsByUserId(String email);
     boolean deleteItemById(String itemId);
-    boolean deleteAllItemsByUserId(String userId);
+    boolean deleteAllItemsByUserId(String email);
 }

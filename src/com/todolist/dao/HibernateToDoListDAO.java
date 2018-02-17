@@ -82,11 +82,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * getting all user items by userId
+     * getting all user items by email
      * */
     @Override
     @SuppressWarnings("unchecked")
-    public List<Item> getItemsByUserId(String userId) throws ItemException {
+    public List<Item> getItemsByUserId(String email) throws ItemException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         List<Item> items = null;
@@ -94,17 +94,17 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         try{
 
             items =  (List<Item>) session.createCriteria(Item.class)
-                    .add(Restrictions.eq("userId", userId)).list();
+                    .add(Restrictions.eq("email", email)).list();
             session.getTransaction().commit();
             if (items == null) {
-                throw new ItemException("Got null instead items for user: " + userId);
+                throw new ItemException("Got null instead items for user: " + email);
             }
-            logger.info("Got " + items.size() + "Item(s) for user id: " + userId);
+            logger.info("Got " + items.size() + "Item(s) for user id: " + email);
         }catch (ItemException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get items for user with id: " + userId);
+            logger.error("Failed to get items for user with id: " + email);
             logger.error(e.getStackTrace());
             throw new ItemException(e.getMessage(), e);
         }finally {
@@ -151,7 +151,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
         try{
             List<Item> itemsToDelete = (List<Item>) session.createCriteria(Item.class)
-                    .add(Restrictions.eq("userId",userId)).list();
+                    .add(Restrictions.eq("email",userId)).list();
 
             if (itemsToDelete == null) {
                 throw new ItemException("Error while searching for items to delete");

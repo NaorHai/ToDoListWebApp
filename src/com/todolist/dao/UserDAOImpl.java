@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO {
         try{
             session.saveOrUpdate(user);
             session.getTransaction().commit();
-            logger.info("User with id " + user.getUserId() +" was saved successfully");
+            logger.info("User with id " + user.getEmail() +" was saved successfully");
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -62,7 +62,7 @@ public class UserDAOImpl implements UserDAO {
         try{
             session.delete(user);
             session.getTransaction().commit();
-            logger.info("User with id: " + user.getUserId() + " was deleted successfully");
+            logger.info("User with id: " + user.getEmail() + " was deleted successfully");
         }catch (Exception e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
@@ -78,21 +78,21 @@ public class UserDAOImpl implements UserDAO {
      * getting user by id
      * */
     @Override
-    public User getUserById(String userId) throws UserException {
+    public User getUserById(String email) throws UserException {
         session = HibernateHelper.getSession();
         session.beginTransaction();
         User user;
         try{
-            user = (User)session.get(User.class, userId);
+            user = (User)session.get(User.class, email);
             session.getTransaction().commit();
             if (user == null) {
-                throw new UserException("User: " + userId + " not found");
+                throw new UserException("User: " + email + " not found");
             }
         }catch (UserException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get a user with id: " + userId);
+            logger.error("Failed to get a user with id: " + email);
             logger.error(e.getStackTrace());
             throw new UserException(e.getMessage(), e);
         }finally {

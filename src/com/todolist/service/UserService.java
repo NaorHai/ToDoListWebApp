@@ -10,9 +10,9 @@ import org.hibernate.QueryException;
  */
 public interface UserService {
     boolean registerUser(String email, String password, String firstName, String lastName) throws UserException;
-    boolean updateUser(String id, String email, String password, String firstName, String lastName) throws UserException;
-    boolean deleteUserById(String id) throws UserException;
+    boolean updateUser(String email, String password, String firstName, String lastName) throws UserException;
+    boolean deleteUserById(String email) throws UserException;
     boolean checkUserLogin(String email, String password) throws QueryException;
-    User getUserById(String id) throws UserException;
+    User getUserById(String email) throws UserException;
 
 }

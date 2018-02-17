@@ -3,7 +3,6 @@
  */
 
 import com.todolist.exception.user.UserException;
-import com.todolist.pojo.User;
 import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;
 import com.todolist.service.UserService;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Servlet implementation class toDoServlet
@@ -107,9 +105,6 @@ public class toDoServletController extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        PrintWriter out = response.getWriter();
-        out.println("<h1>We love Servlet</h1>");
-        out.flush();
     }
 
 }
