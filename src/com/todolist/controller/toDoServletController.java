@@ -39,7 +39,7 @@ public class toDoServletController extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         RequestDispatcher dispatcher = null;
         boolean isRegistrationSucceed = false;
@@ -50,7 +50,7 @@ public class toDoServletController extends HttpServlet {
         switch (path) {
             default:case "/":
             try{
-                dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                dispatcher = getServletContext().getRequestDispatcher("/todo.jsp");
                 dispatcher.forward(request, response);
                 break;
             }
@@ -61,7 +61,7 @@ public class toDoServletController extends HttpServlet {
 
             case "/login":
                 try{
-                    dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+                    dispatcher = getServletContext().getRequestDispatcher("/todo.jsp");
                     dispatcher.forward(request, response);
                     break;
                 }
@@ -103,7 +103,7 @@ public class toDoServletController extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
     }
 

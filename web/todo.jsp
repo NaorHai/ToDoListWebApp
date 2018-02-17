@@ -95,7 +95,7 @@
     <div class="row main">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                <h1 class="title">Company Name</h1>
+                <h1 class="title">ToDo List</h1>
                 <hr />
             </div>
         </div>
