@@ -18,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        logger.info("hiii my first log");
+        logger.info("hiii my first log");
 //        logger.error("error");
 //
 //        BasicConfigurator.configure();

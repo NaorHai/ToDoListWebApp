@@ -131,7 +131,8 @@ public class UserServiceImpl implements UserService{
             e.printStackTrace();
             logger.error("failed to check user credentials: ", e);
             return false;
-        }    }
+        }
+    }
 
     /**
      * creates a new user
