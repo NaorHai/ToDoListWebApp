@@ -51,8 +51,9 @@ public class toDoServletController extends HttpServlet {
         String route;
         boolean auth = Boolean.valueOf(CookieHelper.getCookieValueByName("auth", request));
 
-        String path = request.getParameter("action");
-        path = (path == null) ? "/" : "/" + path.toLowerCase();
+//      String path = request.getParameter("action");
+        String path = request.getServletPath();
+        path = (request.getServletPath() == null) ? "/" : "/" + path.toLowerCase();
 
         switch (path) {
             default:case "/":
