@@ -1,11 +1,11 @@
-package com.todolist.controller; /**
+package com.todolist.controller;
+/**
  * Created by Haimov on 14/12/2017.
  */
-
+import com.todolist.configuration.CookieHelper;
 import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
 import com.todolist.pojo.Item;
-import com.todolist.pojo.User;
 import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;
 import com.todolist.service.UserService;
@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,16 +46,19 @@ public class toDoServletController extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         RequestDispatcher dispatcher = null;
-        boolean isRegistrationSucceed = false;
-        boolean isUserAuthenticated = false;
+        String route;
+        boolean auth = Boolean.valueOf(CookieHelper.getCookieValueByName("auth", request));
+
         String path = request.getParameter("action");
         path = (path == null) ? "/" : "/" + path.toLowerCase();
 
         switch (path) {
             default:case "/":
             try{
-                dispatcher = getServletContext().getRequestDispatcher("/todo.jsp");
+                route = (auth) ? "/userPage.jsp" : "/login.jsp";
+                dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
             }
@@ -65,16 +69,21 @@ public class toDoServletController extends HttpServlet {
             }
 
             case "/login":
-                try{
-                    dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-                    dispatcher.forward(request, response);
+                try {
+                    if (auth) {
+                        dispatcher = getServletContext().getRequestDispatcher("/userPage.jsp");
+                        dispatcher.forward(request, response);
+                    }
+
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");
-                    try {
-                        isUserAuthenticated = userService.checkUserLogin(email, password);
-                        request.setAttribute("authentication", isUserAuthenticated);
-                        break;
 
+                    try {
+                        auth = userService.checkUserLogin(email, password);
+                        request.setAttribute("auth", auth);
+                        CookieHelper.createCookie("auth", String.valueOf(auth), "/", response);
+                        session.setAttribute("email", email);
+                        break;
 
                     }catch (UserException e) {
                         logger.error(e.getMessage());
@@ -92,12 +101,15 @@ public class toDoServletController extends HttpServlet {
                 String password = request.getParameter("password");
                 String firstName = request.getParameter("firstName");
                 String lastName = request.getParameter("lastName");
+
                 try{
-                    isRegistrationSucceed = userService.registerUser(email,password,firstName,lastName);
-                    if (!isRegistrationSucceed) {
+                    boolean isRegistered = userService.registerUser(email,password,firstName,lastName);
+                    if (!isRegistered) {
                         throw new UserException("User registration failed!");
                     }
-                    dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+                    CookieHelper.createCookie("auth", "true", "/", response);
+                    session.setAttribute("email", email);
+                    dispatcher = getServletContext().getRequestDispatcher("/userPage.jsp");
                     dispatcher.forward(request, response);
                     break;
                 }
@@ -107,45 +119,24 @@ public class toDoServletController extends HttpServlet {
                     e.printStackTrace();
                 }
 
-            case "/getitems":
-                if (!isUserAuthenticated) break;
-
+            case "/userlist":
+                if (!auth) {
+                    dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+                    dispatcher.forward(request, response);
+                    break;
+                }
                 try {
-                     email = request.getParameter("email");
+                     email = session.getAttribute("email").toString();
                      dispatcher = getServletContext().getRequestDispatcher("/userPage.jsp");
                      List<Item> userItems = iToDoListService.getItemsByUserId(email);
-                     request.setAttribute("email", email);
                      request.setAttribute("userItems", userItems);
                      dispatcher.forward(request, response);
                      break;
-
-                 }catch (ItemException e) {
-                     logger.error(e.getMessage());
-                     e.printStackTrace();
                  }
-
-            case "/getuser":
-                if (!isUserAuthenticated) break;
-
-                try {
-                    email = request.getParameter("email");
-                    dispatcher = getServletContext().getRequestDispatcher("/userPage.jsp");
-                    User user = userService.getUserById(email);
-                    request.setAttribute("email", email);
-                    request.setAttribute("userDetails", user);
-                    dispatcher.forward(request, response);
-                    break;
-
-                }catch (UserException e) {
+                 catch (ItemException e) {
                     logger.error(e.getMessage());
                     e.printStackTrace();
                 }
-            case "/updateuser": break;
-            case "/deleteuser": break;
-            case "/deleteitem": break;
-            case "/createitem": break;
-            case "/updateitem": break;
-
         }
     }
 

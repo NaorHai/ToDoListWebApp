@@ -34,8 +34,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * creating or updating item
-     * */
+     * Save or update entity
+     * @param item
+     * @throws ItemException
+     */
     @Override
     public void saveOrUpdate(Item item) throws ItemException {
         session = HibernateHelper.getSession();
@@ -58,8 +60,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * deleting an item
-     * */
+     * Deleting entity
+     * @param item
+     * @throws ItemException
+     */
     @Override
     public void deleteItem(Item item) throws ItemException {
         session = HibernateHelper.getSession();
@@ -82,8 +86,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * getting all user items by email
-     * */
+     * Get entity by email
+     * @param email
+     * @throws ItemException
+     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getItemsByUserId(String email) throws ItemException {
@@ -114,8 +120,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * get item by providing item id
-     * */
+     * Get entity by id
+     * @param itemId
+     * @throws ItemException
+     */
     @Override
     public Item getItemById(String itemId) throws ItemException {
         session = HibernateHelper.getSession();
@@ -141,8 +149,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * deleting all user Items by userId
-     * */
+     * Delete all entities by foreign key
+     * @param userId
+     * @throws ItemException
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void deleteAllItemsByUserId(String userId) throws ItemException {

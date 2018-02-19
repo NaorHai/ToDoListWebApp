@@ -19,8 +19,11 @@ public class IToDoListServiceImpl implements IToDoListService {
     public IToDoListServiceImpl(){}
 
     /**
-     * creates a new item
-     * returns true in success or false in failure
+     * Create new Item
+     * @param email
+     * @param title
+     * @param content
+     * @throws ItemException
      */
     @Override
     public boolean createItem(String email, String title, String content) throws ItemException {
@@ -44,8 +47,9 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * get all user items
-     * return list of items in success or null in case of failure
+     * Get item by user email
+     * @param email
+     * @throws ItemException
      */
     @Override
     public List<Item> getItemsByUserId(String email) throws ItemException {
@@ -71,8 +75,9 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * delete item by item id
-     * returns true in success or false in failure
+     * Delete item by item id
+     * @param itemId
+     * @throws ItemException
      */
     @Override
     public boolean deleteItemById(String itemId) throws ItemException {
@@ -99,8 +104,9 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * delete all user items by user id
-     * returns true in success or false in failure
+     * Delete all items by user email
+     * @param email
+     * @throws ItemException
      */
     @Override
     public boolean deleteAllItemsByUserId(String email) throws ItemException {

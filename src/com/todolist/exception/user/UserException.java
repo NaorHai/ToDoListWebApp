@@ -1,5 +1,8 @@
 package com.todolist.exception.user;
 
+/**
+ * User Exception class
+ */
 public class UserException extends Exception {
 
     public UserException(String msg) {

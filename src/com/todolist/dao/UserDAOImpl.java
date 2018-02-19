@@ -29,8 +29,10 @@ public class UserDAOImpl implements UserDAO {
         return instance;
     }
     /**
-     * creating or updating user
-     * */
+     * Save or update entity
+     * @param user
+     * @throws UserException
+     */
     @Override
     public void saveOrUpdate(User user) throws UserException {
         session = HibernateHelper.getSession();
@@ -52,8 +54,10 @@ public class UserDAOImpl implements UserDAO {
         }
     }
     /**
-     * deleting an user
-     * */
+     * Delete entity
+     * @param user
+     * @throws UserException
+     */
     @Override
     public void deleteUser(User user) throws UserException {
         session = HibernateHelper.getSession();
@@ -75,8 +79,10 @@ public class UserDAOImpl implements UserDAO {
         }
     }
     /**
-     * getting user by id
-     * */
+     * Get entity by id
+     * @param email
+     * @throws UserException
+     */
     @Override
     public User getUserById(String email) throws UserException {
         session = HibernateHelper.getSession();

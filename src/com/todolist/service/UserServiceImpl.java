@@ -22,11 +22,15 @@ public class UserServiceImpl implements UserService{
     public UserServiceImpl() {}
 
     /**
-     * creates a new user
-     * returns true in success or false in failure
+     * Register new user
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @throws UserException
      */
     @Override
-    public boolean registerUser(String email, String password, String firstName, String lastName) {
+    public boolean registerUser(String email, String password, String firstName, String lastName) throws UserException {
         User user = new User(email, password, firstName, lastName);
         try {
             userDAO.saveOrUpdate(user);
@@ -40,8 +44,12 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * updates an existed user
-     * returns true in success or false in failure
+     * update  user
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @throws UserException
      */
     @Override
     public boolean updateUser(String email, String password, String firstName, String lastName) throws UserException {
@@ -74,8 +82,9 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * delete an user by providing user id
-     * returns true in success or false in failure
+     * Delete user by mail
+     * @param email
+     * @throws UserException
      */
     @Override
     public boolean deleteUserById(String email) throws UserException {
@@ -104,8 +113,10 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * checks user login credentials
-     * returns true in success or false in failure
+     *  Check user credentials
+     * @param email
+     * @param password
+     * @throws UserException
      */
     @Override
     public boolean checkUserLogin(String email, String password) throws UserException {
@@ -134,8 +145,9 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * creates a new user
-     * returns true in success or false in failure
+     * Get user by email
+     * @param email
+     * @throws UserException
      */
     @Override
     public User getUserById(String email) throws UserException {
