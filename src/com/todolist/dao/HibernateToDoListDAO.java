@@ -40,10 +40,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      */
     @Override
     public void saveOrUpdate(Item item) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             session.saveOrUpdate(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was saved successfully");
@@ -66,10 +66,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      */
     @Override
     public void deleteItem(Item item) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             session.delete(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was deleted successfully");
@@ -93,11 +93,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getItemsByUserId(String email) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
         List<Item> items = null;
 
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
 
             items =  (List<Item>) session.createCriteria(Item.class)
                     .add(Restrictions.eq("email", email)).list();
@@ -126,10 +126,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      */
     @Override
     public Item getItemById(String itemId) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
         Item item;
         try {
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             item = (Item) session.get(Item.class, itemId);
             session.getTransaction().commit();
             if (item == null) {
@@ -156,10 +157,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     @Override
     @SuppressWarnings("unchecked")
     public void deleteAllItemsByUserId(String userId) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             List<Item> itemsToDelete = (List<Item>) session.createCriteria(Item.class)
                     .add(Restrictions.eq("email",userId)).list();
 

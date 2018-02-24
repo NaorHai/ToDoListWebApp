@@ -39,6 +39,7 @@ public class UserDAOImpl implements UserDAO {
         try{
             session = HibernateHelper.getSession();
             session.beginTransaction();
+
             session.saveOrUpdate(user);
             session.getTransaction().commit();
             logger.info("User with id " + user.getEmail() +" was saved successfully");
@@ -60,10 +61,10 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public void deleteUser(User user) throws UserException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             session.delete(user);
             session.getTransaction().commit();
             logger.info("User with id: " + user.getEmail() + " was deleted successfully");
@@ -85,10 +86,12 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User getUserById(String email) throws UserException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
         User user;
+
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             user = (User)session.get(User.class, email);
             session.getTransaction().commit();
             if (user == null) {

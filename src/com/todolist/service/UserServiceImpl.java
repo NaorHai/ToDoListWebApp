@@ -120,10 +120,11 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public boolean checkUserLogin(String email, String password) throws UserException {
-        Session session = HibernateHelper.getSession();
-        session.beginTransaction();
         String hql = "SELECT COUNT(*) FROM User WHERE email = :email AND password = :password";
         try {
+            Session session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             Query q = session.createQuery(hql);
 
             if (q == null) {
