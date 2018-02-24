@@ -1,5 +1,8 @@
 package com.todolist.exception.item;
 
+/**
+ * Item Exception class
+ */
 public class ItemException extends Exception {
 
     public ItemException(String msg) {

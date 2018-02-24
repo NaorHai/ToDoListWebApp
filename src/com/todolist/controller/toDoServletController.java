@@ -4,9 +4,7 @@ package com.todolist.controller;
  */
 
 import com.todolist.configuration.CookieHelper;
-import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
-import com.todolist.pojo.Item;
 import com.todolist.pojo.User;
 import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;

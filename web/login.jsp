@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
-         import="java.util.*" import="com.shenkar.controller.programController"
-         pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
+         import="java.util.*" import="com.todolist.controller.toDoServletController"
+         pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp"%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -32,7 +32,7 @@
         }
 
         .main{
-            margin-top: 70px;
+            /*margin-top: 70px;*/
         }
 
         h1.title {
@@ -40,7 +40,11 @@
             font-family: 'Passion One', cursive;
             font-weight: 400;
         }
-
+        h2.title {
+            font-size: 30px;
+            font-family: 'Passion One', cursive;
+            font-weight: 400;
+        }
         hr{
             width: 10%;
             color: #fff;
@@ -84,9 +88,9 @@
             margin-top: 5px;
         }
 
-        .login-register{
-            font-size: 11px;
-            text-align: center;
+        .go-to-register-button{
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -95,22 +99,13 @@
     <div class="row main">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                <h1 class="title">Company Name</h1>
+                <h1 class="title">ToDo List</h1>
                 <hr />
+                <h2 class="title">Login</h2>
             </div>
         </div>
         <div class="main-login main-center">
-            <form class="form-horizontal" method="post" action="#">
-
-                <div class="form-group">
-                    <label for="name" class="cols-sm-2 control-label">Your Name</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
-                        </div>
-                    </div>
-                </div>
+            <form class="form-horizontal" method="post" action="/todo/auth/">
 
                 <div class="form-group">
                     <label for="email" class="cols-sm-2 control-label">Your Email</label>
@@ -118,16 +113,6 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="username" class="cols-sm-2 control-label">Username</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
                         </div>
                     </div>
                 </div>
@@ -142,21 +127,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
-                        </div>
-                    </div>
+                <div class="form-group ">
+                    <button type="submit"  name="action" value="loginAccount" class="btn btn-primary btn-lg btn-block login-button">Login</button>
                 </div>
 
                 <div class="form-group ">
-                    <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
-                </div>
-                <div class="login-register">
-                    <a href="index.php">Login</a>
+                    <button name="action" value="goToRegister" class="btn btn-link go-to-register-button">Register</button>
                 </div>
             </form>
         </div>

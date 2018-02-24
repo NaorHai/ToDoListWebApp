@@ -7,7 +7,6 @@ import com.todolist.exception.user.UserException;
 import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
-import org.hibernate.QueryException;
 import org.hibernate.Session;
 
 /**
@@ -22,11 +21,15 @@ public class UserServiceImpl implements UserService{
     public UserServiceImpl() {}
 
     /**
-     * creates a new user
-     * returns true in success or false in failure
+     * Register new user
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @throws UserException
      */
     @Override
-    public boolean registerUser(String email, String password, String firstName, String lastName) {
+    public boolean registerUser(String email, String password, String firstName, String lastName) throws UserException {
         User user = new User(email, password, firstName, lastName);
         try {
             userDAO.saveOrUpdate(user);
@@ -40,31 +43,34 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * updates an existed user
-     * returns true in success or false in failure
+     * update  user
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @throws UserException
      */
     @Override
-    public boolean updateUser(String id, String email, String password, String firstName, String lastName) throws UserException {
+    public boolean updateUser(String email, String password, String firstName, String lastName) throws UserException {
         try {
 
-            if (id == null || id.equals("")) {
-                logger.error("invalid user id: " + id);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new UserException("invalid user id was provided!");
             }
 
-            User user = userDAO.getUserById(id);
+            User user = userDAO.getUserById(email);
 
             if (user == null) {
-                throw new UserException("cannot find user to update with id: " + id);
+                throw new UserException("cannot find user to update with id: " + email);
             }
 
-            user.setEmail(email != null ? email : user.getEmail());
             user.setFirstName(firstName != null ? firstName : user.getFirstName());
             user.setLastName(lastName != null ? lastName : user.getLastName());
             user.setPassword(password != null ? password : user.getPassword());
 
             userDAO.saveOrUpdate(user);
-            logger.info("user: " + id + " was updated successfully");
+            logger.info("user: " + email + " was updated successfully");
             return true;
 
         } catch (UserException e) {
@@ -75,49 +81,53 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * delete an user by providing user id
-     * returns true in success or false in failure
+     * Delete user by mail
+     * @param email
+     * @throws UserException
      */
     @Override
-    public boolean deleteUserById(String id) throws UserException {
+    public boolean deleteUserById(String email) throws UserException {
         User userToDelete;
 
-        if (id == null || id.equals("")) {
-            logger.error("invalid user id: " + id);
+        if (email == null || email.equals("")) {
+            logger.error("invalid user id: " + email);
             return false;
         }
 
         try {
-            userToDelete = userDAO.getUserById(id);
+            userToDelete = userDAO.getUserById(email);
 
             if(userToDelete == null) {
-                throw new UserException("cannot find user to update with id: " + id);
+                throw new UserException("cannot find user to update with id: " + email);
             }
 
             userDAO.deleteUser(userToDelete);
-            logger.info("deleted user with id: " + id + " successfully");
+            logger.info("deleted user with id: " + email + " successfully");
             return true;
         } catch (UserException e) {
             e.printStackTrace();
-            logger.error("failed to delete a user with id: " + id);
+            logger.error("failed to delete a user with id: " + email);
             return false;
         }
     }
 
     /**
-     * checks user login credentials
-     * returns true in success or false in failure
+     *  Check user credentials
+     * @param email
+     * @param password
+     * @throws UserException
      */
     @Override
-    public boolean checkUserLogin(String email, String password) throws QueryException {
-        Session session = HibernateHelper.getSession();
-        session.beginTransaction();
+    public boolean checkUserLogin(String email, String password) throws UserException {
         String hql = "SELECT COUNT(*) FROM User WHERE email = :email AND password = :password";
         try {
+            Session session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             Query q = session.createQuery(hql);
 
             if (q == null) {
-                throw new QueryException("unexpected query error");
+                throw new UserException("unexpected query error");
             }
 
             q.setString("email", email);
@@ -127,36 +137,38 @@ public class UserServiceImpl implements UserService{
             logger.debug("user: " + email + " loginSuccess: " + isCredentialsValid);
 
             return isCredentialsValid;
-        } catch (QueryException e) {
+        } catch (UserException e) {
             e.printStackTrace();
             logger.error("failed to check user credentials: ", e);
             return false;
-        }    }
+        }
+    }
 
     /**
-     * creates a new user
-     * returns true in success or false in failure
+     * Get user by email
+     * @param email
+     * @throws UserException
      */
     @Override
-    public User getUserById(String id) throws UserException {
+    public User getUserById(String email) throws UserException {
         User user;
 
-        if (id == null || id.equals("")) {
-            logger.error("invalid user id: " + id);
+        if (email == null || email.equals("")) {
+            logger.error("invalid user id: " + email);
             return null;
         }
         try {
-            user = userDAO.getUserById(id);
+            user = userDAO.getUserById(email);
 
             if(user == null) {
-                throw new UserException("cannot find user to update with id: " + id);
+                throw new UserException("cannot find user to update with id: " + email);
             }
 
             logger.info("created a new user successfully: " + user.toString());
             return user;
         } catch (UserException e) {
             e.printStackTrace();
-            logger.error("failed to get user with id: " + id);
+            logger.error("failed to get user with id: " + email);
             return null;
         }
     }

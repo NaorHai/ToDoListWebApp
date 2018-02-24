@@ -2,11 +2,12 @@ package com.todolist.pojo;
 
 import org.hibernate.annotations.Entity;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.UUID;
-import javax.persistence.*;
 
 /**
  * Created by Papushe on 14/12/2017.
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class Item implements Serializable {
 
     private String itemId;
-    private String userId;
+    private String email;
     private String title;
     private String content;
     private Date creationDate;
@@ -26,9 +27,9 @@ public class Item implements Serializable {
         this.creationDate = Date.valueOf(LocalDate.now());
     }
 
-    public Item(String userId, String title, String content) {
+    public Item(String email, String title, String content) {
         this.itemId = UUID.randomUUID().toString();
-        this.userId = userId;
+        this.email = email;
         this.title = title;
         this.content = content;
         this.creationDate = Date.valueOf(LocalDate.now());
@@ -43,12 +44,12 @@ public class Item implements Serializable {
         this.itemId = itemId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getTitle() {
@@ -79,7 +80,7 @@ public class Item implements Serializable {
     public String toString() {
         return "Item{" +
                 "itemId=" + itemId +
-                ", userId=" + userId +
+                ", userId=" + email +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", creationDate=" + creationDate +
@@ -94,7 +95,7 @@ public class Item implements Serializable {
         Item item = (Item) o;
 
         if (!getItemId().equals(item.getItemId())) return false;
-        if (!getUserId().equals(item.getUserId())) return false;
+        if (!getEmail().equals(item.getEmail())) return false;
         if (!getTitle().equals(item.getTitle())) return false;
         if (!getContent().equals(item.getContent())) return false;
         return getCreationDate().equals(item.getCreationDate());
@@ -103,7 +104,7 @@ public class Item implements Serializable {
     @Override
     public int hashCode() {
         int result = getItemId().hashCode();
-        result = 31 * result + getUserId().hashCode();
+        result = 31 * result + getEmail().hashCode();
         result = 31 * result + getTitle().hashCode();
         result = 31 * result + getContent().hashCode();
         result = 31 * result + getCreationDate().hashCode();

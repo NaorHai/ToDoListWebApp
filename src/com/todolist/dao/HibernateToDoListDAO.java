@@ -34,14 +34,16 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * creating or updating item
-     * */
+     * Save or update entity
+     * @param item
+     * @throws ItemException
+     */
     @Override
     public void saveOrUpdate(Item item) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             session.saveOrUpdate(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was saved successfully");
@@ -58,14 +60,16 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * deleting an item
-     * */
+     * Deleting entity
+     * @param item
+     * @throws ItemException
+     */
     @Override
     public void deleteItem(Item item) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             session.delete(item);
             session.getTransaction().commit();
             logger.info("Item with id " + item.getItemId() +" was deleted successfully");
@@ -82,29 +86,31 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * getting all user items by userId
-     * */
+     * Get entity by email
+     * @param email
+     * @throws ItemException
+     */
     @Override
     @SuppressWarnings("unchecked")
-    public List<Item> getItemsByUserId(String userId) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
+    public List<Item> getItemsByUserId(String email) throws ItemException {
         List<Item> items = null;
 
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
 
             items =  (List<Item>) session.createCriteria(Item.class)
-                    .add(Restrictions.eq("userId", userId)).list();
+                    .add(Restrictions.eq("email", email)).list();
             session.getTransaction().commit();
             if (items == null) {
-                throw new ItemException("Got null instead items for user: " + userId);
+                throw new ItemException("Got null instead items for user: " + email);
             }
-            logger.info("Got " + items.size() + "Item(s) for user id: " + userId);
+            logger.info("Got " + items.size() + "Item(s) for user id: " + email);
         }catch (ItemException e){
             if(session.getTransaction() != null){
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get items for user with id: " + userId);
+            logger.error("Failed to get items for user with id: " + email);
             logger.error(e.getStackTrace());
             throw new ItemException(e.getMessage(), e);
         }finally {
@@ -114,14 +120,17 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * get item by providing item id
-     * */
+     * Get entity by id
+     * @param itemId
+     * @throws ItemException
+     */
     @Override
     public Item getItemById(String itemId) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
         Item item;
         try {
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             item = (Item) session.get(Item.class, itemId);
             session.getTransaction().commit();
             if (item == null) {
@@ -141,17 +150,19 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * deleting all user Items by userId
-     * */
+     * Delete all entities by foreign key
+     * @param userId
+     * @throws ItemException
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void deleteAllItemsByUserId(String userId) throws ItemException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
-
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
+
             List<Item> itemsToDelete = (List<Item>) session.createCriteria(Item.class)
-                    .add(Restrictions.eq("userId",userId)).list();
+                    .add(Restrictions.eq("email",userId)).list();
 
             if (itemsToDelete == null) {
                 throw new ItemException("Error while searching for items to delete");

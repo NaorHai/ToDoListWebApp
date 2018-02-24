@@ -19,19 +19,22 @@ public class IToDoListServiceImpl implements IToDoListService {
     public IToDoListServiceImpl(){}
 
     /**
-     * creates a new item
-     * returns true in success or false in failure
+     * Create new Item
+     * @param email
+     * @param title
+     * @param content
+     * @throws ItemException
      */
     @Override
-    public boolean createItem(String userId, String title, String content) {
+    public boolean createItem(String email, String title, String content) throws ItemException {
         try {
 
-            if (userId == null || userId.equals("")) {
-                logger.error("invalid user id: " + userId);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new ItemException("invalid user id was provided!");
             }
 
-            Item item = new Item(userId, title, content);
+            Item item = new Item(email, title, content);
 
             iToDoListDAO.saveOrUpdate(item);
             logger.info("created a new item successfully: " + item.toString());
@@ -44,38 +47,40 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * get all user items
-     * return list of items in success or null in case of failure
+     * Get item by user email
+     * @param email
+     * @throws ItemException
      */
     @Override
-    public List<Item> getItemsByUserId(String userId) {
+    public List<Item> getItemsByUserId(String email) throws ItemException {
         List<Item> userItems;
         try {
 
-            if (userId == null || userId.equals("")) {
-                logger.error("invalid user id: " + userId);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new ItemException("invalid user id was provided!");
             }
 
-            userItems = iToDoListDAO.getItemsByUserId(userId);
+            userItems = iToDoListDAO.getItemsByUserId(email);
 
             if (userItems == null || userItems.size() == 0) {
-                logger.info("no items were found for user: " + userId);
+                logger.info("no items were found for user: " + email);
             }
             return userItems;
         } catch (ItemException e) {
             e.printStackTrace();
-            logger.error("failed to get items for user: " + userId);
+            logger.error("failed to get items for user: " + email);
             return null;
         }
     }
 
     /**
-     * delete item by item id
-     * returns true in success or false in failure
+     * Delete item by item id
+     * @param itemId
+     * @throws ItemException
      */
     @Override
-    public boolean deleteItemById(String itemId) {
+    public boolean deleteItemById(String itemId) throws ItemException {
         try {
             if (itemId == null || itemId.equals("")) {
                 logger.error("invalid item id: " + itemId);
@@ -99,25 +104,26 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * delete all user items by user id
-     * returns true in success or false in failure
+     * Delete all items by user email
+     * @param email
+     * @throws ItemException
      */
     @Override
-    public boolean deleteAllItemsByUserId(String userId) {
+    public boolean deleteAllItemsByUserId(String email) throws ItemException {
         try {
 
-            if (userId == null || userId.equals("")) {
-                logger.error("invalid user id: " + userId);
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
                 throw new ItemException("invalid user id was provided!");
             }
 
-            iToDoListDAO.deleteAllItemsByUserId(userId);
-            logger.info("deleted all user: " + userId + " items successfully");
+            iToDoListDAO.deleteAllItemsByUserId(email);
+            logger.info("deleted all user: " + email + " items successfully");
             return true;
 
         } catch (ItemException e) {
             e.printStackTrace();
-            logger.error("failed to get items for user: " + userId);
+            logger.error("failed to get items for user: " + email);
             return false;
         }
     }

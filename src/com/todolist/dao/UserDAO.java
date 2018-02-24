@@ -11,5 +11,5 @@ import com.todolist.pojo.User;
 public interface UserDAO {
     void saveOrUpdate(User user) throws UserException;
     void deleteUser(User user) throws UserException;
-    User getUserById(String userId) throws UserException;
+    User getUserById(String email) throws UserException;
 }

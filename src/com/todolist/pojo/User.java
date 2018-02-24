@@ -1,10 +1,11 @@
 package com.todolist.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.UUID;
-import javax.persistence.*;
 
 /**
  * Created by Papushe on 14/12/2017.
@@ -13,7 +14,6 @@ import javax.persistence.*;
 @Table(name="Users")
 public class User implements Serializable {
 
-    private String userId;
     private String email;
     private String password;
     private String firstName;
@@ -21,12 +21,10 @@ public class User implements Serializable {
     private Date creationDate;
 
     public User(){
-        this.userId = UUID.randomUUID().toString();
         this.creationDate = Date.valueOf(LocalDate.now());
     }
 
     public User(String email, String password, String firstName, String lastName) {
-        this.userId = UUID.randomUUID().toString();
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -35,12 +33,6 @@ public class User implements Serializable {
     }
 
     @Id
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) { this.userId = userId; }
-
     public String getEmail() {return email;}
 
     public void setEmail(String email) {
@@ -82,7 +74,6 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "uuid=" + userId +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -97,21 +88,20 @@ public class User implements Serializable {
 
         User user = (User) o;
 
-        if (!getUserId().equals(user.getUserId())) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (!getFirstName().equals(user.getFirstName())) return false;
-        if (!getLastName().equals(user.getLastName())) return false;
-
-        return getCreationDate().equals(user.getCreationDate());
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        return creationDate != null ? creationDate.equals(user.creationDate) : user.creationDate == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getUserId().hashCode();
-        result = 31 * result + getEmail().hashCode();
-        result = 31 * result + getFirstName().hashCode();
-        result = 31 * result + getLastName().hashCode();
-        result = 31 * result + getCreationDate().hashCode();
+        int result = email != null ? email.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         return result;
     }
 }

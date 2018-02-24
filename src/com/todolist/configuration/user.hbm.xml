@@ -4,11 +4,8 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="com.todolist.pojo.User" table="Users">
-		<id name="userId" type="java.lang.String" column="userId">
+		<id name="email" type="java.lang.String" column="email">
 		</id>
-		<property name="email">
-			<column name="email"/>
-		</property>
 		<property name="password">
 			<column name="password"/>
 		</property>
