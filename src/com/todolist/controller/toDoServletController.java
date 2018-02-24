@@ -5,7 +5,6 @@ package com.todolist.controller;
 
 import com.todolist.configuration.CookieHelper;
 import com.todolist.exception.user.UserException;
-import com.todolist.pojo.User;
 import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;
 import com.todolist.service.UserService;
@@ -50,6 +49,7 @@ public class toDoServletController extends HttpServlet {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher = null;
         String route;
+        String context = "todo";
         boolean auth = Boolean.valueOf(CookieHelper.getCookieValueByName("auth", request));
         String email, password, firstName, lastName, title, content;
         String path = request.getParameter("action");
@@ -59,24 +59,20 @@ public class toDoServletController extends HttpServlet {
             path = request.getPathInfo();
             if (path.contains("login")) path = "/goToLogin";
             else if (path.contains("register")) path = "/goToRegister";
-//            else if (path.contains("createTask")) path = "/createTask";
 
         } else {
 
             //with parameter
             if (path.equals("goToLogin")) path = "/goToLogin";
             else if (path.equals("loginAccount")) path = "/loginAccount";
-
             else if (path.equals("goToRegister")) path = "/goToRegister";
             else if (path.equals("registerAccount")) path = "/registerAccount";
-//
 //            else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
 //            else if (path.equals("createTask")) path = "/createTask";
 
         }
         switch (path) {
-            default:
-            case "/":
+            default:case "/":
                 try {
 //                    route = (auth) ? "/login.jsp" : "/login.jsp";
                     route = "/login.jsp";
@@ -99,6 +95,7 @@ public class toDoServletController extends HttpServlet {
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
+
 //
 //            case "/goToCreateTask":
 //                route = "/createTask.jsp";
@@ -111,11 +108,21 @@ public class toDoServletController extends HttpServlet {
                 password = request.getParameter("password");
 
                 try {
-                    userService.checkUserLogin(email, password);
-//                    userService.getUserById(email);
-                    logger.info("Login  user " + email.toString() + " success ");
+                    if (email.equals("") || password.equals("")) {
+                        throw new UserException("empty credentials");
+                    }
+                    boolean isAuthenticated = userService.checkUserLogin(email, password);
+                    CookieHelper.createCookie("email", email, "/", response);
+                    CookieHelper.createCookie("auth", String.valueOf(isAuthenticated), "/", response);
+                    logger.info("Login  user " + email + " success: " + isAuthenticated);
+
+                    route = (isAuthenticated) ? "/goToMyZone" : "/goToLogin";
+                    response.sendRedirect("/" + context + route);
+                    break;
+
                 } catch (UserException e) {
                     e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
                 break;
 
@@ -125,11 +132,14 @@ public class toDoServletController extends HttpServlet {
                 firstName = request.getParameter("firstName");
                 lastName = request.getParameter("lastName");
 
-                User user = new User(email, password, firstName, lastName);
-
                 try {
-                    userService.registerUser(email, password, firstName, lastName);
-                    logger.info("Creating a new user " + user.toString() + " success ");
+                    boolean isUserCreated = userService.registerUser(email, password, firstName, lastName);
+                    logger.info("Creating a new user " + email + " success: " + isUserCreated);
+                    CookieHelper.createCookie("email", email, "/", response);
+                    CookieHelper.createCookie("auth", String.valueOf(isUserCreated), "/", response);
+
+                    route = (isUserCreated) ? "/goToMyZone" : "/goToRegister";
+                    response.sendRedirect("/" + context + route);
                 } catch (UserException e) {
                     e.printStackTrace();
                 }

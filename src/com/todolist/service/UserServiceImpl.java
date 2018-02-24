@@ -119,27 +119,22 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public boolean checkUserLogin(String email, String password) throws UserException {
-        String hql = "SELECT COUNT(*) FROM User WHERE email = :email AND password = :password";
+        User user;
         try {
             Session session = HibernateHelper.getSession();
             session.beginTransaction();
 
-            Query q = session.createQuery(hql);
+            user = userDAO.getUserById(email);
 
-            if (q == null) {
-                throw new UserException("unexpected query error");
+            if (user == null) {
+                throw new UserException("User not found!");
             }
 
-            q.setString("email", email);
-            q.setString("password", password);
+            return  (user.getPassword().equals(password));
 
-            boolean isCredentialsValid = q.executeUpdate() > 0;
-            logger.debug("user: " + email + " loginSuccess: " + isCredentialsValid);
-
-            return isCredentialsValid;
         } catch (UserException e) {
             e.printStackTrace();
-            logger.error("failed to check user credentials: ", e);
+            logger.error(e.getMessage());
             return false;
         }
     }
@@ -168,7 +163,7 @@ public class UserServiceImpl implements UserService{
             return user;
         } catch (UserException e) {
             e.printStackTrace();
-            logger.error("failed to get user with id: " + email);
+            logger.error(e.getMessage());
             return null;
         }
     }
