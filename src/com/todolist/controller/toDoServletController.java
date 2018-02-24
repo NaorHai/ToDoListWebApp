@@ -50,7 +50,7 @@ public class toDoServletController extends HttpServlet {
         RequestDispatcher dispatcher = null;
         String route;
         String context = "todo";
-        boolean auth = Boolean.valueOf(CookieHelper.getCookieValueByName("auth", request));
+        boolean auth;
         String email, password, firstName, lastName, title, content;
         String path = request.getParameter("action");
         if (path == null) {
@@ -92,6 +92,12 @@ public class toDoServletController extends HttpServlet {
 
             case "/goToRegister":
                 route = "/register.jsp";
+                dispatcher = getServletContext().getRequestDispatcher(route);
+                dispatcher.forward(request, response);
+                break;
+
+            case "/goToMyZone":
+                route = "/myZone.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
