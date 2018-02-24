@@ -35,10 +35,10 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public void saveOrUpdate(User user) throws UserException {
-        session = HibernateHelper.getSession();
-        session.beginTransaction();
 
         try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
             session.saveOrUpdate(user);
             session.getTransaction().commit();
             logger.info("User with id " + user.getEmail() +" was saved successfully");

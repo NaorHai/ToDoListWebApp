@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
          import="java.util.*" import="com.todolist.controller.toDoServletController"
          pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp"%>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<%--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">--%>
+<%--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>--%>
+<%--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--%>
 <!-- ---- Include the above in your HEAD tag -------- -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 
@@ -22,7 +26,7 @@
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 
-    <title>Admin</title>
+    <title>ToDo App</title>
     <style type="text/css">
         body, html{
             height: 100%;
@@ -32,11 +36,16 @@
         }
 
         .main{
-            margin-top: 70px;
+            /*margin-top: 70px;*/
         }
 
         h1.title {
             font-size: 50px;
+            font-family: 'Passion One', cursive;
+            font-weight: 400;
+        }
+        h2.title {
+            font-size: 30px;
             font-family: 'Passion One', cursive;
             font-weight: 400;
         }
@@ -80,13 +89,13 @@
 
         }
 
-        .login-button{
+        .register-button{
             margin-top: 5px;
         }
 
-        .login-register{
-            font-size: 11px;
-            text-align: center;
+        .go-to-login-button{
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -97,37 +106,38 @@
             <div class="panel-title text-center">
                 <h1 class="title">ToDo List</h1>
                 <hr />
+                <h2 class="title">Register</h2>
             </div>
         </div>
         <div class="main-login main-center">
-            <form class="form-horizontal" method="post" action="#">
+            <form class="form-horizontal" method="post" action="/todo/auth/">
 
                 <div class="form-group">
-                    <label for="name" class="cols-sm-2 control-label">Your Name</label>
+                    <label for="name" class="cols-sm-2 control-label">First Name</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                            <input type="text" class="form-control" name="firstName" id="name"  placeholder="Enter your First Name"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                    <label for="username" class="cols-sm-2 control-label">Last Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="lastName" id="username"  placeholder="Enter your Last Name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Email</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="username" class="cols-sm-2 control-label">Username</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
                         </div>
                     </div>
                 </div>
@@ -153,10 +163,10 @@
                 </div>
 
                 <div class="form-group ">
-                    <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                    <button type="submit" name="action" value="registerAccount" class="btn btn-primary btn-lg btn-block register-button">Register</button>
                 </div>
-                <div class="login-register">
-                    <a href="index.php">Login</a>
+                <div class="form-group ">
+                    <button name="action" value="goToLogin" class="btn btn-link go-to-login-button">Login</button>
                 </div>
             </form>
         </div>
