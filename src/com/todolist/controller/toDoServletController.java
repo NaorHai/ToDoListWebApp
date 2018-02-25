@@ -61,7 +61,7 @@ public class toDoServletController extends HttpServlet {
             path = request.getPathInfo();
             if (path.contains("login")) path = "/goToLogin";
             else if (path.contains("register")) path = "/goToRegister";
-//            else if (path.contains("createTask")) path = "/createTask";
+            else if (path.contains("goToCreateTask")) path = "/goToCreateTask";
 
         } else {
 
@@ -71,9 +71,9 @@ public class toDoServletController extends HttpServlet {
 
             else if (path.equals("goToRegister")) path = "/goToRegister";
             else if (path.equals("registerAccount")) path = "/registerAccount";
-//
-//            else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
-//            else if (path.equals("createTask")) path = "/createTask";
+
+            else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
+            else if (path.equals("createTask")) path = "/createTask";
 
         }
         switch (path) {
@@ -101,12 +101,12 @@ public class toDoServletController extends HttpServlet {
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
-//
-//            case "/goToCreateTask":
-//                route = "/createTask.jsp";
-//                dispatcher = getServletContext().getRequestDispatcher(route);
-//                dispatcher.forward(request, response);
-//                break;
+
+            case "/goToCreateTask":
+                route = "/createTask.jsp";
+                dispatcher = getServletContext().getRequestDispatcher(route);
+                dispatcher.forward(request, response);
+                break;
 
             case "/loginAccount":
                 email = request.getParameter("email");
@@ -114,7 +114,13 @@ public class toDoServletController extends HttpServlet {
 
                 try {
                     userService.checkUserLogin(email, password);
-//                    userService.getUserById(email);
+                    User user = userService.getUserById(email);
+                    if(user.getEmail() == email){
+                        route = "/createTask.jsp";
+                        dispatcher = getServletContext().getRequestDispatcher(route);
+                        dispatcher.forward(request, response);
+                        break;
+                    }
                     logger.info("Login  user " + email.toString() + " success ");
                 } catch (UserException e) {
                     e.printStackTrace();
@@ -138,24 +144,24 @@ public class toDoServletController extends HttpServlet {
 
                 break;
 
-//            case "/createTask":
-//                title = request.getParameter("title");
-//                content = request.getParameter("content");
-//
-//                //TODO need to get user email and set it in the item constructor
-//
-//                email = "useddr@mail.com"; //TODO example
-//
-//                Item item = new Item(email, title, content);
-//
-//
-//                try {
-//                    iToDoListService.createItem(email, title, content);
-//                    logger.info("Creating a new user " + item.toString() + " success ");
-//                } catch (ItemException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
+            case "/createTask":
+                title = request.getParameter("title");
+                content = request.getParameter("content");
+
+                //TODO need to get user email and set it in the item constructor
+
+                email = "useddr@mail.com"; //TODO example
+
+                Item item = new Item(email, title, content);
+
+
+                try {
+                    iToDoListService.createItem(email, title, content);
+                    logger.info("Creating a new user " + item.toString() + " success ");
+                } catch (ItemException e) {
+                    e.printStackTrace();
+                }
+                break;
 
 //            case "/login":
 //                try {

@@ -115,3 +115,5 @@
 2018-02-24 16:50:06 INFO  HibernateToDoListDAO:49 - Item with id 2a570c73-13f1-43a7-8e36-7f8876838bed was saved successfully
 2018-02-24 16:50:06 INFO  IToDoListServiceImpl:40 - created a new item successfully: Item{itemId=2a570c73-13f1-43a7-8e36-7f8876838bed, userId=useddr@mail.com, title='dsfs', content='das', creationDate=2018-02-24}
 2018-02-24 16:50:06 INFO  Main:62 - Creating a new item Item{itemId=df310b6e-92e9-48fb-962d-f011d5fbe661, userId=useddr@mail.com, title='title', content='content of item', creationDate=2018-02-24} success:
+2018-02-25 19:37:46 INFO  Main:27 - hiii my first log
+2018-02-25 19:37:46 ERROR Main:28 - error
