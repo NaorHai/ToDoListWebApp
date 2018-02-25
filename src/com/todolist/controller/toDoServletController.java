@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Servlet implementation class toDoServlet
@@ -114,6 +116,7 @@ public class toDoServletController extends HttpServlet {
 
             case "/loginAccount":
                 User user;
+                List<Item> userItems;
                 email = request.getParameter("email");
                 password = request.getParameter("password");
 
@@ -129,6 +132,19 @@ public class toDoServletController extends HttpServlet {
                         CookieHelper.createCookie("email", email, "/", response);
                         CookieHelper.createCookie("firstName", user.getFirstName(), "/", response);
                         CookieHelper.createCookie("lastName", user.getLastName(), "/", response);
+
+                        try {
+                            userItems =  iToDoListService.getItemsByUserId(email);
+
+                            if (userItems == null) {
+                                throw new ItemException("failed to get Items");
+                            }
+
+                            CookieHelper.createCookie("userItems", userItems.toString(), "/", response);
+                        } catch (ItemException e) {
+                            e.printStackTrace();
+                            logger.error(e.getMessage());
+                        }
                     }
 
                     CookieHelper.createCookie("auth", String.valueOf(auth), "/", response);

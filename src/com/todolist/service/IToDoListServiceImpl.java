@@ -6,6 +6,7 @@ import com.todolist.exception.item.ItemException;
 import com.todolist.pojo.Item;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +66,7 @@ public class IToDoListServiceImpl implements IToDoListService {
 
             if (userItems == null || userItems.size() == 0) {
                 logger.info("no items were found for user: " + email);
+                return new ArrayList<>();
             }
             return userItems;
         } catch (ItemException e) {
