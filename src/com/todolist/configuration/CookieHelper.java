@@ -90,7 +90,7 @@ public final class CookieHelper {
     }
 
     /**
-     * clear cookie by name
+     * return list as json string
      * @param list of elements
      */
     public static String Jsonfy(List<?> list) {
