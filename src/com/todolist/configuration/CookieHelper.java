@@ -4,11 +4,16 @@ package com.todolist.configuration;
  * Created by Haimov on 19/02/2018.
  */
 
+import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * Cookie Helper for creating and editing user cookies
@@ -16,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public final class CookieHelper {
 
     private final static Logger logger = Logger.getLogger(CookieHelper.class);
+    private static Gson gson = new Gson();
     private final static int MAX_AGE_SECONDS = 24 * 60 * 60;
 
     /**
@@ -26,11 +32,18 @@ public final class CookieHelper {
      * @param response
      */
     public static void createCookie(String cookieName, String cookieValue, String cookiePath, HttpServletResponse response) {
-        Cookie cookie = new Cookie(cookieName, cookieValue);
-        cookie.setMaxAge(MAX_AGE_SECONDS);
-        cookie.setPath(cookiePath);
-        response.addCookie(cookie);
-        logger.debug("added new cookie: " + cookieName + " with val " + cookieValue);
+        Cookie cookie = null;
+        try {
+            cookie = new Cookie(cookieName, URLEncoder.encode(cookieValue, "UTF-8"));
+            cookie.setMaxAge(MAX_AGE_SECONDS);
+            cookie.setPath(cookiePath);
+            response.addCookie(cookie);
+            logger.debug("added new cookie: " + cookieName + " with val " + cookieValue);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            logger.error("error with saving user items in cookie");
+            logger.error(e.getMessage());
+        }
     }
 
     /**
@@ -45,12 +58,18 @@ public final class CookieHelper {
         if (requestCookies != null) {
             for (Cookie c : requestCookies) {
                 if (c.getName().equals(cookieName)) {
-                    cookieValue = c.getValue();
-                    logger.debug("got cookie: " + cookieName + " with val " + cookieValue);
+                    try {
+                        cookieValue = URLDecoder.decode(c.getValue(), "UTF-8");
+                        logger.debug("got cookie: " + cookieName + " with val " + cookieValue);
+                        return cookieValue;
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
-        return cookieValue;
+        return "";
     }
 
     /**
@@ -68,5 +87,13 @@ public final class CookieHelper {
                 logger.debug("cleared cookie: " + cookieName);
             }
         }
+    }
+
+    /**
+     * clear cookie by name
+     * @param list of elements
+     */
+    public static String Jsonfy(List<?> list) {
+        return gson.toJson(list);
     }
 }

@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -140,7 +141,7 @@ public class toDoServletController extends HttpServlet {
                                 throw new ItemException("failed to get Items");
                             }
 
-                            CookieHelper.createCookie("userItems", userItems.toString(), "/", response);
+                            CookieHelper.createCookie("userItems", CookieHelper.Jsonfy(userItems), "/", response);
                         } catch (ItemException e) {
                             e.printStackTrace();
                             logger.error(e.getMessage());

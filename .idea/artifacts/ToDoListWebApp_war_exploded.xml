@@ -19,6 +19,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/resources/javassist-3.12.1.GA.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/resources/jta-1_1.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/resources/antlr-3.1.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/resources/gson-2.2.2.jar" />
         </element>
       </element>
     </root>
