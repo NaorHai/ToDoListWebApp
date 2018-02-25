@@ -4,7 +4,10 @@ package com.todolist.controller;
  */
 
 import com.todolist.configuration.CookieHelper;
+import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
+import com.todolist.pojo.Item;
+import com.todolist.pojo.User;
 import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;
 import com.todolist.service.UserService;
@@ -67,8 +70,8 @@ public class toDoServletController extends HttpServlet {
             else if (path.equals("loginAccount")) path = "/loginAccount";
             else if (path.equals("goToRegister")) path = "/goToRegister";
             else if (path.equals("registerAccount")) path = "/registerAccount";
-//            else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
-//            else if (path.equals("createTask")) path = "/createTask";
+            else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
+            else if (path.equals("createTask")) path = "/createTask";
 
         }
         switch (path) {
@@ -102,27 +105,36 @@ public class toDoServletController extends HttpServlet {
                 dispatcher.forward(request, response);
                 break;
 
-//
-//            case "/goToCreateTask":
-//                route = "/createTask.jsp";
-//                dispatcher = getServletContext().getRequestDispatcher(route);
-//                dispatcher.forward(request, response);
-//                break;
+
+            case "/goToCreateTask":
+                route = "/createTask.jsp";
+                dispatcher = getServletContext().getRequestDispatcher(route);
+                dispatcher.forward(request, response);
+                break;
 
             case "/loginAccount":
+                User user;
                 email = request.getParameter("email");
                 password = request.getParameter("password");
 
                 try {
-                    if (email.equals("") || password.equals("")) {
-                        throw new UserException("empty credentials");
-                    }
-                    boolean isAuthenticated = userService.checkUserLogin(email, password);
-                    CookieHelper.createCookie("email", email, "/", response);
-                    CookieHelper.createCookie("auth", String.valueOf(isAuthenticated), "/", response);
-                    logger.info("Login  user " + email + " success: " + isAuthenticated);
+                    user = userService.checkUserLogin(email, password);
 
-                    route = (isAuthenticated) ? "/goToMyZone" : "/goToLogin";
+                    if (user == null) {
+                        auth = false;
+                        logger.info("credentials are invalid: user: " + email + " with pass: " + password);
+                    }
+                    else {
+                        auth = true;
+                        CookieHelper.createCookie("email", email, "/", response);
+                        CookieHelper.createCookie("firstName", user.getFirstName(), "/", response);
+                        CookieHelper.createCookie("lastName", user.getLastName(), "/", response);
+                    }
+
+                    CookieHelper.createCookie("auth", String.valueOf(auth), "/", response);
+                    logger.info("Login user " + email + " success: " + auth);
+
+                    route = (auth) ? "/goToMyZone" : "/goToLogin";
                     response.sendRedirect("/" + context + route);
                     break;
 
@@ -152,24 +164,21 @@ public class toDoServletController extends HttpServlet {
 
                 break;
 
-//            case "/createTask":
-//                title = request.getParameter("title");
-//                content = request.getParameter("content");
-//
-//                //TODO need to get user email and set it in the item constructor
-//
-//                email = "useddr@mail.com"; //TODO example
-//
-//                Item item = new Item(email, title, content);
-//
-//
-//                try {
-//                    iToDoListService.createItem(email, title, content);
-//                    logger.info("Creating a new user " + item.toString() + " success ");
-//                } catch (ItemException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
+            case "/createTask":
+                try {
+                    title = request.getParameter("title");
+                    content = request.getParameter("content");
+                    email = CookieHelper.getCookieValueByName("email", request);
+
+                    if (email == null) {
+                        throw new ItemException("user email is missing!");
+                    }
+
+                    iToDoListService.createItem(email, title, content);
+                } catch (ItemException e) {
+                    e.printStackTrace();
+                }
+                break;
 
 //            case "/login":
 //                try {

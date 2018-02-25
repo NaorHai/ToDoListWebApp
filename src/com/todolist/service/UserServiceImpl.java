@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService{
      * @throws UserException
      */
     @Override
-    public boolean checkUserLogin(String email, String password) throws UserException {
+    public User checkUserLogin(String email, String password) throws UserException {
         User user;
         try {
             Session session = HibernateHelper.getSession();
@@ -130,12 +130,12 @@ public class UserServiceImpl implements UserService{
                 throw new UserException("User not found!");
             }
 
-            return  (user.getPassword().equals(password));
+            return  (user.getPassword().equals(password)) ? user : null;
 
         } catch (UserException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            return false;
+            return null;
         }
     }
 

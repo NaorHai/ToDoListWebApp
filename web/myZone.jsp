@@ -31,5 +31,9 @@
 </head>
 <body>
 <h1>Welcome To My Zone!</h1>
+
+<form action = "" method = "post">
+  <input type="submit" class="btn-success" name="createTask" value="Create Task" />
+</form>
 </body>
 </html>
