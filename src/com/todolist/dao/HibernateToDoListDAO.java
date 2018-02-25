@@ -93,7 +93,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getItemsByUserId(String email) throws ItemException {
-        List<Item> items = null;
+        List<Item> items;
 
         try{
             session = HibernateHelper.getSession();
