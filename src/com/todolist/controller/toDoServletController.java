@@ -191,10 +191,13 @@ public class toDoServletController extends HttpServlet {
                         throw new ItemException("user email is missing!");
                     }
 
-                    iToDoListService.createItem(email, title, content);
+                    boolean create = iToDoListService.createItem(email, title, content);
+                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    response.sendRedirect("/" + context + route);
                 } catch (ItemException e) {
                     e.printStackTrace();
                 }
+
                 break;
 
 //            case "/login":

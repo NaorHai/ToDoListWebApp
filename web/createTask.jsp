@@ -106,7 +106,7 @@
       <div class="panel-title text-center">
         <h1 class="title">ToDo List</h1>
         <hr />
-        <h2 class="title">Register</h2>
+        <h2 class="title">Create Task</h2>
       </div>
     </div>
     <div class="main-login main-center">
