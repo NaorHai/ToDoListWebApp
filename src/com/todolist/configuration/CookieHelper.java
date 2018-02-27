@@ -75,6 +75,20 @@ public final class CookieHelper {
     }
 
     /**
+     * clear all user cookies
+     * @param request
+     * @param response
+     */
+    public static void clearAllUserCookies(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] requestCookies = request.getCookies();
+        for (Cookie c : requestCookies) {
+            c.setValue(null);
+            response.addCookie(c);
+            logger.debug("cleared user cookies");
+        }
+    }
+
+    /**
      * return list as json string
      * @param list of elements
      */
