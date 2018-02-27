@@ -6,13 +6,9 @@ package com.todolist.configuration;
 
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -33,17 +29,11 @@ public final class CookieHelper {
      */
     public static void createCookie(String cookieName, String cookieValue, String cookiePath, HttpServletResponse response) {
         Cookie cookie = null;
-        try {
-            cookie = new Cookie(cookieName, URLEncoder.encode(cookieValue, "UTF-8"));
-            cookie.setMaxAge(MAX_AGE_SECONDS);
-            cookie.setPath(cookiePath);
-            response.addCookie(cookie);
-            logger.debug("added new cookie: " + cookieName + " with val " + cookieValue);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            logger.error("error with saving user items in cookie");
-            logger.error(e.getMessage());
-        }
+        cookie = new Cookie(cookieName, cookieValue);
+        cookie.setMaxAge(MAX_AGE_SECONDS);
+        cookie.setPath(cookiePath);
+        response.addCookie(cookie);
+        logger.debug("added new cookie: " + cookieName + " with val " + cookieValue);
     }
 
     /**
@@ -53,19 +43,14 @@ public final class CookieHelper {
      * @return cookieValue Value of Cookie
      */
     public static String getCookieValueByName(String cookieName, HttpServletRequest request) {
-        String cookieValue = null;
+        String cookieValue;
         Cookie[] requestCookies = request.getCookies();
         if (requestCookies != null) {
             for (Cookie c : requestCookies) {
                 if (c.getName().equals(cookieName)) {
-                    try {
-                        cookieValue = URLDecoder.decode(c.getValue(), "UTF-8");
-                        logger.debug("got cookie: " + cookieName + " with val " + cookieValue);
-                        return cookieValue;
-
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    cookieValue = c.getValue();
+                    logger.debug("got cookie: " + cookieName + " with val " + cookieValue);
+                    return cookieValue;
                 }
             }
         }
