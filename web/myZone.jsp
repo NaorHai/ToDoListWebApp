@@ -191,9 +191,9 @@
                 email = ck.getValue();
               }
 			}
-            List<Item> userItems = iToDoListService.getItemsByUserId("pap@pap.com");
+            List<Item> userItems = iToDoListService.getItemsByUserId(email);
             out.print("Welcome, <b>" + firstName + " " +lastName + "</b><br>");
-            out.print("<a href='/todo/deleteUser?action/deleteUser&email="+"pap@pap.com"+"'>Delete this user</a>");
+            out.print("<a href='/todo/deleteUser?action/deleteUser&email="+email+"'>Delete this user</a>");
             if(userItems.size()==0){
 
               out.print("<h3>No task yet, Create a new one below</h3>");

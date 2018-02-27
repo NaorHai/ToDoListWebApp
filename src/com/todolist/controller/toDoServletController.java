@@ -224,7 +224,7 @@ public class toDoServletController extends HttpServlet {
                     }
 
                     boolean create= userService.deleteUserById(email);
-                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    route = (create) ? "/goToRegister" : "/goToRegister";
                     response.sendRedirect("/" + context + route);
                 } catch (UserException e) {
                     e.printStackTrace();
