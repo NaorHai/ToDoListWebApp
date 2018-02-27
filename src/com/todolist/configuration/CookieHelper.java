@@ -67,7 +67,9 @@ public final class CookieHelper {
         Cookie[] requestCookies = request.getCookies();
         for (Cookie c : requestCookies) {
             if (c.getName().equals(cookieName)) {
-                c.setValue(null);
+                c.setValue("");
+                c.setMaxAge(0);
+                c.setPath("/");
                 response.addCookie(c);
                 logger.debug("cleared cookie: " + cookieName);
             }
@@ -82,7 +84,9 @@ public final class CookieHelper {
     public static void clearAllUserCookies(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] requestCookies = request.getCookies();
         for (Cookie c : requestCookies) {
-            c.setValue(null);
+            c.setValue("");
+            c.setMaxAge(0);
+            c.setPath("/");
             response.addCookie(c);
             logger.debug("cleared user cookies");
         }
