@@ -114,7 +114,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="firstName" id="name"  placeholder="Enter your First Name"/>
+                            <input type="text" required class="form-control" name="firstName" id="name"  placeholder="Enter your First Name"/>
                         </div>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="lastName" id="username"  placeholder="Enter your Last Name"/>
+                            <input type="text" required class="form-control" name="lastName" id="username"  placeholder="Enter your Last Name"/>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                            <input type="text" required class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                            <input type="password" required class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                            <input type="password" required class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
                         </div>
                     </div>
                 </div>

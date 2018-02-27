@@ -132,8 +132,11 @@
 
     }
 
-    .login-button{
-      margin-top: 5px;
+    #logout{
+      position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 16px;
     }
 .panelL {
   margin-bottom: 10px;
@@ -162,9 +165,10 @@
   <div class="row main">
     <div class="panel-heading">
       <div class="panel-title text-center">
-        <h1 class="title">My Zone</h1>
+          <a href="todo/logOut" id="logout">LogOut</a>
+          <h1 class="title">My Zone</h1>
         <hr />
-        <h2 class="title">Your Task, Create, Delete etc.</h2>
+        <h2 class="title">Your Tasks, Create, Update, Delete etc.</h2>
       </div>
     </div>
     <div class="main-login main-center">
@@ -196,11 +200,11 @@
             out.print("<a href='/todo/deleteUser?action/deleteUser&email="+email+"'>Delete this user</a>");
             if(userItems.size()==0){
 
-              out.print("<h3>No task yet, Create a new one below</h3>");
+              out.print("<h3>No tasks have been defined yet.</h3>");
 
             }else{
 
-              out.print("<h3><b><u>Here is Your Tasks</b></u></h3>");
+              out.print("<h3><b><u>My Todo List:</b></u></h3>");
               for (int i = 0; i < userItems.size(); i++) {
 
                 out.print("<div class=panelL>");
