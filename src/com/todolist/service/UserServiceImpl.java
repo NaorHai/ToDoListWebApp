@@ -1,8 +1,11 @@
 package com.todolist.service;
 
 import com.todolist.configuration.HibernateHelper;
+import com.todolist.dao.HibernateToDoListDAO;
+import com.todolist.dao.IToDoListDAO;
 import com.todolist.dao.UserDAO;
 import com.todolist.dao.UserDAOImpl;
+import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
 import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
@@ -17,6 +20,7 @@ public class UserServiceImpl implements UserService{
 
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
     private UserDAO userDAO = UserDAOImpl.getInstance();
+    private IToDoListDAO iToDoListDAO = HibernateToDoListDAO.getInstance();
 
     public UserServiceImpl() {}
 
@@ -95,6 +99,13 @@ public class UserServiceImpl implements UserService{
         }
 
         try {
+            try {
+                iToDoListDAO.deleteAllItemsByUserId(email);
+            } catch (ItemException e) {
+                e.printStackTrace();
+                logger.error(e.getMessage());
+                return false;
+            }
             userToDelete = userDAO.getUserById(email);
 
             if(userToDelete == null) {
