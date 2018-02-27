@@ -57,7 +57,7 @@ public class toDoServletController extends HttpServlet {
         String route;
         String context = "todo";
         boolean auth;
-        String email, password, firstName, lastName, title, content;
+        String email, password, firstName, lastName, title, content, taskId;
         String path = request.getParameter("action");
         if (path == null) {
 
@@ -65,6 +65,8 @@ public class toDoServletController extends HttpServlet {
             path = request.getPathInfo();
             if (path.contains("login")) path = "/goToLogin";
             else if (path.contains("register")) path = "/goToRegister";
+            else if (path.contains("deleteTask")) path = "/deleteTask";
+            else if (path.contains("deleteUser")) path = "/deleteUser";
 
         } else {
 
@@ -75,6 +77,8 @@ public class toDoServletController extends HttpServlet {
             else if (path.equals("registerAccount")) path = "/registerAccount";
             else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
             else if (path.equals("createTask")) path = "/createTask";
+            else if (path.equals("deleteTask")) path = "/deleteTask";
+            else if (path.equals("deleteUser")) path = "/deleteUser";
 
         }
         switch (path) {
@@ -195,6 +199,40 @@ public class toDoServletController extends HttpServlet {
                     route = (create) ? "/goToMyZone" : "/goToRegister";
                     response.sendRedirect("/" + context + route);
                 } catch (ItemException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "/deleteTask":
+                try {
+                    taskId = request.getParameter("taskId");
+
+
+                    if (taskId == null) {
+                        throw new ItemException("user email is missing!");
+                    }
+
+                    boolean create= iToDoListService.deleteItemById(taskId);
+                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    response.sendRedirect("/" + context + route);
+                } catch (ItemException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "/deleteUser":
+                try {
+                    email = request.getParameter("email");
+
+
+                    if (email == null) {
+                        throw new UserException("user email is missing!");
+                    }
+
+                    boolean create= userService.deleteUserById(email);
+                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    response.sendRedirect("/" + context + route);
+                } catch (UserException e) {
                     e.printStackTrace();
                 }
 

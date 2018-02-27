@@ -47,6 +47,8 @@
 <%@ page import="com.todolist.pojo.Item" %>
 <%@ page import="com.todolist.service.IToDoListService" %>
 <%@ page import="com.todolist.service.IToDoListServiceImpl" %>
+<%@ page import="com.todolist.service.UserService" %>
+<%@ page import="com.todolist.service.UserServiceImpl" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -172,31 +174,45 @@
           <%
             Cookie[] cookie = request.getCookies();
 
-//			int val=0;
-//			for(Cookie ck:cookie)
-//			{
-//				out.print("cookie number "+val + ck.getValue()+"<br>");
-//				val++	;
-//			}
-
-            out.print("Welcome, <b>" + cookie[1].getValue() + " " +cookie[2].getValue() + "</b><br>");
-            out.print("<h3><b><u>Here is Your Tasks</b></u></h3>");
-
             IToDoListService iToDoListService = new IToDoListServiceImpl();
-            String email = cookie[0].getValue();
+            UserService userService = new UserServiceImpl();
+
+            String email = "", firstName = "", lastName="";
+
+			int val=0;
+			for(Cookie ck:cookie) {
+			    if(ck.getName().equals("firstName")){
+			        firstName = ck.getValue();
+                }
+                if(ck.getName().equals("lastName")){
+                lastName = ck.getValue();
+              }
+              if(ck.getName().equals("email")){
+                email = ck.getValue();
+              }
+			}
             List<Item> userItems = iToDoListService.getItemsByUserId("pap@pap.com");
+            out.print("Welcome, <b>" + firstName + " " +lastName + "</b><br>");
+            out.print("<a href='/todo/deleteUser?action/deleteUser&email="+"pap@pap.com"+"'>Delete this user</a>");
+            if(userItems.size()==0){
 
-            for (int i = 0; i < userItems.size(); i++) {
+              out.print("<h3>No task yet, Create a new one below</h3>");
 
-              out.print("<div class=panelL>");
-                out.print("<div class=panelHeadHead>"+ userItems.get(i).getTitle()+ "</div>");
-                out.print("<div class" + "="+"panel-body>"+ userItems.get(i).getContent()+ "</div>");
-                out.print("<div class" + "="+"panel-footer></div>");
-              out.print("</div>");
+            }else{
 
+              out.print("<h3><b><u>Here is Your Tasks</b></u></h3>");
+              for (int i = 0; i < userItems.size(); i++) {
+
+                out.print("<div class=panelL>");
+                  out.print("<div class=panelHeadHead>"+ userItems.get(i).getTitle()+ "</div>");
+                  out.print("<div class" + "="+"panel-body>"+ userItems.get(i).getContent()+ "</div>");
+                  out.print("<div class" + "="+"panel-footer>");
+                out.print("<a href='/todo/deleteTask?action/deleteTask&taskId="+userItems.get(i).getItemId()+"'>Delete this task</a>");
+                out.print("</div>");
+                out.print("</div>");
+
+              }
             }
-
-
 
           %>
         </blockquote>
