@@ -133,19 +133,6 @@ public class toDoServletController extends HttpServlet {
                         CookieHelper.createCookie("email", email, "/", response);
                         CookieHelper.createCookie("firstName", user.getFirstName(), "/", response);
                         CookieHelper.createCookie("lastName", user.getLastName(), "/", response);
-
-                        try {
-                            userItems =  iToDoListService.getItemsByUserId(email);
-
-                            if (userItems == null) {
-                                throw new ItemException("failed to get Items");
-                            }
-
-                            CookieHelper.createCookie("userItems", CookieHelper.Jsonfy(userItems), "/", response);
-                        } catch (ItemException e) {
-                            e.printStackTrace();
-                            logger.error(e.getMessage());
-                        }
                     }
 
                     CookieHelper.createCookie("auth", String.valueOf(auth), "/", response);
