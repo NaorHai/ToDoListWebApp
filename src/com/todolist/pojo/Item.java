@@ -1,9 +1,9 @@
 package com.todolist.pojo;
 
 import org.hibernate.annotations.Entity;
-
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -44,6 +44,8 @@ public class Item implements Serializable {
         this.itemId = itemId;
     }
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public String getEmail() {
         return email;
     }

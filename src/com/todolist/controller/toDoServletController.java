@@ -6,7 +6,6 @@ package com.todolist.controller;
 import com.todolist.configuration.CookieHelper;
 import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
-import com.todolist.pojo.Item;
 import com.todolist.pojo.User;
 import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;
@@ -22,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -81,6 +78,10 @@ public class toDoServletController extends HttpServlet {
             else if (path.equals("deleteUser")) path = "/deleteUser";
 
         }
+
+        //getting user authorization
+        auth = CookieHelper.getCookieValueByName("auth", request).equalsIgnoreCase("true");
+
         switch (path) {
             default:case "/":
                 try {
@@ -107,21 +108,27 @@ public class toDoServletController extends HttpServlet {
                 break;
 
             case "/goToMyZone":
-                route = "/myZone.jsp";
+                route = (auth) ? "/myZone.jsp" : "/login.jsp" ;
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
 
 
             case "/goToCreateTask":
-                route = "/createTask.jsp";
+                route =  (auth) ? "/createTask.jsp" : "/login.jsp";
+                dispatcher = getServletContext().getRequestDispatcher(route);
+                dispatcher.forward(request, response);
+                break;
+
+            case "/logOut":
+                route = "/login.jsp";
+                CookieHelper.clearAllUserCookies(request, response);
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
 
             case "/loginAccount":
                 User user;
-                List<Item> userItems;
                 email = request.getParameter("email");
                 password = request.getParameter("password");
 
@@ -137,19 +144,6 @@ public class toDoServletController extends HttpServlet {
                         CookieHelper.createCookie("email", email, "/", response);
                         CookieHelper.createCookie("firstName", user.getFirstName(), "/", response);
                         CookieHelper.createCookie("lastName", user.getLastName(), "/", response);
-
-                        try {
-                            userItems =  iToDoListService.getItemsByUserId(email);
-
-                            if (userItems == null) {
-                                throw new ItemException("failed to get Items");
-                            }
-
-                            CookieHelper.createCookie("userItems", CookieHelper.Jsonfy(userItems), "/", response);
-                        } catch (ItemException e) {
-                            e.printStackTrace();
-                            logger.error(e.getMessage());
-                        }
                     }
 
                     CookieHelper.createCookie("auth", String.valueOf(auth), "/", response);
