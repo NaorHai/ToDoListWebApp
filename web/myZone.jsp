@@ -97,7 +97,7 @@
                 <a href="todo/logOut" id="logout">LogOut</a>
                 <h1 class="title">My Zone</h1>
                 <hr/>
-                <h2 class="title">Your Tasks, Create, Update, Delete etc.</h2>
+                <h2 class="title">Your Items, Create, Edit, Delete etc.</h2>
             </div>
         </div>
         <div class="main-login main-center">
@@ -125,7 +125,7 @@
                         out.print("<a href='/todo/deleteUser?action/deleteUser&email=" + email + "'>Delete this user</a>");
                         if (userItems.size() == 0) {
 
-                            out.print("<h3>No tasks have been defined yet.</h3>");
+                            out.print("<h3>No Items have been defined yet.</h3>");
 
                         } else {
 
@@ -136,9 +136,9 @@
                                 out.print("<div class='panel-heading'>" + userItems.get(i).getTitle() +"<span class='creationDate'>Created at: "+ userItems.get(i).getCreationDate()+"</span></div>");
                                 out.print("<div class='panel-body'>" + userItems.get(i).getContent() + "</div>");
                                 out.print("<div class='panel-footer'>");
-                                out.print("<a href='/todo/goToUpdateTask?action/goToUpdateTask&taskId=" + userItems.get(i).getItemId()
+                                out.print("<a href='/todo/goToUpdateItem?action/goToUpdateItem&itemId=" + userItems.get(i).getItemId()
                                         + "&title=" + userItems.get(i).getTitle() + "&content=" + userItems.get(i).getContent() + "'>Edit</a>");
-                                out.print("<a class='DeleteButton' href='/todo/deleteTask?action/deleteTask&taskId=" + userItems.get(i).getItemId() + "'>Delete</a>");
+                                out.print("<a class='DeleteButton' href='/todo/deleteItem?action/deleteItem&itemId=" + userItems.get(i).getItemId() + "'>Delete</a>");
                                 out.print("</div>");
                                 out.print("</div>");
                             }
@@ -146,7 +146,7 @@
                     %>
                 </blockquote>
                 <div class="form-group ">
-                    <button name="action" value="goToCreateTask" class="btn btn-primary btn-lg btn-block">Create Task</button>
+                    <button name="action" value="goToCreateItem" class="btn btn-primary btn-lg btn-block">Create Item</button>
                 </div>
             </form>
         </div>

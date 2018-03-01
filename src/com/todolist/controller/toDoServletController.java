@@ -49,7 +49,7 @@ public class toDoServletController extends HttpServlet {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher = null;
         boolean auth;
-        String email, password, firstName, lastName, title, content, taskId,route, context = "todo";
+        String email, password, firstName, lastName, title, content, itemId,route, context = "todo";
         String path = request.getParameter("action");
         if (path == null) {
 
@@ -57,10 +57,10 @@ public class toDoServletController extends HttpServlet {
             path = request.getPathInfo();
             if (path.contains("login")) path = "/goToLogin";
             else if (path.contains("register")) path = "/goToRegister";
-            else if (path.contains("deleteTask")) path = "/deleteTask";
+            else if (path.contains("deleteItem")) path = "/deleteItem";
             else if (path.contains("deleteUser")) path = "/deleteUser";
-            else if (path.contains("updateTask")) path = "/updateTask";
-            else if (path.contains("goToUpdateTask")) path = "/goToUpdateTask";
+            else if (path.contains("updateItem")) path = "/updateItem";
+            else if (path.contains("goToUpdateItem")) path = "/goToUpdateItem";
 
         } else {
 
@@ -69,12 +69,12 @@ public class toDoServletController extends HttpServlet {
             else if (path.equals("loginAccount")) path = "/loginAccount";
             else if (path.equals("goToRegister")) path = "/goToRegister";
             else if (path.equals("registerAccount")) path = "/registerAccount";
-            else if (path.equals("goToCreateTask")) path = "/goToCreateTask";
-            else if (path.equals("createTask")) path = "/createTask";
-            else if (path.equals("deleteTask")) path = "/deleteTask";
+            else if (path.equals("goToCreateItem")) path = "/goToCreateItem";
+            else if (path.equals("createItem")) path = "/createItem";
+            else if (path.equals("deleteItem")) path = "/deleteItem";
             else if (path.equals("deleteUser")) path = "/deleteUser";
-            else if (path.equals("updateTask")) path = "/updateTask";
-            else if (path.equals("goToUpdateTask")) path = "/goToUpdateTask";
+            else if (path.equals("updateItem")) path = "/updateItem";
+            else if (path.equals("goToUpdateItem")) path = "/goToUpdateItem";
 
         }
 
@@ -84,8 +84,7 @@ public class toDoServletController extends HttpServlet {
         switch (path) {
             default:case "/":
                 try {
-//                    route = (auth) ? "/login.jsp" : "/login.jsp";
-                    route = "/login.jsp";
+                    route = (auth) ? "/myZone.jsp" : "/login.jsp";
                     dispatcher = getServletContext().getRequestDispatcher(route);
                     dispatcher.forward(request, response);
                     break;
@@ -113,8 +112,8 @@ public class toDoServletController extends HttpServlet {
                 break;
 
 
-            case "/goToCreateTask":
-                route =  (auth) ? "/createTask.jsp" : "/login.jsp";
+            case "/goToCreateItem":
+                route =  (auth) ? "/createItem.jsp" : "/login.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
@@ -125,10 +124,10 @@ public class toDoServletController extends HttpServlet {
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
-            case "/goToUpdateTask":
-                taskId = request.getParameter("taskId");
-                CookieHelper.createCookie("taskId", taskId, "/", response);
-                route = "/updateTask.jsp";
+            case "/goToUpdateItem":
+                itemId = request.getParameter("itemId");
+                CookieHelper.createCookie("itemId", itemId, "/", response);
+                route = "/updateItem.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
@@ -185,7 +184,7 @@ public class toDoServletController extends HttpServlet {
 
                 break;
 
-            case "/createTask":
+            case "/createItem":
                 try {
                     title = request.getParameter("title");
                     content = request.getParameter("content");
@@ -203,15 +202,15 @@ public class toDoServletController extends HttpServlet {
                 }
 
                 break;
-            case "/deleteTask":
+            case "/deleteItem":
                 try {
 
-                    taskId = request.getParameter("taskId");
-                    if (taskId == null) {
+                    itemId = request.getParameter("itemId");
+                    if (itemId == null) {
                         throw new ItemException("user email is missing!");
                     }
 
-                    boolean deleteItem= iToDoListService.deleteItemById(taskId);
+                    boolean deleteItem= iToDoListService.deleteItemById(itemId);
                     route = (deleteItem) ? "/goToMyZone" : "/goToMyZone";
                     response.sendRedirect("/" + context + route);
                 } catch (ItemException e) {
@@ -234,17 +233,17 @@ public class toDoServletController extends HttpServlet {
                 }
 
                 break;
-            case "/updateTask":
+            case "/updateItem":
                 try {
                     title = request.getParameter("title");
                     content = request.getParameter("content");
                     email = CookieHelper.getCookieValueByName("email", request);
-                    taskId = CookieHelper.getCookieValueByName("taskId", request);
+                    itemId = CookieHelper.getCookieValueByName("itemId", request);
                     if (email == null) {
                         throw new ItemException("user email is missing!");
                     }
-                    boolean updateItem = iToDoListService.updateItem(email, title, content, taskId);
-                    route = (updateItem) ? "/goToMyZone" : "/goToRegister";
+                    boolean updateItem = iToDoListService.updateItem(email, title, content, itemId);
+                    route = (updateItem) ? "/goToMyZone" : "/goToMyZone";
                     response.sendRedirect("/" + context + route);
                 } catch (Exception e) {
                     e.printStackTrace();

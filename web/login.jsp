@@ -116,13 +116,14 @@
                 </div>
 
                 <div class="form-group ">
-                    <button type="submit"  name="action" value="loginAccount" class="btn btn-primary btn-lg btn-block login-button">Login</button>
+                    <button type="submit" name="action" value="loginAccount" class="btn btn-primary btn-lg btn-block login-button">Login</button>
                 </div>
 
-                <div class="form-group ">
-                    <button name="action" value="goToRegister" class="btn btn-link go-to-register-button">Register</button>
-                </div>
+
             </form>
+            <div class="form-group ">
+            <a href="/todo/goToRegister?action/goToRegister" name="action" value="goToRegister" class="btn btn-link go-to-register-button">Register</a>
+        </div>
         </div>
     </div>
 </div>

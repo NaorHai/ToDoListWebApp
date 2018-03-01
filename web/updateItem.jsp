@@ -5,13 +5,15 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
+<!-- ---- Include the above in your HEAD tag -------- -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 
   <title>ToDo App</title>
   <style type="text/css">
@@ -73,24 +75,25 @@
   </style>
 </head>
 <body>
+
 <div class="container">
   <div class="row main">
     <div class="panel-heading">
       <div class="panel-title text-center">
         <h1 class="title">ToDo List</h1>
         <hr />
-        <h2 class="title">Create Task</h2>
+        <h2 class="title">Update Item</h2>
       </div>
     </div>
     <div class="main-login main-center">
-      <form class="form-horizontal" method="post" action="/todo/createTask/">
+      <form class="form-horizontal" method="post" action="/todo/updateItem/">
 
         <div class="form-group">
           <label for="title" class="cols-sm-2 control-label">Title</label>
           <div class="cols-sm-10">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" name="title" id="title"  placeholder="Enter your Title"/>
+              <input type="text" class="form-control" name="title" id="title" value="<%= request.getParameter("title") %>"  placeholder="Enter your Title"/>
             </div>
           </div>
         </div>
@@ -100,18 +103,19 @@
           <div class="cols-sm-10">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" name="content" id="content"  placeholder="Enter your Content"/>
+              <input type="text" class="form-control" name="content" id="content" value="<%= request.getParameter("content") %>" placeholder="Enter your Content"/>
             </div>
           </div>
         </div>
 
         <div class="form-group ">
-          <button type="submit" name="action" value="createTask" class="btn btn-primary btn-lg btn-block">Create</button>
+          <button type="submit" name="action" value="updateItem" class="btn btn-primary btn-lg btn-block">Update</button>
         </div>
 
       </form>
     </div>
   </div>
 </div>
+
 </body>
 </html>

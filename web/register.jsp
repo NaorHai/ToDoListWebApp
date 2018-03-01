@@ -137,23 +137,13 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" required class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group ">
                     <button type="submit" name="action" value="registerAccount" class="btn btn-primary btn-lg btn-block register-button">Register</button>
                 </div>
-                <div class="form-group ">
-                    <button name="action" value="goToLogin" class="btn btn-link go-to-login-button">Login</button>
-                </div>
             </form>
+                <div class="form-group ">
+                    <a href="/todo/goToLogin?action/goToLogin" name="action" value="goToLogin" class="btn btn-link go-to-login-button">Login</a>
+                </div>
         </div>
     </div>
 </div>
