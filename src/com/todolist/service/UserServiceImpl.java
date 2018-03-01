@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
 
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
     private UserDAO userDAO = UserDAOImpl.getInstance();
-    private IToDoListDAO iToDoListDAO = HibernateToDoListDAO.getInstance();
+    private IToDoListService iToDoListService = new IToDoListServiceImpl();
 
     public UserServiceImpl() {}
 
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService{
 
         try {
             try {
-                iToDoListDAO.deleteAllItemsByUserId(email);
+                iToDoListService.deleteAllItemsByUserId(email);
             } catch (ItemException e) {
                 e.printStackTrace();
                 logger.error(e.getMessage());
@@ -133,6 +133,11 @@ public class UserServiceImpl implements UserService{
         User user;
         try {
             Session session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new UserException("could not open session");
+            }
+
             session.beginTransaction();
 
             user = userDAO.getUserById(email);

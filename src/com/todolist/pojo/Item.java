@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * Created by Papushe on 14/12/2017.
+ * Item Entity
  */
 @Entity
 @Table(name="Items")

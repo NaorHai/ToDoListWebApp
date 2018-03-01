@@ -17,27 +17,30 @@ public class UserDAOImpl implements UserDAO {
     private static UserDAO instance;
     private Session session;
 
-    private UserDAOImpl() {}
+    private UserDAOImpl() {
+    }
 
     /**
      * returns a singleton object which implements UserDAO interface
      * lazy initialization
-     * */
+     */
     public static synchronized UserDAO getInstance() {
         if (instance == null) {
             return new UserDAOImpl();
         }
         return instance;
     }
+
     /**
      * Save or update entity
+     *
      * @param user
      * @throws UserException
      */
     @Override
     public void saveOrUpdate(User user) throws UserException {
 
-        try{
+        try {
             session = HibernateHelper.getSession();
 
             if (session == null) {
@@ -48,26 +51,28 @@ public class UserDAOImpl implements UserDAO {
 
             session.saveOrUpdate(user);
             session.getTransaction().commit();
-            logger.info("User with id " + user.getEmail() +" was saved successfully");
-        }catch (Exception e){
-            if(session.getTransaction() != null){
+            logger.info("User with id " + user.getEmail() + " was saved successfully");
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             logger.error("Failed to save a user " + user.toString());
             logger.error(e.getStackTrace());
             throw new UserException(e.getMessage(), e);
-        }finally {
+        } finally {
             session.close();
         }
     }
+
     /**
      * Delete entity
+     *
      * @param user
      * @throws UserException
      */
     @Override
     public void deleteUser(User user) throws UserException {
-        try{
+        try {
             session = HibernateHelper.getSession();
 
             if (session == null) {
@@ -79,19 +84,21 @@ public class UserDAOImpl implements UserDAO {
             session.delete(user);
             session.getTransaction().commit();
             logger.info("User with id: " + user.getEmail() + " was deleted successfully");
-        }catch (Exception e){
-            if(session.getTransaction() != null){
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             logger.error("Failed to delete a user with id: " + user);
             logger.error(e.getStackTrace());
             throw new UserException(e.getMessage(), e);
-        }finally {
+        } finally {
             session.close();
         }
     }
+
     /**
      * Get entity by id
+     *
      * @param email
      * @throws UserException
      */
@@ -99,7 +106,7 @@ public class UserDAOImpl implements UserDAO {
     public User getUserById(String email) throws UserException {
         User user;
 
-        try{
+        try {
             session = HibernateHelper.getSession();
 
             if (session == null) {
@@ -108,19 +115,19 @@ public class UserDAOImpl implements UserDAO {
 
             session.beginTransaction();
 
-            user = (User)session.get(User.class, email);
+            user = (User) session.get(User.class, email);
             session.getTransaction().commit();
             if (user == null) {
                 throw new UserException("User: " + email + " not found");
             }
-        }catch (UserException e){
-            if(session.getTransaction() != null){
+        } catch (UserException e) {
+            if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
             logger.error("Failed to get a user with id: " + email);
             logger.error(e.getStackTrace());
             throw new UserException(e.getMessage(), e);
-        }finally {
+        } finally {
             session.close();
         }
         return user;

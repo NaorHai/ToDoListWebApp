@@ -48,10 +48,11 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * Create new Item
+     * Update Item
      * @param email
      * @param title
      * @param content
+     * @param itemId
      * @throws ItemException
      */
     @Override
@@ -83,7 +84,7 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * Get item by user email
+     * Get item by user id
      * @param email
      * @throws ItemException
      */
@@ -141,7 +142,7 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
-     * Delete all items by user email
+     * Delete all items by user id
      * @param email
      * @throws ItemException
      */

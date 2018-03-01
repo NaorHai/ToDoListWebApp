@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 /**
  * Created by Papushe on 14/12/2017.
+ * User Entity
  */
 @Entity
 @Table(name="Users")

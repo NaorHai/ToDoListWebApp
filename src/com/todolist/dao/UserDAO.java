@@ -6,7 +6,7 @@ import com.todolist.pojo.User;
 
 /**
  * Created by Haimov on 21/12/2017.
- * UserDao interface represents DB operations on user entity
+ * UserDao interface represents DB operations on User entity
  */
 public interface UserDAO {
     void saveOrUpdate(User user) throws UserException;

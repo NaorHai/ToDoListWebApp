@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Created by Haimov on 17/01/2018.
- * IToDoListService interface represents item CRUD operations
+ * IToDoListService interface represents item CRUD operations service
  */
 public interface IToDoListService {
     boolean createItem(String email, String title, String content) throws ItemException;
