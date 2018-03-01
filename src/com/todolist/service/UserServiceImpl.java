@@ -143,7 +143,8 @@ public class UserServiceImpl implements UserService{
             user = userDAO.getUserById(email);
 
             if (user == null) {
-                throw new UserException("User not found!");
+                logger.error("User not found with id: " + email);
+                return null;
             }
 
             return  (user.getPassword().equals(password)) ? user : null;
