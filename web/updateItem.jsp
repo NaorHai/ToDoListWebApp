@@ -94,7 +94,7 @@
                     <label for="title" class="cols-sm-2 control-label">Title</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-sticky-note fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="title" id="title"
                                    value="<%= request.getParameter("title") %>" placeholder="Enter your Title"/>
                         </div>
@@ -105,7 +105,7 @@
                     <label for="content" class="cols-sm-2 control-label">Content</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-server fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="content" id="content"
                                    value="<%= request.getParameter("content") %>" placeholder="Enter your Content"/>
                         </div>

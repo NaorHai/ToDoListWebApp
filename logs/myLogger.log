@@ -1,8 +1,0 @@
-2018-03-01 12:08:06 INFO  Main:25 - hiii my first log
-2018-03-01 12:08:06 ERROR Main:26 - error
-2018-03-01 12:08:07 INFO  UserDAOImpl:54 - User with id sdf was saved successfully
-2018-03-01 12:08:07 INFO  UserServiceImpl:37 - created a new user successfully: User{, email='sdf', firstName='sdfg', lastName='fgh', creationDate=2018-03-01}
-2018-03-01 12:08:07 INFO  Main:51 - Creating a new user User{, email='useddr@mail.com', firstName='firstff', lastName='lastfff', creationDate=2018-03-01} success: 
-2018-03-01 12:08:07 INFO  HibernateToDoListDAO:57 - Item with id 0fb1bf3a-e71f-44df-84e9-edff22c504fc was saved successfully
-2018-03-01 12:08:07 INFO  IToDoListServiceImpl:43 - created a new item successfully: Item{itemId=0fb1bf3a-e71f-44df-84e9-edff22c504fc, userId=useddr@mail.com, title='dsfs', content='das', creationDate=2018-03-01}
-2018-03-01 12:08:07 INFO  Main:60 - Creating a new item Item{itemId=ab03a5cf-bd78-46eb-8b23-9e97048d76e4, userId=useddr@mail.com, title='title', content='content of item', creationDate=2018-03-01} success:
