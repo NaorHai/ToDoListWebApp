@@ -4,7 +4,6 @@ package com.todolist.configuration;
  * Created by Haimov on 19/02/2018.
  */
 
-import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 public final class CookieHelper {
 
     private final static Logger logger = Logger.getLogger(CookieHelper.class);
-    private static Gson gson = new Gson();
     private final static int MAX_AGE_SECONDS = 24 * 60 * 60;
 
     private CookieHelper() {}
@@ -58,6 +56,25 @@ public final class CookieHelper {
             }
         }
         return "";
+    }
+
+    /**
+     * clear cookie by name
+     * @param cookieName name of needed cookie
+     * @param request
+     * @param response
+     */
+    public static void clearCookieByName(String cookieName, HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] requestCookies = request.getCookies();
+        for (Cookie c : requestCookies) {
+            if (c.getName().equals(cookieName)) {
+                c.setValue("");
+                c.setMaxAge(0);
+                c.setPath("/");
+                response.addCookie(c);
+                logger.debug("cleared cookie: " + cookieName);
+            }
+        }
     }
 
     /**
