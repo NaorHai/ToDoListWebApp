@@ -120,16 +120,13 @@ public class UserDAOImpl implements UserDAO {
             if (user == null) {
                 throw new UserException("User: " + email + " not found");
             }
+            return user;
         } catch (UserException e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get a user with id: " + email);
             logger.error(e.getStackTrace());
-            throw new UserException(e.getMessage(), e);
         } finally {
             session.close();
         }
-        return user;
+        return null;
     }
 }
