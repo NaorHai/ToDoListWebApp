@@ -1,6 +1,7 @@
 package com.todolist.dao;
 
 import com.todolist.configuration.HibernateHelper;
+import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
 import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
@@ -38,6 +39,11 @@ public class UserDAOImpl implements UserDAO {
 
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new UserException("could not open session");
+            }
+
             session.beginTransaction();
 
             session.saveOrUpdate(user);
@@ -63,6 +69,11 @@ public class UserDAOImpl implements UserDAO {
     public void deleteUser(User user) throws UserException {
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new UserException("could not open session");
+            }
+
             session.beginTransaction();
 
             session.delete(user);
@@ -90,6 +101,11 @@ public class UserDAOImpl implements UserDAO {
 
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new UserException("could not open session");
+            }
+
             session.beginTransaction();
 
             user = (User)session.get(User.class, email);

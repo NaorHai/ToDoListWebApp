@@ -55,18 +55,25 @@ public class IToDoListServiceImpl implements IToDoListService {
      * @throws ItemException
      */
     @Override
-    public boolean updateTask(String email, String title, String content,String taskId) throws ItemException {
+    public boolean updateItem(String email, String title, String content, String itemId) throws ItemException {
+        Item item;
         try {
-
-            if (email == null || email.equals("")) {
-                logger.error("invalid user id: " + email);
+            if (itemId == null || itemId.equals("")) {
+                logger.error("invalid user id: " + itemId);
                 throw new ItemException("invalid user id was provided!");
             }
 
-//            iToDoListDAO.getItemById(taskId);
-//
-//            iToDoListDAO.updateTask(item);
-//            logger.info("created a new item successfully: " + item.toString());
+            item = iToDoListDAO.getItemById(itemId);
+
+            if (item == null) {
+                throw new ItemException("could not find item: " + itemId  +" to update");
+            }
+
+            item. setTitle((title == null) ? item.getTitle() : title);
+            item. setContent((content == null) ? item.getContent() : title);
+
+            iToDoListDAO.saveOrUpdate(item);
+
             return true;
         } catch (ItemException e) {
             e.printStackTrace();

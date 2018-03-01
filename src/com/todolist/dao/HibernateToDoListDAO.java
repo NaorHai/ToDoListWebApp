@@ -5,6 +5,7 @@ import com.todolist.exception.item.ItemException;
 import com.todolist.pojo.Item;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionException;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
@@ -42,6 +43,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     public void saveOrUpdate(Item item) throws ItemException {
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new ItemException("could not open session");
+            }
+
             session.beginTransaction();
 
             session.saveOrUpdate(item);
@@ -63,30 +69,33 @@ public class HibernateToDoListDAO implements IToDoListDAO {
      * @param
      * @throws ItemException
      */
-    @Override
-    public boolean updateTask(Item item) throws ItemException {
-        try{
-            session = HibernateHelper.getSession();
-            session.beginTransaction();
-
-
-
-            session.saveOrUpdate(item);
-            session.getTransaction().commit();
-            logger.info("Item with id " + item.getItemId() +" was saved successfully");
-            return true;
-        }catch (Exception e){
-            if(session.getTransaction() != null){
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to save an item " + item.toString());
-            logger.error(e.getStackTrace());
-            return false;
-//            throw new ItemException(e.getMessage(), e);
-        }finally {
-            session.close();
-        }
-    }
+//    @Override
+//    public boolean updateItem(Item item) throws ItemException {
+//        try{
+//            session = HibernateHelper.getSession();
+//
+//            if (session == null) {
+//                throw new ItemException("could not open session");
+//            }
+//
+//            session.beginTransaction();
+//
+//            session.saveOrUpdate(item);
+//            session.getTransaction().commit();
+//            logger.info("Item with id " + item.getItemId() +" was saved successfully");
+//            return true;
+//        }catch (Exception e){
+//            if(session.getTransaction() != null){
+//                session.getTransaction().rollback();
+//            }
+//            logger.error("Failed to save an item " + item.toString());
+//            logger.error(e.getStackTrace());
+//            return false;
+////            throw new ItemException(e.getMessage(), e);
+//        }finally {
+//            session.close();
+//        }
+//    }
     /**
      * Deleting entity
      * @param item
@@ -96,6 +105,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     public void deleteItem(Item item) throws ItemException {
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new ItemException("could not open session");
+            }
+
             session.beginTransaction();
 
             session.delete(item);
@@ -125,6 +139,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new ItemException("could not open session");
+            }
+
             session.beginTransaction();
 
             items =  (List<Item>) session.createCriteria(Item.class)
@@ -157,6 +176,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         Item item;
         try {
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new ItemException("could not open session");
+            }
+
             session.beginTransaction();
 
             item = (Item) session.get(Item.class, itemId);
@@ -187,6 +211,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     public void deleteAllItemsByUserId(String userId) throws ItemException {
         try{
             session = HibernateHelper.getSession();
+
+            if (session == null) {
+                throw new ItemException("could not open session");
+            }
+
             session.beginTransaction();
 
             List<Item> itemsToDelete = (List<Item>) session.createCriteria(Item.class)
