@@ -2,7 +2,6 @@ package com.todolist.controller;
 /**
  * Created by Haimov on 14/12/2017.
  */
-
 import com.todolist.configuration.CookieHelper;
 import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+
 /**
  * Servlet implementation class toDoServlet
  */
@@ -30,9 +30,7 @@ public class toDoServletController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private final static Logger logger = Logger.getLogger(toDoServletController.class);
-
     private IToDoListService iToDoListService = new IToDoListServiceImpl();
-
     private UserService userService = new UserServiceImpl();
 
     /**
@@ -50,10 +48,8 @@ public class toDoServletController extends HttpServlet {
 
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher = null;
-        String route;
-        String context = "todo";
         boolean auth;
-        String email, password, firstName, lastName, title, content, taskId;
+        String email, password, firstName, lastName, title, content, taskId,route, context = "todo";
         String path = request.getParameter("action");
         if (path == null) {
 
@@ -130,6 +126,8 @@ public class toDoServletController extends HttpServlet {
                 dispatcher.forward(request, response);
                 break;
             case "/goToUpdateTask":
+                taskId = request.getParameter("taskId");
+                CookieHelper.createCookie("taskId", taskId, "/", response);
                 route = "/updateTask.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
@@ -198,7 +196,7 @@ public class toDoServletController extends HttpServlet {
                     }
 
                     boolean create = iToDoListService.createItem(email, title, content);
-                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    route = (create) ? "/goToMyZone" : "/goToMyZone";
                     response.sendRedirect("/" + context + route);
                 } catch (ItemException e) {
                     e.printStackTrace();
@@ -207,32 +205,29 @@ public class toDoServletController extends HttpServlet {
                 break;
             case "/deleteTask":
                 try {
+
                     taskId = request.getParameter("taskId");
-
-
                     if (taskId == null) {
                         throw new ItemException("user email is missing!");
                     }
 
-                    boolean create= iToDoListService.deleteItemById(taskId);
-                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    boolean deleteItem= iToDoListService.deleteItemById(taskId);
+                    route = (deleteItem) ? "/goToMyZone" : "/goToMyZone";
                     response.sendRedirect("/" + context + route);
                 } catch (ItemException e) {
                     e.printStackTrace();
                 }
-
                 break;
             case "/deleteUser":
                 try {
                     email = request.getParameter("email");
 
-
                     if (email == null) {
                         throw new UserException("user email is missing!");
                     }
 
-                    boolean create= userService.deleteUserById(email);
-                    route = (create) ? "/goToRegister" : "/goToRegister";
+                    boolean deleteUser= userService.deleteUserById(email);
+                    route = (deleteUser) ? "/goToRegister" : "/goToRegister";
                     response.sendRedirect("/" + context + route);
                 } catch (UserException e) {
                     e.printStackTrace();
@@ -243,85 +238,20 @@ public class toDoServletController extends HttpServlet {
                 try {
                     title = request.getParameter("title");
                     content = request.getParameter("content");
-//                    taskId = request.getParameter("taskId");
                     email = CookieHelper.getCookieValueByName("email", request);
                     taskId = CookieHelper.getCookieValueByName("taskId", request);
                     if (email == null) {
                         throw new ItemException("user email is missing!");
                     }
-//
-                    boolean create = iToDoListService.updateItem(email, title, content, taskId);
-                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    boolean updateItem = iToDoListService.updateItem(email, title, content, taskId);
+                    route = (updateItem) ? "/goToMyZone" : "/goToRegister";
                     response.sendRedirect("/" + context + route);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 break;
-//            case "/login":
-//                try {
-////                    if (auth) {
-//                    dispatcher = getServletContext().getRequestDispatcher("/createTask.jsp");
-//                    dispatcher.forward(request, response);
-////                    }
-//
-//                    String email = request.getParameter("email");
-//                    String password = request.getParameter("password");
-//
-//                    auth = userService.checkUserLogin(email, password);
-//                    request.setAttribute("auth", auth);
-//                    CookieHelper.createCookie("auth", String.valueOf(auth), "/", response);
-//                    session.setAttribute("email", email);
-//                    break;
-//
-//                } catch (Exception e) {
-//                    logger.error(e.getMessage());
-//                    e.printStackTrace();
-//                }
-
-
-//                dispatcher = getServletContext().getRequestDispatcher("/register.jsp");
-//                dispatcher.forward(request, response);
-//                String email = request.getParameter("email");
-//                String password = request.getParameter("password");
-//                String firstName = request.getParameter("firstName");
-//                String lastName = request.getParameter("lastName");
-//
-//                try {
-//                    boolean isRegistered = userService.registerUser(email, password, firstName, lastName);
-//                    if (!isRegistered) {
-//                        throw new UserException("User registration failed!");
-//                    }
-//                    CookieHelper.createCookie("auth", "true", "/", response);
-//                    session.setAttribute("email", email);
-//                    dispatcher = getServletContext().getRequestDispatcher("/createTask.jsp");
-//                    dispatcher.forward(request, response);
-//                    break;
-//                } catch (UserException e) {
-//                    logger.error(e.getMessage());
-//                    e.printStackTrace();
-//                }
-
-            case "/userlist":
-//                if (!auth) {
-//                    dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-//                    dispatcher.forward(request, response);
-//                    break;
-//                }
-//                try {
-//                    email = session.getAttribute("email").toString();
-//                    dispatcher = getServletContext().getRequestDispatcher("/createTask.jsp");
-//                    List<Item> userItems = iToDoListService.getItemsByUserId(email);
-//                    request.setAttribute("userItems", userItems);
-//                    dispatcher.forward(request, response);
-//                    break;
-//                } catch (ItemException e) {
-//                    logger.error(e.getMessage());
-//                    e.printStackTrace();
-//                }
         }
     }
-
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */

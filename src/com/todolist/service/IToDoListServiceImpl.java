@@ -71,7 +71,7 @@ public class IToDoListServiceImpl implements IToDoListService {
             }
 
             item. setTitle((title == null) ? item.getTitle() : title);
-            item. setContent((content == null) ? item.getContent() : title);
+            item. setContent((content == null) ? item.getContent() : content);
 
             iToDoListDAO.saveOrUpdate(item);
 
