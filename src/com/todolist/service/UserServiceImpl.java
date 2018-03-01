@@ -1,13 +1,11 @@
 package com.todolist.service;
 
-import com.todolist.configuration.HibernateHelper;
 import com.todolist.dao.UserDAO;
 import com.todolist.dao.UserDAOImpl;
 import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
 import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
 /**
  * Created by Haimov on 04/01/2018.
@@ -129,14 +127,6 @@ public class UserServiceImpl implements UserService{
     public User checkUserLogin(String email, String password) throws UserException {
         User user;
         try {
-            Session session = HibernateHelper.getSession();
-
-            if (session == null) {
-                throw new UserException("could not open session");
-            }
-
-            session.beginTransaction();
-
             user = userDAO.getUserById(email);
 
             if (user == null) {
@@ -145,7 +135,6 @@ public class UserServiceImpl implements UserService{
             }
 
             return  (user.getPassword().equals(password)) ? user : null;
-
         } catch (UserException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
