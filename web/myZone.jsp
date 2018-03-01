@@ -1,45 +1,3 @@
-<%--<%@ page language="java" contentType="text/html; charset=windows-1255"--%>
-         <%--import="java.util.*" import="com.todolist.controller.toDoServletController"--%>
-         <%--pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp"%>--%>
-<%--&lt;%&ndash;<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">&ndash;%&gt;--%>
-<%--&lt;%&ndash;<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>&ndash;%&gt;--%>
-<%--&lt;%&ndash;<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>&ndash;%&gt;--%>
-<%--<!-- ---- Include the above in your HEAD tag -------- -->--%>
-
-<%--<!DOCTYPE html>--%>
-<%--<html lang="en">--%>
-<%--<head>--%>
-
-  <%--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">--%>
-  <%--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>--%>
-  <%--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>--%>
-  <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
-  <%--<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">--%>
-
-  <%--<!-- Website CSS style -->--%>
-  <%--<link rel="stylesheet" type="text/css" href="assets/css/main.css">--%>
-
-  <%--<!-- Website Font style -->--%>
-  <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">--%>
-
-  <%--<!-- Google Fonts -->--%>
-  <%--<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>--%>
-  <%--<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>--%>
-
-  <%--<title>ToDo App</title>--%>
-
-<%--</head>--%>
-<%--<body>--%>
-<%--<h1>Welcome To My Zone!</h1>--%>
-
-<%--<form action = "" method = "post">--%>
-  <%--<input type="submit" class="btn-success" name="createTask" value="Create Task" />--%>
-<%--</form>--%>
-<%--</body>--%>
-<%--</html>--%>
-
-
-
 <%@ page language="java" contentType="text/html; charset=windows-1255"
          import="java.util.*" import="com.todolist.controller.toDoServletController"
          pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp"%>
@@ -177,13 +135,9 @@
         <blockquote>
           <%
             Cookie[] cookie = request.getCookies();
-
             IToDoListService iToDoListService = new IToDoListServiceImpl();
-            UserService userService = new UserServiceImpl();
-
             String email = "", firstName = "", lastName="";
 
-			int val=0;
 			for(Cookie ck:cookie) {
 			    if(ck.getName().equals("firstName")){
 			        firstName = ck.getValue();
@@ -212,6 +166,8 @@
                   out.print("<div class" + "="+"panel-body>"+ userItems.get(i).getContent()+ "</div>");
                   out.print("<div class" + "="+"panel-footer>");
                 out.print("<a href='/todo/deleteTask?action/deleteTask&taskId="+userItems.get(i).getItemId()+"'>Delete this task</a>");
+                  out.print("<a href='/todo/goToUpdateTask?action/goToUpdateTask&taskId="+userItems.get(i).getItemId()
+                          + "&title=" +userItems.get(i).getTitle()+"&content="+userItems.get(i).getContent() +  "'> Update this task</a>");
                 out.print("</div>");
                 out.print("</div>");
 

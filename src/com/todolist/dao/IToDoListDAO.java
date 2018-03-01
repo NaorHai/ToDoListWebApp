@@ -16,4 +16,5 @@ public interface IToDoListDAO {
     List<Item> getItemsByUserId(String email) throws ItemException;
     Item getItemById(String itemId) throws ItemException;
     void deleteAllItemsByUserId(String user) throws ItemException;
+    boolean updateTask(Item item) throws ItemException;
 }

@@ -14,4 +14,5 @@ public interface IToDoListService {
     List<Item> getItemsByUserId(String email) throws ItemException;
     boolean deleteItemById(String itemId) throws ItemException;
     boolean deleteAllItemsByUserId(String email) throws ItemException;
+    boolean updateTask(String email, String title, String content,String taskId) throws ItemException;
 }

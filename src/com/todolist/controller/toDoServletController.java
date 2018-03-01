@@ -64,6 +64,8 @@ public class toDoServletController extends HttpServlet {
             else if (path.contains("register")) path = "/goToRegister";
             else if (path.contains("deleteTask")) path = "/deleteTask";
             else if (path.contains("deleteUser")) path = "/deleteUser";
+            else if (path.contains("updateTask")) path = "/updateTask";
+            else if (path.contains("goToUpdateTask")) path = "/goToUpdateTask";
 
         } else {
 
@@ -76,6 +78,8 @@ public class toDoServletController extends HttpServlet {
             else if (path.equals("createTask")) path = "/createTask";
             else if (path.equals("deleteTask")) path = "/deleteTask";
             else if (path.equals("deleteUser")) path = "/deleteUser";
+            else if (path.equals("updateTask")) path = "/updateTask";
+            else if (path.equals("goToUpdateTask")) path = "/goToUpdateTask";
 
         }
 
@@ -123,6 +127,11 @@ public class toDoServletController extends HttpServlet {
             case "/logOut":
                 route = "/login.jsp";
                 CookieHelper.clearAllUserCookies(request, response);
+                dispatcher = getServletContext().getRequestDispatcher(route);
+                dispatcher.forward(request, response);
+                break;
+            case "/goToUpdateTask":
+                route = "/updateTask.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
@@ -231,7 +240,25 @@ public class toDoServletController extends HttpServlet {
                 }
 
                 break;
+            case "/updateTask":
+                try {
+                    title = request.getParameter("title");
+                    content = request.getParameter("content");
+//                    taskId = request.getParameter("taskId");
+                    email = CookieHelper.getCookieValueByName("email", request);
+                    taskId = CookieHelper.getCookieValueByName("taskId", request);
+                    if (email == null) {
+                        throw new ItemException("user email is missing!");
+                    }
+//
+                    boolean create = iToDoListService.updateTask(email, title, content, taskId);
+                    route = (create) ? "/goToMyZone" : "/goToRegister";
+                    response.sendRedirect("/" + context + route);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+                break;
 //            case "/login":
 //                try {
 ////                    if (auth) {

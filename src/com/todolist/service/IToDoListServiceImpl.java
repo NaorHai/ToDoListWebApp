@@ -48,6 +48,34 @@ public class IToDoListServiceImpl implements IToDoListService {
     }
 
     /**
+     * Create new Item
+     * @param email
+     * @param title
+     * @param content
+     * @throws ItemException
+     */
+    @Override
+    public boolean updateTask(String email, String title, String content,String taskId) throws ItemException {
+        try {
+
+            if (email == null || email.equals("")) {
+                logger.error("invalid user id: " + email);
+                throw new ItemException("invalid user id was provided!");
+            }
+
+//            iToDoListDAO.getItemById(taskId);
+//
+//            iToDoListDAO.updateTask(item);
+//            logger.info("created a new item successfully: " + item.toString());
+            return true;
+        } catch (ItemException e) {
+            e.printStackTrace();
+            logger.error("failed to create a new item!");
+            return false;
+        }
+    }
+
+    /**
      * Get item by user email
      * @param email
      * @throws ItemException

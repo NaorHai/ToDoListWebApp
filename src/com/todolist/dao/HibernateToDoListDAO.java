@@ -58,7 +58,35 @@ public class HibernateToDoListDAO implements IToDoListDAO {
             session.close();
         }
     }
+    /**
+     * Save or update entity
+     * @param
+     * @throws ItemException
+     */
+    @Override
+    public boolean updateTask(Item item) throws ItemException {
+        try{
+            session = HibernateHelper.getSession();
+            session.beginTransaction();
 
+
+
+            session.saveOrUpdate(item);
+            session.getTransaction().commit();
+            logger.info("Item with id " + item.getItemId() +" was saved successfully");
+            return true;
+        }catch (Exception e){
+            if(session.getTransaction() != null){
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to save an item " + item.toString());
+            logger.error(e.getStackTrace());
+            return false;
+//            throw new ItemException(e.getMessage(), e);
+        }finally {
+            session.close();
+        }
+    }
     /**
      * Deleting entity
      * @param item
