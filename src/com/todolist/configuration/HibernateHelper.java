@@ -11,7 +11,8 @@ import org.hibernate.cfg.Configuration;
 public final class HibernateHelper {
     private final static Logger logger = Logger.getLogger(HibernateHelper.class);
 
-    private HibernateHelper() {}
+    private HibernateHelper() {
+    }
 
     /**
      * Open new hibernate session

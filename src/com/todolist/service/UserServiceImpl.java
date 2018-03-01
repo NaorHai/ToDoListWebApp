@@ -11,16 +11,18 @@ import org.apache.log4j.Logger;
  * Created by Haimov on 04/01/2018.
  * implementation of UserService interface
  */
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
     private UserDAO userDAO = UserDAOImpl.getInstance();
     private IToDoListService iToDoListService = new IToDoListServiceImpl();
 
-    public UserServiceImpl() {}
+    public UserServiceImpl() {
+    }
 
     /**
      * Register new user
+     *
      * @param email
      * @param password
      * @param firstName
@@ -43,6 +45,7 @@ public class UserServiceImpl implements UserService{
 
     /**
      * update  user
+     *
      * @param email
      * @param password
      * @param firstName
@@ -81,6 +84,7 @@ public class UserServiceImpl implements UserService{
 
     /**
      * Delete user by mail
+     *
      * @param email
      * @throws UserException
      */
@@ -103,7 +107,7 @@ public class UserServiceImpl implements UserService{
             }
             userToDelete = userDAO.getUserById(email);
 
-            if(userToDelete == null) {
+            if (userToDelete == null) {
                 throw new UserException("cannot find user to update with id: " + email);
             }
 
@@ -118,7 +122,8 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     *  Check user credentials
+     * Check user credentials
+     *
      * @param email
      * @param password
      * @throws UserException
@@ -134,7 +139,7 @@ public class UserServiceImpl implements UserService{
                 return null;
             }
 
-            return  (user.getPassword().equals(password)) ? user : null;
+            return (user.getPassword().equals(password)) ? user : null;
         } catch (UserException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -144,6 +149,7 @@ public class UserServiceImpl implements UserService{
 
     /**
      * Get user by email
+     *
      * @param email
      * @throws UserException
      */
@@ -158,7 +164,7 @@ public class UserServiceImpl implements UserService{
         try {
             user = userDAO.getUserById(email);
 
-            if(user == null) {
+            if (user == null) {
                 throw new UserException("cannot find user to update with id: " + email);
             }
 
@@ -173,6 +179,7 @@ public class UserServiceImpl implements UserService{
 
     /**
      * Check if user already exist
+     *
      * @param email
      * @throws UserException
      */

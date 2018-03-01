@@ -12,7 +12,7 @@ import java.time.LocalDate;
  * User Entity
  */
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 public class User implements Serializable {
 
     private String email;
@@ -21,7 +21,7 @@ public class User implements Serializable {
     private String lastName;
     private Date creationDate;
 
-    public User(){
+    public User() {
         this.creationDate = Date.valueOf(LocalDate.now());
     }
 
@@ -34,7 +34,9 @@ public class User implements Serializable {
     }
 
     @Id
-    public String getEmail() {return email;}
+    public String getEmail() {
+        return email;
+    }
 
     public void setEmail(String email) {
         this.email = email;

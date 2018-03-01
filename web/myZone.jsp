@@ -84,8 +84,17 @@
             right: 5px;
             font-size: 16px;
         }
-        .DeleteButton,.creationDate{
+
+        .DeleteButton, .creationDate {
             float: right;
+        }
+
+        .wrapperMyTodo {
+            margin-bottom: 5px;
+        }
+
+        .myTodo {
+            display: inline;
         }
     </style>
 </head>
@@ -94,7 +103,7 @@
     <div class="row main">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                <a href="todo/logOut" id="logout">LogOut</a>
+                <a href="/todo/logOut" id="logout">LogOut</a>
                 <h1 class="title">My Zone</h1>
                 <hr/>
                 <h2 class="title">Your Items, Create, Edit, Delete etc.</h2>
@@ -129,11 +138,12 @@
 
                         } else {
 
-                            out.print("<h3><b><u>My Todo List:</b></u></h3>");
+                            out.print("<div class='wrapperMyTodo'><h3 class='MyTodo'><b><u>My Todo List:</b></u></h3>");
+                            out.print("<a class='DeleteButton' href='/todo/deleteAllItems?action/deleteAllItems&email=" + email + "'>Delete All</a></div>");
                             for (int i = 0; i < userItems.size(); i++) {
 
                                 out.print("<div class='panel panel-primary'>");
-                                out.print("<div class='panel-heading'>" + userItems.get(i).getTitle() +"<span class='creationDate'>Created at: "+ userItems.get(i).getCreationDate()+"</span></div>");
+                                out.print("<div class='panel-heading'>" + userItems.get(i).getTitle() + "<span class='creationDate'>Created at: " + userItems.get(i).getCreationDate() + "</span></div>");
                                 out.print("<div class='panel-body'>" + userItems.get(i).getContent() + "</div>");
                                 out.print("<div class='panel-footer'>");
                                 out.print("<a href='/todo/goToUpdateItem?action/goToUpdateItem&itemId=" + userItems.get(i).getItemId()
@@ -146,7 +156,8 @@
                     %>
                 </blockquote>
                 <div class="form-group ">
-                    <button name="action" value="goToCreateItem" class="btn btn-primary btn-lg btn-block">Create Item</button>
+                    <button name="action" value="goToCreateItem" class="btn btn-primary btn-lg btn-block">Create Item
+                    </button>
                 </div>
             </form>
         </div>

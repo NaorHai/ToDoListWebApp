@@ -1,23 +1,22 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC 
-"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.todolist.pojo.Item" table="Items">
-		<id name="itemId" type="java.lang.String" column="itemId">
-			<!--<generator class="native"/>-->
-		</id>
-		<property name="email">
-			<column name="email"/>
-		</property>
-		<property name="title">
-			<column name="title"/>
-		</property>
-		<property name="content">
-			<column name="content"/>
-		</property>
-		<property name="creationDate" type="date">
-			<column name="creationDate"/>
-		</property>
-	</class>
+    <class name="com.todolist.pojo.Item" table="Items">
+        <id name="itemId" type="java.lang.String" column="itemId">
+        </id>
+        <property name="email">
+            <column name="email"/>
+        </property>
+        <property name="title">
+            <column name="title"/>
+        </property>
+        <property name="content">
+            <column name="content"/>
+        </property>
+        <property name="creationDate" type="date">
+            <column name="creationDate"/>
+        </property>
+    </class>
 </hibernate-mapping>

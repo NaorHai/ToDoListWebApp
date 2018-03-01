@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
          import="java.util.*" import="com.todolist.controller.toDoServletController"
-         pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp"%>
+         pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp" %>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -18,33 +18,35 @@
 
     <title>ToDo App</title>
     <style type="text/css">
-        body, html{
+        body, html {
             height: 100%;
             background-repeat: no-repeat;
             background-color: #d3d3d3;
             font-family: 'Oxygen', sans-serif;
         }
+
         h1.title {
             font-size: 50px;
             font-family: 'Passion One', cursive;
             font-weight: 400;
         }
+
         h2.title {
             font-size: 30px;
             font-family: 'Passion One', cursive;
             font-weight: 400;
         }
 
-        hr{
+        hr {
             width: 10%;
             color: #fff;
         }
 
-        .form-group{
+        .form-group {
             margin-bottom: 15px;
         }
 
-        label{
+        label {
             margin-bottom: 15px;
         }
 
@@ -54,7 +56,7 @@
             padding-top: 3px;
         }
 
-        .main-login{
+        .main-login {
             background-color: #fff;
             /* shadows and rounded borders */
             -moz-border-radius: 2px;
@@ -66,7 +68,7 @@
 
         }
 
-        .main-center{
+        .main-center {
             margin-top: 30px;
             margin: 0 auto;
             max-width: 330px;
@@ -74,13 +76,17 @@
 
         }
 
-        .register-button{
+        .register-button {
             margin-top: 5px;
         }
 
-        .go-to-login-button{
+        .go-to-login-button {
             display: block;
             margin: 0 auto;
+        }
+
+        .red {
+            color: red;
         }
     </style>
 </head>
@@ -90,7 +96,7 @@
         <div class="panel-heading">
             <div class="panel-title text-center">
                 <h1 class="title">ToDo List</h1>
-                <hr />
+                <hr/>
                 <h2 class="title">Register</h2>
             </div>
         </div>
@@ -102,7 +108,8 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" required class="form-control" name="firstName" id="name"  placeholder="Enter your First Name"/>
+                            <input type="text" required class="form-control" name="firstName" id="name"
+                                   placeholder="Enter your First Name"/>
                         </div>
                     </div>
                 </div>
@@ -112,7 +119,8 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" required class="form-control" name="lastName" id="username"  placeholder="Enter your Last Name"/>
+                            <input type="text" required class="form-control" name="lastName" id="username"
+                                   placeholder="Enter your Last Name"/>
                         </div>
                     </div>
                 </div>
@@ -122,28 +130,42 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" required class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                            <input type="text" required class="form-control" name="email" id="email"
+                                   placeholder="Enter your Email"/>
                         </div>
                     </div>
                 </div>
-
+                <%
+                    Cookie[] cookie = request.getCookies();
+                    for (Cookie ck : cookie) {
+                        if (ck.getName().equals("isUserAlreadyExist")) {
+                            if(ck.getValue().equals("true")){
+                            out.print("<p class='red'>Email already exist</p>");
+                            }
+                        }
+                    }
+                %>
                 <div class="form-group">
                     <label for="password" class="cols-sm-2 control-label">Password</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" required class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                            <input type="password" required class="form-control" name="password" id="password"
+                                   placeholder="Enter your Password"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group ">
-                    <button type="submit" name="action" value="registerAccount" class="btn btn-primary btn-lg btn-block register-button">Register</button>
+                    <button type="submit" name="action" value="registerAccount"
+                            class="btn btn-primary btn-lg btn-block register-button">Register
+                    </button>
                 </div>
             </form>
-                <div class="form-group ">
-                    <a href="/todo/goToLogin?action/goToLogin" name="action" value="goToLogin" class="btn btn-link go-to-login-button">Login</a>
-                </div>
+            <div class="form-group ">
+                <a href="/todo/goToLogin?action/goToLogin" name="action" value="goToLogin"
+                   class="btn btn-link go-to-login-button">Login</a>
+            </div>
         </div>
     </div>
 </div>

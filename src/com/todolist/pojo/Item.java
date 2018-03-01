@@ -3,6 +3,7 @@ package com.todolist.pojo;
 import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -14,7 +15,7 @@ import java.util.UUID;
  * Item Entity
  */
 @Entity
-@Table(name="Items")
+@Table(name = "Items")
 public class Item implements Serializable {
 
     private String itemId;
@@ -23,7 +24,7 @@ public class Item implements Serializable {
     private String content;
     private Date creationDate;
 
-    public Item(){
+    public Item() {
         this.itemId = UUID.randomUUID().toString();
         this.creationDate = Date.valueOf(LocalDate.now());
     }

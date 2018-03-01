@@ -5,19 +5,21 @@ package com.todolist.configuration;
  */
 
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Cookie Helper for creating and editing user cookies
- * */
+ */
 public final class CookieHelper {
 
     private final static Logger logger = Logger.getLogger(CookieHelper.class);
     private final static int MAX_AGE_SECONDS = 24 * 60 * 60;
 
-    private CookieHelper() {}
+    private CookieHelper() {
+    }
 
     /**
      * Create Cookie
@@ -60,6 +62,7 @@ public final class CookieHelper {
 
     /**
      * clear cookie by name
+     *
      * @param cookieName name of needed cookie
      * @param request
      * @param response

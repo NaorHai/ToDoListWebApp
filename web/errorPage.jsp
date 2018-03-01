@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
          import="java.util.*" import="com.todolist.controller.toDoServletController"
-         pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp"%>
+         pageEncoding="windows-1255" isErrorPage="false" errorPage="errorPage.jsp" %>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -17,32 +17,35 @@
 
     <title>Error Page</title>
     <style type="text/css">
-        body, html{
+        body, html {
             height: 100%;
             background-repeat: no-repeat;
             background-color: #d3d3d3;
             font-family: 'Oxygen', sans-serif;
         }
+
         h1.title {
             font-size: 50px;
             font-family: 'Passion One', cursive;
             font-weight: 400;
         }
+
         h2.title {
             font-size: 30px;
             font-family: 'Passion One', cursive;
             font-weight: 400;
         }
-        hr{
+
+        hr {
             width: 10%;
             color: #fff;
         }
 
-        .form-group{
+        .form-group {
             margin-bottom: 15px;
         }
 
-        label{
+        label {
             margin-bottom: 15px;
         }
 
@@ -52,7 +55,7 @@
             padding-top: 3px;
         }
 
-        .main-login{
+        .main-login {
             background-color: #fff;
             /* shadows and rounded borders */
             -moz-border-radius: 2px;
@@ -64,7 +67,7 @@
 
         }
 
-        .main-center{
+        .main-center {
             margin-top: 30px;
             margin: 0 auto;
             max-width: 330px;
@@ -72,7 +75,7 @@
 
         }
 
-        .login-button{
+        .login-button {
             margin-top: 5px;
         }
 
@@ -84,7 +87,7 @@
         <div class="panel-heading">
             <div class="panel-title text-center">
                 <h1 class="title">ToDo List</h1>
-                <hr />
+                <hr/>
                 <h2 class="title">Error Page, something went wrong</h2>
             </div>
         </div>
@@ -92,7 +95,9 @@
             <form class="form-horizontal" method="post" action="/todo/auth/">
 
                 <div class="form-group ">
-                    <button type="button" name="action" value="goToLogin" class="btn btn-primary btn-lg btn-block login-button">Go To Login Page</button>
+                    <button type="button" name="action" value="goToLogin"
+                            class="btn btn-primary btn-lg btn-block login-button">Go To Login Page
+                    </button>
                 </div>
             </form>
         </div>

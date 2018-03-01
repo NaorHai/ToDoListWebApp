@@ -11,8 +11,12 @@ import java.util.List;
  */
 public interface IToDoListService {
     boolean createItem(String email, String title, String content) throws ItemException;
+
     List<Item> getItemsByUserId(String email) throws ItemException;
+
     boolean deleteItemById(String itemId) throws ItemException;
+
     boolean deleteAllItemsByUserId(String email) throws ItemException;
+
     boolean updateItem(String email, String title, String content, String itemId) throws ItemException;
 }

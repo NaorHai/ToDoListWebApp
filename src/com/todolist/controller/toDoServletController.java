@@ -2,6 +2,7 @@ package com.todolist.controller;
 /**
  * Created by Haimov on 14/12/2017.
  */
+
 import com.todolist.configuration.CookieHelper;
 import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
@@ -10,6 +11,7 @@ import com.todolist.service.IToDoListService;
 import com.todolist.service.IToDoListServiceImpl;
 import com.todolist.service.UserService;
 import com.todolist.service.UserServiceImpl;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -32,6 +34,7 @@ public class toDoServletController extends HttpServlet {
     private final static Logger logger = Logger.getLogger(toDoServletController.class);
     private IToDoListService iToDoListService = new IToDoListServiceImpl();
     private UserService userService = new UserServiceImpl();
+    private boolean isLoggerOn = false;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,22 +48,31 @@ public class toDoServletController extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //initialize logger
+        if (!isLoggerOn) {
+            logger.info("logger is on");
+            isLoggerOn = true;
+        }
 
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher = null;
         boolean auth;
-        String email, password, firstName, lastName, title, content, itemId,route, context = "todo";
+
+        String email, password, firstName, lastName, title, content, itemId, route, context = "todo";
         String path = request.getParameter("action");
         if (path == null) {
 
             //checking the next URL from form
             path = request.getPathInfo();
             if (path.contains("login")) path = "/goToLogin";
+
+
             else if (path.contains("register")) path = "/goToRegister";
             else if (path.contains("deleteItem")) path = "/deleteItem";
             else if (path.contains("deleteUser")) path = "/deleteUser";
             else if (path.contains("updateItem")) path = "/updateItem";
             else if (path.contains("goToUpdateItem")) path = "/goToUpdateItem";
+            else if (path.contains("deleteAllItems")) path = "/deleteAllItems";
 
         } else {
 
@@ -75,6 +87,7 @@ public class toDoServletController extends HttpServlet {
             else if (path.equals("deleteUser")) path = "/deleteUser";
             else if (path.equals("updateItem")) path = "/updateItem";
             else if (path.equals("goToUpdateItem")) path = "/goToUpdateItem";
+            else if (path.equals("deleteAllItems")) path = "/deleteAllItems";
 
         }
 
@@ -82,7 +95,8 @@ public class toDoServletController extends HttpServlet {
         auth = CookieHelper.getCookieValueByName("auth", request).equalsIgnoreCase("true");
 
         switch (path) {
-            default:case "/":
+            default:
+            case "/":
                 try {
                     route = (auth) ? "/myZone.jsp" : "/login.jsp";
                     dispatcher = getServletContext().getRequestDispatcher(route);
@@ -106,21 +120,22 @@ public class toDoServletController extends HttpServlet {
                 break;
 
             case "/goToMyZone":
-                route = (auth) ? "/myZone.jsp" : "/login.jsp" ;
+                route = (auth) ? "/myZone.jsp" : "/login.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
 
 
             case "/goToCreateItem":
-                route =  (auth) ? "/createItem.jsp" : "/login.jsp";
+                route = (auth) ? "/createItem.jsp" : "/login.jsp";
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
 
             case "/logOut":
+                CookieHelper.clearCookieByName("tryAgain", request, response);
+                CookieHelper.clearCookieByName("auth", request, response);
                 route = "/login.jsp";
-                CookieHelper.clearAllUserCookies(request, response);
                 dispatcher = getServletContext().getRequestDispatcher(route);
                 dispatcher.forward(request, response);
                 break;
@@ -142,10 +157,11 @@ public class toDoServletController extends HttpServlet {
 
                     if (user == null) {
                         auth = false;
+                        CookieHelper.createCookie("tryAgain", "true", "/", response);
                         logger.info("credentials are invalid: user: " + email + " with pass: " + password);
-                    }
-                    else {
+                    } else {
                         auth = true;
+                        CookieHelper.clearCookieByName("tryAgain", request, response);
                         CookieHelper.createCookie("email", email, "/", response);
                         CookieHelper.createCookie("firstName", user.getFirstName(), "/", response);
                         CookieHelper.createCookie("lastName", user.getLastName(), "/", response);
@@ -171,26 +187,34 @@ public class toDoServletController extends HttpServlet {
                 lastName = request.getParameter("lastName");
 
                 try {
-                    boolean isUserCreated = userService.registerUser(email, password, firstName, lastName);
-                    logger.info("Creating a new user " + email + " success: " + isUserCreated);
-                    CookieHelper.createCookie("email", email, "/", response);
-                    CookieHelper.createCookie("auth", String.valueOf(isUserCreated), "/", response);
-
-                    route = (isUserCreated) ? "/goToMyZone" : "/goToRegister";
+                    CookieHelper.clearAllUserCookies(request, response);
+                    if (!userService.isUserAlreadyExist(email)) {
+                        boolean isUserCreated = userService.registerUser(email, password, firstName, lastName);
+                        logger.info("Creating a new user " + email + " success: " + isUserCreated);
+                        CookieHelper.createCookie("email", email, "/", response);
+                        CookieHelper.createCookie("auth", String.valueOf(isUserCreated), "/", response);
+                        CookieHelper.createCookie("firstName", firstName, "/", response);
+                        CookieHelper.createCookie("lastName", lastName, "/", response);
+                        CookieHelper.clearCookieByName("isUserAlreadyExist",request,response);
+                        route = (isUserCreated) ? "/goToMyZone" : "/goToRegister";
+                        response.sendRedirect("/" + context + route);
+                        break;
+                    }
+                    CookieHelper.createCookie("isUserAlreadyExist", "true", "/", response);
+                    route = "/goToRegister";
                     response.sendRedirect("/" + context + route);
+
                 } catch (UserException e) {
                     e.printStackTrace();
                 }
-
                 break;
-
             case "/createItem":
                 try {
                     title = request.getParameter("title");
                     content = request.getParameter("content");
                     email = CookieHelper.getCookieValueByName("email", request);
 
-                    if (email == null) {
+                    if (email == null || email.equals("")) {
                         throw new ItemException("user email is missing!");
                     }
 
@@ -204,13 +228,25 @@ public class toDoServletController extends HttpServlet {
                 break;
             case "/deleteItem":
                 try {
-
                     itemId = request.getParameter("itemId");
-                    if (itemId == null) {
+                    if (itemId == null || itemId.equals("")) {
                         throw new ItemException("user email is missing!");
                     }
 
-                    boolean deleteItem= iToDoListService.deleteItemById(itemId);
+                    boolean deleteItem = iToDoListService.deleteItemById(itemId);
+                    route = (deleteItem) ? "/goToMyZone" : "/goToMyZone";
+                    response.sendRedirect("/" + context + route);
+                } catch (ItemException e) {
+                    e.printStackTrace();
+                }
+            case "/deleteAllItems":
+                try {
+                    email = request.getParameter("email");
+                    if (email == null || email.equals("")) {
+                        throw new ItemException("user email is missing!");
+                    }
+
+                    boolean deleteItem = iToDoListService.deleteAllItemsByUserId(email);
                     route = (deleteItem) ? "/goToMyZone" : "/goToMyZone";
                     response.sendRedirect("/" + context + route);
                 } catch (ItemException e) {
@@ -225,7 +261,7 @@ public class toDoServletController extends HttpServlet {
                         throw new UserException("user email is missing!");
                     }
 
-                    boolean deleteUser= userService.deleteUserById(email);
+                    boolean deleteUser = userService.deleteUserById(email);
                     route = (deleteUser) ? "/goToRegister" : "/goToRegister";
                     response.sendRedirect("/" + context + route);
                 } catch (UserException e) {
@@ -251,6 +287,7 @@ public class toDoServletController extends HttpServlet {
                 break;
         }
     }
+
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */

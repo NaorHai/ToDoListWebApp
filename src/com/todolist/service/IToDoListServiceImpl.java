@@ -17,10 +17,12 @@ public class IToDoListServiceImpl implements IToDoListService {
     private final static Logger logger = Logger.getLogger(IToDoListServiceImpl.class);
     private IToDoListDAO iToDoListDAO = HibernateToDoListDAO.getInstance();
 
-    public IToDoListServiceImpl(){}
+    public IToDoListServiceImpl() {
+    }
 
     /**
      * Create new Item
+     *
      * @param email
      * @param title
      * @param content
@@ -49,6 +51,7 @@ public class IToDoListServiceImpl implements IToDoListService {
 
     /**
      * Update Item
+     *
      * @param email
      * @param title
      * @param content
@@ -67,11 +70,11 @@ public class IToDoListServiceImpl implements IToDoListService {
             item = iToDoListDAO.getItemById(itemId);
 
             if (item == null) {
-                throw new ItemException("could not find item: " + itemId  +" to update");
+                throw new ItemException("could not find item: " + itemId + " to update");
             }
 
-            item. setTitle((title == null) ? item.getTitle() : title);
-            item. setContent((content == null) ? item.getContent() : content);
+            item.setTitle((title == null) ? item.getTitle() : title);
+            item.setContent((content == null) ? item.getContent() : content);
 
             iToDoListDAO.saveOrUpdate(item);
 
@@ -85,6 +88,7 @@ public class IToDoListServiceImpl implements IToDoListService {
 
     /**
      * Get item by user id
+     *
      * @param email
      * @throws ItemException
      */
@@ -114,6 +118,7 @@ public class IToDoListServiceImpl implements IToDoListService {
 
     /**
      * Delete item by item id
+     *
      * @param itemId
      * @throws ItemException
      */
@@ -134,7 +139,7 @@ public class IToDoListServiceImpl implements IToDoListService {
             iToDoListDAO.deleteItem(itemToDelete);
             logger.info("deleted item with id: " + itemId + " successfully");
             return true;
-        }catch (ItemException e) {
+        } catch (ItemException e) {
             e.printStackTrace();
             logger.error("failed to delete item: " + itemId);
         }
@@ -143,6 +148,7 @@ public class IToDoListServiceImpl implements IToDoListService {
 
     /**
      * Delete all items by user id
+     *
      * @param email
      * @throws ItemException
      */
