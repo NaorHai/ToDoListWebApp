@@ -13,5 +13,6 @@ public interface UserService {
     boolean deleteUserById(String email) throws UserException;
     User checkUserLogin(String email, String password) throws UserException;
     User getUserById(String email) throws UserException;
+    boolean isUserAlreadyExist(String email) throws UserException;
 
 }

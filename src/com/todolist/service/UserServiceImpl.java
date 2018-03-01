@@ -1,15 +1,12 @@
 package com.todolist.service;
 
 import com.todolist.configuration.HibernateHelper;
-import com.todolist.dao.HibernateToDoListDAO;
-import com.todolist.dao.IToDoListDAO;
 import com.todolist.dao.UserDAO;
 import com.todolist.dao.UserDAOImpl;
 import com.todolist.exception.item.ItemException;
 import com.todolist.exception.user.UserException;
 import com.todolist.pojo.User;
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -184,4 +181,28 @@ public class UserServiceImpl implements UserService{
             return null;
         }
     }
+
+    /**
+     * Check if user already exist
+     * @param email
+     * @throws UserException
+     */
+    @Override
+    public boolean isUserAlreadyExist(String email) throws UserException {
+        User user;
+
+        if (email == null || email.equals("")) {
+            logger.error("invalid user id: " + email);
+            return false;
+        }
+        try {
+            user = userDAO.getUserById(email);
+            return user != null;
+        } catch (UserException e) {
+            e.printStackTrace();
+            logger.error("failed to delete a user with id: " + email);
+            return false;
+        }
+    }
+
 }
